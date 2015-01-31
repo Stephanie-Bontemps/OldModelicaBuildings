@@ -1,8 +1,10 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Constructions;
 record Ground
-  extends HeatTransfer.Data.OpaqueConstructions.Generic(
+  extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
   final nLay=5,
-  final material = {Materials.Concrete(                                                                          k=2.1),
-        Materials.LevellingFill,Materials.PURDammplatte025Insulation,Materials.CompositePanelPUR,
-                    Materials.Screed(                                                                          x=0.065)});
+  final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.Concrete(k=2.1),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.LevellingFill(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.PURDammplatte025Insulation(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.CompositePanelPUR(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.Screed(x=0.065)});
 end Ground;

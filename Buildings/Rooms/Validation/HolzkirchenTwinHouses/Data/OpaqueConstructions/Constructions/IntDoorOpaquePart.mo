@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Constructions;
 record IntDoorOpaquePart
-  extends HeatTransfer.Data.OpaqueConstructions.Generic(
+  extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
   final nLay=1,
-  final material = {Materials.WoodDoor});
+  final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.WoodDoor()});
 end IntDoorOpaquePart;

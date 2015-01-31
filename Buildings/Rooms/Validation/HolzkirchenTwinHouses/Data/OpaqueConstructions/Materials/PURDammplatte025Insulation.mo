@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials;
-model PURDammplatte025Insulation
-  extends HeatTransfer.Data.Solids.Generic(
+record PURDammplatte025Insulation
+  extends Buildings.HeatTransfer.Data.Solids.Generic(
     x=0.030,
     k=0.025,
     c=840,

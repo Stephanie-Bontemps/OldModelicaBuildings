@@ -1,5 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems;
-model ExtGlass "Interpane Clear float 4 mm"
+record ExtGlass "Interpane Clear float 4 mm"
   extends HeatTransfer.Data.Glasses.Generic(
     x=0.004,
     k=1,

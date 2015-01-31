@@ -1,7 +1,10 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Constructions;
 record ExtWallSN
-  extends HeatTransfer.Data.OpaqueConstructions.Generic(
+  extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
   final nLay=5,
-  final material = {Materials.ExteriorPlaster,Materials.InsulationPU,Materials.FormerExtPlaster,
-        Materials.HoneycombBrick,Materials.InteriorPlaster});
+  final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InsulationPU(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InteriorPlaster()});
 end ExtWallSN;

@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials;
-model Insulation
-  extends HeatTransfer.Data.Solids.Generic(
+record Insulation
+  extends Buildings.HeatTransfer.Data.Solids.Generic(
     x=0.04,
     k=0.04,
     c=840,

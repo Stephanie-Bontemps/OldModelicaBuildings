@@ -1,5 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems;
-model ArgonAirGap "Gap between two glasses 90% argon and 10% air"
+record ArgonAirGap "Gap between two glasses 90% argon and 10% air"
   extends HeatTransfer.Data.Gases.Generic(
     x=0.016,
     MM=38.85E-3,

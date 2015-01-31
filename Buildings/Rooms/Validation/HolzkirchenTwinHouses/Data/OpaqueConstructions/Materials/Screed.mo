@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials;
-model Screed
-  extends HeatTransfer.Data.Solids.Generic(
+record Screed
+  extends Buildings.HeatTransfer.Data.Solids.Generic(
     c=1000,
     x=0.04,
     k=1.4,

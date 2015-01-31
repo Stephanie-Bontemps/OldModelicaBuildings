@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials;
-model RoofTile
-  extends HeatTransfer.Data.Solids.Generic(
+record RoofTile
+  extends Buildings.HeatTransfer.Data.Solids.Generic(
     c=1000,
     x=0.02,
     k=0.961,
