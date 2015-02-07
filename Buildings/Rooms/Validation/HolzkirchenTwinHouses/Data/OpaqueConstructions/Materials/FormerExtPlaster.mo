@@ -5,4 +5,13 @@ record FormerExtPlaster
     k=1.0,
     c=1000,
     d=1200);
+  annotation (
+Documentation(revisions="<html>
+<ul>
+<li>
+January 16, 2015 by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
 end FormerExtPlaster;

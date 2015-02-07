@@ -2,26 +2,22 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses;
 model HeatingCoolingSchedule
   "Heating and cooling experimental schedule using imposed constant temperature or imposed heat or cooling power"
 
-  Modelica.Blocks.Sources.BooleanTable booTabTorFlo(startValue=startValue,
-      table=table)
-    "Boolean table to choose the sceanrio(constant temperature set point or imposed heat flow)"
-    annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
   Modelica.Blocks.Interfaces.RealInput heaCooFlo
     "Heat or cooling power input applied depending on the scenario" annotation (
      Placement(transformation(extent={{-220,80},{-180,120}}),
         iconTransformation(extent={{-220,80},{-180,120}})));
   HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloCon
     "Prescribed heat or cooling flow for the convective part"
-    annotation (Placement(transformation(extent={{100,20},{120,40}})));
+    annotation (Placement(transformation(extent={{100,40},{120,60}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bCon
-    "Convective split" annotation (Placement(transformation(extent={{170,20},{190,
-            40}}), iconTransformation(extent={{170,20},{190,40}})));
+    "Convective split" annotation (Placement(transformation(extent={{170,40},{190,
+            60}}), iconTransformation(extent={{170,40},{190,60}})));
   HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloRad
     "Prescribed heat or cooling flow for the radiative part"
-    annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
+    annotation (Placement(transformation(extent={{100,-60},{120,-40}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bRad
-    "Radiative split" annotation (Placement(transformation(extent={{170,-40},{190,
-            -20}}), iconTransformation(extent={{170,-40},{190,-20}})));
+    "Radiative split" annotation (Placement(transformation(extent={{170,-60},{190,
+            -40}}), iconTransformation(extent={{170,-60},{190,-40}})));
   Separate separate(k1=0.7, k2=0.3)
     annotation (Placement(transformation(extent={{60,-10},{80,10}})));
   Controls.Continuous.LimPID           conHea(
@@ -75,13 +71,13 @@ model HeatingCoolingSchedule
         iconTransformation(extent={{-220,-140},{-180,-100}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor TRooAir
     "Room air temperature"
-    annotation (Placement(transformation(extent={{100,-100},{120,-80}})));
+    annotation (Placement(transformation(extent={{100,-120},{120,-100}})));
   Modelica.Blocks.Math.Mean TRooHou(f=1/3600, y(start=293.15))
     "Hourly averaged room air temperature"
-    annotation (Placement(transformation(extent={{140,-80},{160,-60}})));
+    annotation (Placement(transformation(extent={{140,-100},{160,-80}})));
   Modelica.Blocks.Math.Mean TRooAnn(f=1/86400/365, y(start=293.15))
     "Annual averaged room air temperature"
-    annotation (Placement(transformation(extent={{140,-120},{160,-100}})));
+    annotation (Placement(transformation(extent={{140,-140},{160,-120}})));
   parameter Boolean startValue=false
     "Start value of y. At time = table[1], y changes to 'not startValue'";
   parameter Modelica.SIunits.Time table[:]={0,1}
@@ -92,13 +88,23 @@ model HeatingCoolingSchedule
 
   Modelica.Blocks.Logical.Switch switch1
     annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bTSet
+    "Measured temperature for the set point"
+                       annotation (Placement(transformation(extent={{170,-10},{190,
+            10}}), iconTransformation(extent={{170,-10},{190,10}})));
+  Modelica.Blocks.Interfaces.RealInput schChoice
+    "Temperature set point or heating and cooling power" annotation (Placement(
+        transformation(extent={{-220,-20},{-180,20}}), iconTransformation(
+          extent={{-220,-20},{-180,20}})));
+  Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(threshold=0.5)
+    annotation (Placement(transformation(extent={{-120,0},{-100,20}})));
 equation
   connect(separate.y2, preHeaCooFloRad.Q_flow) annotation (Line(
-      points={{81,-5},{90,-5},{90,-30},{100,-30}},
+      points={{81,-5},{90,-5},{90,-50},{100,-50}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(separate.y1, preHeaCooFloCon.Q_flow) annotation (Line(
-      points={{81,5},{90,5},{90,30},{100,30}},
+      points={{81,5},{90,5},{90,50},{100,50}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(conHea.y,gaiHea. u) annotation (Line(
@@ -146,27 +152,23 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(preHeaCooFloRad.port, port_bRad) annotation (Line(
-      points={{120,-30},{180,-30}},
+      points={{120,-50},{180,-50}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(TRooAir.T,TRooHou. u) annotation (Line(
-      points={{120,-90},{130,-90},{130,-70},{138,-70}},
+      points={{120,-110},{130,-110},{130,-90},{138,-90}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(TRooAir.T,TRooAnn. u) annotation (Line(
-      points={{120,-90},{130,-90},{130,-110},{138,-110}},
+      points={{120,-110},{130,-110},{130,-130},{138,-130}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(port_bCon, TRooAir.port) annotation (Line(
-      points={{180,30},{180,0},{140,0},{140,-40},{100,-40},{100,-90}},
-      color={191,0,0},
-      smooth=Smooth.None));
   connect(TRooAir.T, conHea.u_m) annotation (Line(
-      points={{120,-90},{120,-70},{-150,-70},{-150,-62}},
+      points={{120,-110},{120,-70},{-150,-70},{-150,-62}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(TRooAir.T, conCoo.u_m) annotation (Line(
-      points={{120,-90},{120,-150},{-150,-150},{-150,-142}},
+      points={{120,-110},{120,-150},{-150,-150},{-150,-142}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(switch1.y, separate.u) annotation (Line(
@@ -181,31 +183,45 @@ equation
       points={{1,-90},{10,-90},{10,-8},{18,-8}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(booTabTorFlo.y, switch1.u2) annotation (Line(
-      points={{-159,0},{18,0}},
-      color={255,0,255},
-      smooth=Smooth.None));
   connect(preHeaCooFloCon.port, port_bCon) annotation (Line(
-      points={{120,30},{150,30},{150,30},{180,30}},
+      points={{120,50},{180,50}},
       color={191,0,0},
+      smooth=Smooth.None));
+  connect(port_bTSet, TRooAir.port) annotation (Line(
+      points={{180,0},{180,-20},{140,-20},{140,-60},{80,-60},{80,-110},{100,-110}},
+      color={191,0,0},
+      smooth=Smooth.None));
+
+  connect(schChoice, greaterThreshold.u) annotation (Line(
+      points={{-200,0},{-162,0},{-162,10},{-122,10}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(greaterThreshold.y, switch1.u2) annotation (Line(
+      points={{-99,10},{-42,10},{-42,0},{18,0}},
+      color={255,0,255},
       smooth=Smooth.None));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
             -180},{180,180}}), graphics), Icon(coordinateSystem(
           preserveAspectRatio=false, extent={{-180,-180},{180,180}}), graphics={
+                               Rectangle(extent={{-180,180},{180,-180}},
+            lineColor={0,0,0},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
         Text(
-          extent={{-94,196},{94,228}},
+          extent={{-90,194},{98,226}},
           lineColor={0,0,255},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
-          textString="%name"), Rectangle(extent={{-180,180},{180,-180}},
-            lineColor={0,0,0})}), defaultComponentName="heaCoolSch",
+          textString="%name")}),  defaultComponentName="heaCooSch",
               Documentation(
   info="<html>
-  Model to choose the kind of schedule used depending on the period. A constant temperature set point can be used if boolean=false or an imposed heat or cooling power if boolean=true.
+  Model to choose the kind of scenario used depending on the period in the experiment. A constant temperature set point can be used if boolean=false or an imposed heat or cooling power if boolean=true.
   <br/>
-  The constant temperature set point is applied comparing the set point to the air temperature in the room.
+  The constant temperature set point is applied comparing the set point to the air temperature in the room.Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses.HeatingCoolingSchedule
   <br/>
-  Once the heat or cooling heat flow defined, it is separated between a radiative (30%) and a convective (70%) parts. 
+  Once the heat or cooling heat flow defined, it is separated between a radiative (30%) and a convective (70%) parts.
+  <br/>
+  This model can be used for one room. 
   </html>",
   revisions="<html>
 <ul>

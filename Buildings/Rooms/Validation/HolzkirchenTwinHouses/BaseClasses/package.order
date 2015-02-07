@@ -2,6 +2,15 @@ ThermalBridge
 MultiThermalBridge
 OpenOrClosedDoor
 MultiEffectiveAirLeakageArea
-InternalGains
 HeatingCoolingSchedule
 Separate
+TemperatureSetPoint
+MultiHeatingCoolingSchedule
+ReaderWeatherFile
+TestReaderWeatherFile
+ComparisonReaderTMY3
+ReaderTMY3bis
+smoothMaxNew
+ReaderWeatherFile2
+TestTabHeaCooSch
+InternalGains

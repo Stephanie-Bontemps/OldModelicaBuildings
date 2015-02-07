@@ -1,25 +1,20 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle HolzkirchenLat = 47.874
-    "Latitude of the buildings in Holzkirchen site";
-  parameter Modelica.SIunits.Height hRooGroundFloor = 2.495
-    "Height of the ground floor";
-  parameter Modelica.SIunits.Area AFloor "Area of the floor";
-  parameter Modelica.SIunits.Length ExtWallNorthLgth
+  parameter Modelica.SIunits.Length ExtWallNorthLgth = 2.85
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length IntWallOnLobbyLgth
+  parameter Modelica.SIunits.Length IntWallOnLobbyLgth = 2.61
     "Length of the wall between kitchen and lobby";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth
+  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 1.915
     "Length of the wall between kitchen and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth
+  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between kitchen and living room";
-  parameter Modelica.SIunits.Length ExtWallWestLgth
+  parameter Modelica.SIunits.Length ExtWallWestLgth = 2.61
     "Length of the external wall on the West";
 
   extends MixedAir(
-    lat=HolzkirchenLat,
-    AFlo=AFloor,
-    hRoo=hRooGroundFloor,
+    lat=47.874,
+    hRoo=2.495,
+    AFlo=7.4385,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -29,13 +24,13 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     datConExt(
     layers = {extWallSNKitchen},
-    A = {hRooGroundFloor*ExtWallNorthLgth},
+    A = {hRoo*ExtWallNorthLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
     steadyStateInitial = {true}),
     datConExtWin(
     layers = {extWallWNKitchen},
-    A = {hRooGroundFloor*ExtWallWestLgth},
+    A = {hRoo*ExtWallWestLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
     steadyStateInitial = {true},
@@ -47,11 +42,11 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     sidFin(h = {0}, gap = {0}, dep = {0.12})),
     datConBou(
     layers = {intWall2Kitchen, ceilingKitchen, groundKitchen},
-    A = {hRooGroundFloor*IntWallOnLobbyLgth, AFloor, AFloor},
+    A = {hRoo*IntWallOnLobbyLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
     steadyStateInitial = {true, true, true}),
     surBou(
-    A = {hRooGroundFloor*IntWallOnLivRoomLgth, hRooGroundFloor*DoorOnLivRoomLgth},
+    A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
     each absSol = 0.9));

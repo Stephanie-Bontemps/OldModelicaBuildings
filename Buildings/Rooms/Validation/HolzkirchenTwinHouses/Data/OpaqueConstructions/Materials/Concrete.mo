@@ -5,4 +5,13 @@ record Concrete
     x=0.22,
     k=2.0,
     d=2400);
+  annotation (
+Documentation(revisions="<html>
+<ul>
+<li>
+January 16, 2015 by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
 end Concrete;

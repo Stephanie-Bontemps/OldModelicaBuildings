@@ -9,4 +9,18 @@ record ArgonAirGap "Gap between two glasses 90% argon and 10% air"
     b_mu=6.300E-8,
     a_c=557.782,
     b_c=9.19E-4);
+
+  annotation (
+Documentation(info="<html>
+  <p>
+  This is a model of the gap between the two glasses used in the window construction used in Holzkirchen twin houses. 
+  </p>
+  </html>", revisions="<html>
+<ul>
+<li>
+January 16, 2015 by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
 end ArgonAirGap;

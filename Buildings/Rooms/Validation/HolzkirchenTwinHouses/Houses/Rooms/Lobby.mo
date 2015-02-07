@@ -1,28 +1,23 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Lobby
   "Model of the Lobby (Flur on North side of building) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle HolzkirchenLat = 47.874
-    "Latitude of the buildings in Holzkirchen site";
-  parameter Modelica.SIunits.Height hRooGroundFloor = 2.495
-    "Height of the ground floor";
-  parameter Modelica.SIunits.Area AFloor "Area of the floor";
-  parameter Modelica.SIunits.Length ExtWallNorthLgth
+  parameter Modelica.SIunits.Length ExtWallNorthLgth = 1.25
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length ExtDoorNorthLgth
+  parameter Modelica.SIunits.Length ExtDoorNorthLgth = 1.00
     "Length of the external door on the North";
-  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.61
     "Length of the wall between lobby and North Bedroom";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth
+  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 1.315
     "Length of the wall between lobby and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth
+  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between lobby and living room";
-  parameter Modelica.SIunits.Length IntWallOnKithenLgth
+  parameter Modelica.SIunits.Length IntWallOnKitchenLgth = 2.61
     "Length of the wall between lobby and kitchen";
 
   extends MixedAir(
-    lat=HolzkirchenLat,
-    AFlo=AFloor,
-    hRoo=hRooGroundFloor,
+    lat=47.874,
+    hRoo=2.495,
+    AFlo=5.8725,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -32,13 +27,13 @@ model Lobby
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     datConExt(
     layers = {extWallSNLobby},
-    A = {hRooGroundFloor*ExtWallNorthLgth},
+    A = {hRoo*ExtWallNorthLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
     steadyStateInitial = {true}),
     datConExtWin(
     layers = {extDoorOpaquePartLobby},
-    A = {hRooGroundFloor*ExtDoorNorthLgth},
+    A = {hRoo*ExtDoorNorthLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
     steadyStateInitial = {true},
@@ -50,11 +45,11 @@ model Lobby
     sidFin(h = {0.20}, gap = {0.20}, dep = {0.16})),
     datConBou(
     layers = {intWall1Lobby, ceilingLobby, groundLobby},
-    A = {hRooGroundFloor*IntWallOnNBedroomLgth, AFloor, AFloor},
+    A = {hRoo*IntWallOnNBedroomLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
     steadyStateInitial = {true, true, true}),
     surBou(
-    A = {hRooGroundFloor*IntWallOnLivRoomLgth, hRooGroundFloor*DoorOnLivRoomLgth, hRooGroundFloor*IntWallOnKithenLgth},
+    A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth, hRoo*IntWallOnKitchenLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
     each absSol = 0.9));

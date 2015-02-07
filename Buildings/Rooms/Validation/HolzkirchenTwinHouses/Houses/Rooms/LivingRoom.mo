@@ -1,40 +1,37 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle HolzkirchenLat = 47.874
-    "Latitude of the buildings in Holzkirchen site";
-  parameter Modelica.SIunits.Height hRooGroundFloor = 2.495
-    "Height of the ground floor";
-  parameter Modelica.SIunits.Area AFloor "Area of the floor";
-  parameter Modelica.SIunits.Length IntWallOnKitchenLgth
+  parameter Modelica.SIunits.Length IntWallOnKitchenLgth = 1.915
     "Length of the wall between living room and kitchen";
-  parameter Modelica.SIunits.Length DoorOnKitchenLgth
+  parameter Modelica.SIunits.Length DoorOnKitchenLgth = 0.935
     "Length of the door between living room and kitchen";
-  parameter Modelica.SIunits.Length IntWallOnLobbyLgth
+  parameter Modelica.SIunits.Length IntWallOnLobbyLgth = 1.315
     "Length of the wall between living room and lobby";
-  parameter Modelica.SIunits.Length DoorOnLobbyLgth
+  parameter Modelica.SIunits.Length DoorOnLobbyLgth = 0.935
     "Length of the door between living room and lobby";
-  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 0.30
     "Length of the wall between living room and North bedroom";
-  parameter Modelica.SIunits.Length IntWallOnCorridorLgth
+  parameter Modelica.SIunits.Length IntWallOnCorridorLgth = 2.055
     "Length of the wall between living room and corridor";
-  parameter Modelica.SIunits.Length DoorOnCorridorLgth
+  parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between living room and corridor";
-  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth
+  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = 2.89
     "Length of the wall between living room and South bedroom";
-  parameter Modelica.SIunits.Length ExtWallSouthWin3Lgth
-    "Length of the external wall on the South under window 3";
-  parameter Modelica.SIunits.Length ExtWallSouthWin2Lgth
-    "Length of the external wall on the South with window 2";
-  parameter Modelica.SIunits.Length ExtWallSouthWestLgth
+  parameter Modelica.SIunits.Area ExtWallSouthUnderWin3Area = 2.7722
+    "Area of the external wall on the South under window 3";
+  parameter Modelica.SIunits.Area ExtWallSouthWin3Area = 7.53215
+    "Area of the external wall on the South with window 3 but without the wall under";
+  parameter Modelica.SIunits.Area ExtWallSouthWin2Area = 2.76945
+    "Area of the external wall on the South with window 2";
+  parameter Modelica.SIunits.Length ExtWallSouthWestLgth = 4.67
     "Length of the external wall on the South West";
-  parameter Modelica.SIunits.Length ExtWallNorthWestLgth
+  parameter Modelica.SIunits.Length ExtWallNorthWestLgth = 1.79
     "Length of the external wall on the North West";
 
   extends MixedAir(
-    lat=HolzkirchenLat,
-    AFlo=AFloor,
-    hRoo=hRooGroundFloor,
-    nConExt=1,
+    lat=47.874,
+    hRoo=2.495,
+    AFlo=33.8504,
+    nConExt=2,
     nConExtWin=3,
     nConPar=0,
     nConBou=10,
@@ -42,14 +39,14 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     datConExt(
-    layers = {extWallWSLivingRoom},
-    A = {hRooGroundFloor*ExtWallSouthWestLgth},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall},
-    azi = {Buildings.HeatTransfer.Types.Azimuth.W},
-    steadyStateInitial = {true}),
+    layers = {extWallSNUnderWindow3_1, extWallWSLivingRoom},
+    A = {ExtWallSouthWin3Area, hRoo*ExtWallSouthWestLgth},
+    til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
+    azi = {Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.W},
+    steadyStateInitial = {true, true}),
     datConExtWin(
-    layers = {extWallSNUnderWindow3_1, extWallSNLivingRoom, extWallWNLivingRoom},
-    A = {hRooGroundFloor*ExtWallSouthWin3Lgth, hRooGroundFloor*ExtWallSouthWin2Lgth, hRooGroundFloor*ExtWallNorthWestLgth},
+    layers = {extWallSNLivingRoom, extWallSNLivingRoom, extWallWNLivingRoom},
+    A = {ExtWallSouthWin3Area, ExtWallSouthWin2Area, hRoo*ExtWallNorthWestLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.W},
     steadyStateInitial = {true, true, true},
@@ -61,7 +58,7 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     sidFin(h = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.16})),
     datConBou(
     layers = {intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, ceilingLivingRoom, groundLivingRoom},
-    A = {hRooGroundFloor*IntWallOnKitchenLgth, hRooGroundFloor*DoorOnKitchenLgth, hRooGroundFloor*IntWallOnLobbyLgth, hRooGroundFloor*DoorOnLobbyLgth, hRooGroundFloor*IntWallOnNBedroomLgth, hRooGroundFloor*IntWallOnCorridorLgth, hRooGroundFloor*DoorOnCorridorLgth, hRooGroundFloor*IntWallOnSBedroomLgth, AFloor, AFloor},
+    A = {hRoo*IntWallOnKitchenLgth, hRoo*DoorOnKitchenLgth, hRoo*IntWallOnLobbyLgth, hRoo*DoorOnLobbyLgth, hRoo*IntWallOnNBedroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnSBedroomLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
     steadyStateInitial = {true, true, true, true, true, true, true, true, true, true}));
 
@@ -85,4 +82,6 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
   Data.GlazingSystems.Window windowLivingRoom(haveExteriorShade=true, shade=
         Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
+    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-260,
+            -220},{460,200}}), graphics));
 end LivingRoom;

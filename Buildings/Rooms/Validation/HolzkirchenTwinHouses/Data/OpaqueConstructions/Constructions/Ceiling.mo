@@ -1,5 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Constructions;
-record Ceiling
+record Ceiling "Ceiling"
   extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
   final nLay=5,
   final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.Screed(),
@@ -7,4 +7,13 @@ record Ceiling
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.Concrete(),
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.Plaster(),
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InsulationUnderCeiling()});
+  annotation (
+Documentation(revisions="<html>
+<ul>
+<li>
+January 16, 2015 by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
 end Ceiling;

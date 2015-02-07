@@ -30,13 +30,13 @@ model MultiThermalBridge "Model of all the thermal bridges"
     "Constant thermal conductance of thermal bridge";
   parameter Modelica.SIunits.ThermalConductance gLob
     "Constant thermal conductance of thermal bridge";
-  parameter Modelica.SIunits.ThermalConductance gSouBed
+  parameter Modelica.SIunits.ThermalConductance gNorBed
     "Constant thermal conductance of thermal bridge";
   parameter Modelica.SIunits.ThermalConductance gCor
     "Constant thermal conductance of thermal bridge";
   parameter Modelica.SIunits.ThermalConductance gBat
     "Constant thermal conductance of thermal bridge";
-  parameter Modelica.SIunits.ThermalConductance gNorBed
+  parameter Modelica.SIunits.ThermalConductance gSouBed
     "Constant thermal conductance of thermal bridge";
   parameter Modelica.SIunits.ThermalConductance gLivRoo
     "Constant thermal conductance of thermal bridge";
@@ -97,31 +97,31 @@ equation
       string="%first",
       index=-1,
       extent={{-6,3},{-6,3}}));
-  connect(theBriKit.port_a1,port_b [1]) annotation (Line(
+  connect(theBriKit.port_b1,port_b [1]) annotation (Line(
       points={{0,90},{42,90},{42,-8.57143},{100,-8.57143}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriLob.port_a1,port_b [2]) annotation (Line(
+  connect(theBriLob.port_b1,port_b [2]) annotation (Line(
       points={{0,60},{42,60},{42,-5.71429},{100,-5.71429}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriNorBed.port_a1,port_b [3]) annotation (Line(
+  connect(theBriNorBed.port_b1,port_b [3]) annotation (Line(
       points={{0,30},{42,30},{42,-2.85714},{100,-2.85714}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriCor.port_a1,port_b [4]) annotation (Line(
+  connect(theBriCor.port_b1,port_b [4]) annotation (Line(
       points={{0,0},{100,0}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriBat.port_a1,port_b [5]) annotation (Line(
+  connect(theBriBat.port_b1,port_b [5]) annotation (Line(
       points={{0,-30},{42,-30},{42,2.85714},{100,2.85714}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriSouBed.port_a1,port_b [6]) annotation (Line(
+  connect(theBriSouBed.port_b1,port_b [6]) annotation (Line(
       points={{0,-60},{42,-60},{42,5.71429},{100,5.71429}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(theBriLivRoo.port_a1,port_b [7]) annotation (Line(
+  connect(theBriLivRoo.port_b1,port_b [7]) annotation (Line(
       points={{0,-90},{42,-90},{42,8.57143},{100,8.57143}},
       color={191,0,0},
       smooth=Smooth.None));
@@ -129,14 +129,16 @@ equation
             -100},{100,100}}), graphics), Icon(coordinateSystem(
           preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics={
                                Rectangle(extent={{-100,100},{100,-100}},
-            lineColor={0,0,0}),
+            lineColor={0,0,0},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
         Text(
           extent={{-96,106},{92,138}},
           lineColor={0,0,255},
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           textString="%name")}),
-            defaultComponentName="MulTherBri",
+            defaultComponentName="mulTherBri",
               Documentation(
   info="<html>
   Model for all the thermal bridges in a house. The thermal bridges in each room are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses.ThermalBridge\">

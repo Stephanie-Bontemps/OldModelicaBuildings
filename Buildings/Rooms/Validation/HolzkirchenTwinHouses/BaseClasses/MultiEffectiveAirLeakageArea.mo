@@ -2,69 +2,13 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses;
 model MultiEffectiveAirLeakageArea
   "Model with all the effective air leakage areas"
 
-  Fluid.Sources.Outside_CpLowRise outNor(
-    nPorts=2,
-    s=sNor,
-    redeclare package Medium = Medium,
-    azi=3.1415926535898)
-    "Outside boundary using weather data on the North wall"
-    annotation (Placement(transformation(extent={{-60,80},{-40,100}})));
-  BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
-        transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent={{-100,
-            -10},{-80,10}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=LKit, redeclare package
-      Medium = Medium)
-    "Effective air leakage area around the window in the kitchen"
-    annotation (Placement(transformation(extent={{-10,80},{10,100}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=LLob, redeclare package
-      Medium = Medium)
-    "Effective air leakage area around the door in the lobby"
-    annotation (Placement(transformation(extent={{-10,50},{10,70}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=LNorBed, redeclare
-      package Medium = Medium)
-    "Effective air leakage area around the window in the North bedroom"
-    annotation (Placement(transformation(extent={{-10,20},{10,40}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=LBat, redeclare package
-      Medium = Medium)
-    "Effective air leakage area around the window in the bathroom"
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=LSouBed, redeclare
-      package Medium = Medium)
-    "Effective air leakage area around the window in the South bedroom"
-    annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=LLivRoo1, redeclare
-      package Medium = Medium)
-    "Effective air leakage area around windows 2 and 3 on the South wall of the living room"
-    annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
-  Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=LLivRoo2, redeclare
-      package Medium = Medium)
-    "Effective air leakage area around window 1 on the West wall of the living room"
-    annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
-  Fluid.Sources.Outside_CpLowRise outEas(
-    nPorts=1,
-    s=sEas,
-    redeclare package Medium = Medium,
-    azi=-1.5707963267949)
-    "Outside boundary using weather data on the East wall"
-    annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-  Fluid.Sources.Outside_CpLowRise outSou(
-    nPorts=2,
-    s=sSou,
-    azi=0,
-    redeclare package Medium = Medium)
-    "Outside boundary using weather data on the South wall"
-    annotation (Placement(transformation(extent={{-60,-40},{-40,-20}})));
-  Fluid.Sources.Outside_CpLowRise outWes(
-    nPorts=2,
-    s=sWes,
-    redeclare package Medium = Medium,
-    azi=1.5707963267949) "Outside boundary using weather data on the West wall"
-    annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
-  parameter Modelica.SIunits.Area LBat "Effective leakage area of the bathroom";
+  replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
+    annotation (__Dymola_choicesAllMatching=true);
   parameter Modelica.SIunits.Area LKit "Effective leakage area of the kitchen";
   parameter Modelica.SIunits.Area LLob "Effective leakage area of the lobby";
   parameter Modelica.SIunits.Area LNorBed
     "Effective leakage area of the North bedroom";
+  parameter Modelica.SIunits.Area LBat "Effective leakage area of the bathroom";
   parameter Modelica.SIunits.Area LSouBed
     "Effective leakage area of the South bedroom";
   parameter Modelica.SIunits.Area LLivRoo1
@@ -79,11 +23,72 @@ model MultiEffectiveAirLeakageArea
     "Side ratio, s=length of this wall/length of adjacent wall (South)";
   parameter Real sWes
     "Side ratio, s=length of this wall/length of adjacent wall (West)";
-  Modelica.Fluid.Interfaces.FluidPorts_b ports_b[7] annotation (Placement(
+
+  Fluid.Sources.Outside_CpLowRise outNor(
+    nPorts=2,
+    s=sNor,
+    redeclare package Medium = MediumB,
+    azi=Buildings.HeatTransfer.Types.Azimuth.N)
+    "Outside boundary using weather data on the North wall"
+    annotation (Placement(transformation(extent={{-60,80},{-40,100}})));
+  BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
+        transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent={{-100,
+            -10},{-80,10}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=LKit, redeclare package
+      Medium = MediumB)
+    "Effective air leakage area around the window in the kitchen"
+    annotation (Placement(transformation(extent={{-10,80},{10,100}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=LLob, redeclare package
+      Medium = MediumB)
+    "Effective air leakage area around the door in the lobby"
+    annotation (Placement(transformation(extent={{-10,50},{10,70}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=LNorBed, redeclare
+      package Medium = MediumB)
+    "Effective air leakage area around the window in the North bedroom"
+    annotation (Placement(transformation(extent={{-10,20},{10,40}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=LBat, redeclare package
+      Medium = MediumB)
+    "Effective air leakage area around the window in the bathroom"
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=LSouBed, redeclare
+      package Medium = MediumB)
+    "Effective air leakage area around the window in the South bedroom"
+    annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=LLivRoo1, redeclare
+      package Medium = MediumB)
+    "Effective air leakage area around windows 2 and 3 on the South wall of the living room"
+    annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
+  Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=LLivRoo2, redeclare
+      package Medium = MediumB)
+    "Effective air leakage area around window 1 on the West wall of the living room"
+    annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
+  Fluid.Sources.Outside_CpLowRise outEas(
+    nPorts=1,
+    s=sEas,
+    redeclare package Medium = MediumB,
+    azi=Buildings.HeatTransfer.Types.Azimuth.E)
+    "Outside boundary using weather data on the East wall"
+    annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
+  Fluid.Sources.Outside_CpLowRise outSou(
+    nPorts=2,
+    s=sSou,
+    azi=Buildings.HeatTransfer.Types.Azimuth.S,
+    redeclare package Medium = MediumB)
+    "Outside boundary using weather data on the South wall"
+    annotation (Placement(transformation(extent={{-60,-40},{-40,-20}})));
+  Fluid.Sources.Outside_CpLowRise outWes(
+    nPorts=2,
+    s=sWes,
+    redeclare package Medium = MediumB,
+    azi=Buildings.HeatTransfer.Types.Azimuth.W)
+    "Outside boundary using weather data on the West wall"
+    annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
+
+  Modelica.Fluid.Interfaces.FluidPorts_b ports_b[7](redeclare package Medium =
+        MediumB)                                    annotation (Placement(
         transformation(extent={{80,-40},{100,40}}), iconTransformation(extent={{
             80,-40},{100,40}})));
-  replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
-    annotation (__Dymola_choicesAllMatching=true);
+
 equation
   connect(weaBus, outEas.weaBus) annotation (Line(
       points={{-90,0},{-68,0},{-68,30.2},{-60,30.2}},
@@ -186,7 +191,10 @@ equation
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid,
           textString="%name"), Rectangle(extent={{-100,100},{100,-100}},
-            lineColor={0,0,0})}), defaultComponentName="MulAirLea",
+            lineColor={0,0,0},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}),
+                                  defaultComponentName="MulAirLea",
               Documentation(
   info="<html>
   Model for all the effective air leakage areas in a house with their associated outside boundary. The effective air leakage area in each room are supposed to be around the windows and they are modeled using an instance of <a href=\"Buildings.Airflow.Multizone.EffectiveAirLeakageArea\">
