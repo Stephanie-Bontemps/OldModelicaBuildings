@@ -3,18 +3,6 @@ package Constructions "Constructions (walls, roof...) commonly found in Holzkirc
   extends Modelica.Icons.MaterialPropertiesPackage;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   annotation(Documentation(info="<html>
   <p>
   This package contains description of the opaque constructions found in the Holzkirchen twin houses.

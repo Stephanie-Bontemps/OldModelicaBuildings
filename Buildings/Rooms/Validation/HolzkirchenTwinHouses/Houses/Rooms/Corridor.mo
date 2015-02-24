@@ -17,6 +17,11 @@ model Corridor
     "Length of the wall between corridor and living room";
   parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between corridor and living room";
+  parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
 
   extends MixedAir(
     lat=47.874,
@@ -33,12 +38,18 @@ model Corridor
     layers = {intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, ceilingCorridor, groundCorridor},
     A = {hRoo*IntWallOnNBedroomLgth, hRoo*DoorOnNBedroomLgth, hRoo*IntWallOnBathroomLgth, hRoo*DoorOnBathroomLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
-    steadyStateInitial = {true, true, true, true, true, true}),
+    steadyStateInitial = {false, false, false, false, false, false},
+    each T_a_start=Tini_bou,
+    each T_b_start=Tini_int),
     surBou(
     A = {hRoo*IntWallOnSBedroomLgth, hRoo*DoorOnSBedroomLgth, hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9));
+    each absSol = 0.9),
+    air(T_start=Tini_int),
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    T_start=Tini_int);
 
   Data.OpaqueConstructions.Constructions.IntWall1 intWall1Corridor
     annotation (Placement(transformation(extent={{420,-200},{440,-180}})));

@@ -3,8 +3,6 @@ package OpaqueConstructions "Opaque constructions commonly found in Holzkirchen 
   extends Modelica.Icons.MaterialPropertiesPackage;
 
 
-
-
   annotation(Documentation(info="<html>
   <p>
   This package contains construction models for walls, roofs and doors of

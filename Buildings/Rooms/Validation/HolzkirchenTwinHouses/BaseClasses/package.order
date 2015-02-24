@@ -14,3 +14,7 @@ smoothMaxNew
 ReaderWeatherFile2
 TestTabHeaCooSch
 InternalGains
+DirectNormalCalculation
+smoothDirectNormalRadiation
+heavisideDirectNormalRadiation
+ExtraRadRatio

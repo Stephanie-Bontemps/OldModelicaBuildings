@@ -53,7 +53,6 @@ model ComparisonReaderTMY3
     "Direct normal radiation calculated with base model"
     annotation (Placement(transformation(extent={{80,-60},{100,-40}})));
 
-protected
   BoundaryConditions.WeatherData.BaseClasses.ConvertRadiation
                                conGloHorRad
     annotation (Placement(transformation(extent={{30,-20},{50,0}})));

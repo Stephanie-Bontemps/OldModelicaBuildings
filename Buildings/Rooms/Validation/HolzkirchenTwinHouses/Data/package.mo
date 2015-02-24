@@ -3,7 +3,6 @@ package Data "Package with data that are used in houses models implemented to av
   extends Modelica.Icons.MaterialPropertiesPackage;
 
 
-
   annotation(Documentation(info="<html>
     <p>
     This package contains data for wall and window constructions commonly found in Holzkirchen twin houses.

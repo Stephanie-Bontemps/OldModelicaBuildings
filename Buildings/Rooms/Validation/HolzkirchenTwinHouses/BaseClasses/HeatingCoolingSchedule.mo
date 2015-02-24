@@ -57,10 +57,6 @@ model HeatingCoolingSchedule
     u(unit="W"),
     y(unit="J")) "Cooling energy in Joules"
     annotation (Placement(transformation(extent={{-80,-140},{-60,-120}})));
-  Modelica.Blocks.Math.Mean PHea(f=1/3600) "Hourly averaged heating power"
-    annotation (Placement(transformation(extent={{-80,-20},{-60,0}})));
-  Modelica.Blocks.Math.Mean PCoo(f=1/3600) "Hourly averaged cooling power"
-    annotation (Placement(transformation(extent={{-80,-180},{-60,-160}})));
   Modelica.Blocks.Interfaces.RealInput TSetHea
     "Heating temperature set point input applied depending on the scenario"
     annotation (Placement(transformation(extent={{-220,-70},{-180,-30}}),
@@ -74,14 +70,11 @@ model HeatingCoolingSchedule
     annotation (Placement(transformation(extent={{100,-120},{120,-100}})));
   Modelica.Blocks.Math.Mean TRooHou(f=1/3600, y(start=293.15))
     "Hourly averaged room air temperature"
-    annotation (Placement(transformation(extent={{140,-100},{160,-80}})));
-  Modelica.Blocks.Math.Mean TRooAnn(f=1/86400/365, y(start=293.15))
-    "Annual averaged room air temperature"
-    annotation (Placement(transformation(extent={{140,-140},{160,-120}})));
+    annotation (Placement(transformation(extent={{140,-120},{160,-100}})));
   parameter Boolean startValue=false
     "Start value of y. At time = table[1], y changes to 'not startValue'";
-  parameter Modelica.SIunits.Time table[:]={0,1}
-    "Vector of time points. At every time point, the output y gets its opposite value (e.g., table={0,1}). 0 = Temperature set point and 1 = Heat or cooling flow imposed";
+  //parameter Modelica.SIunits.Time table[:]={0,1}
+  //  "Vector of time points. At every time point, the output y gets its opposite value (e.g., table={0,1}). 0 = Temperature set point and 1 = Heat or cooling flow imposed";
   parameter Real kHea=1E6 "Gain value multiplied with input signal for heating";
   parameter Real kCoo=-1E6
     "Gain value multiplied with input signal for cooling";
@@ -131,14 +124,6 @@ equation
       points={{-82,-130},{-99,-130}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(PCoo.u,gaiCoo. y) annotation (Line(
-      points={{-82,-170},{-90,-170},{-90,-130},{-99,-130}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(PHea.u,gaiHea. y) annotation (Line(
-      points={{-82,-10},{-90,-10},{-90,-50},{-99,-50}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(TSetHea, conHea.u_s) annotation (Line(
       points={{-200,-50},{-162,-50}},
       color={0,0,127},
@@ -156,11 +141,7 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(TRooAir.T,TRooHou. u) annotation (Line(
-      points={{120,-110},{130,-110},{130,-90},{138,-90}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(TRooAir.T,TRooAnn. u) annotation (Line(
-      points={{120,-110},{130,-110},{130,-130},{138,-130}},
+      points={{120,-110},{138,-110}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(TRooAir.T, conHea.u_m) annotation (Line(

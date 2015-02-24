@@ -3,10 +3,6 @@ package GlazingSystems "Glazing system constructions commonly found in Holzkirch
   extends Modelica.Icons.MaterialPropertiesPackage;
 
 
-
-
-
-
 annotation(Documentation(info="<html>
     <p>
     This package contains data describing window constructions commonly found in Holzkirchen twin houses.

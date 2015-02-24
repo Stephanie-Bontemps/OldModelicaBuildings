@@ -26,6 +26,11 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     "Length of the external wall on the South West";
   parameter Modelica.SIunits.Length ExtWallNorthWestLgth = 1.79
     "Length of the external wall on the North West";
+  parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
 
   extends MixedAir(
     lat=47.874,
@@ -43,13 +48,17 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     A = {ExtWallSouthWin3Area, hRoo*ExtWallSouthWestLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.W},
-    steadyStateInitial = {true, true}),
+    steadyStateInitial = {false, false},
+    each T_a_start=Tini_ext,
+    each T_b_start=Tini_int),
     datConExtWin(
     layers = {extWallSNLivingRoom, extWallSNLivingRoom, extWallWNLivingRoom},
     A = {ExtWallSouthWin3Area, ExtWallSouthWin2Area, hRoo*ExtWallNorthWestLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.S, Buildings.HeatTransfer.Types.Azimuth.W},
-    steadyStateInitial = {true, true, true},
+    steadyStateInitial = {false, false, false},
+    each T_a_start=Tini_ext,
+    each T_b_start=Tini_int,
     glaSys = {windowLivingRoom, windowLivingRoom, windowLivingRoom},
     hWin = {1.54, 2.37, 1.54},
     wWin = {3.34, 1.11, 1.23},
@@ -60,7 +69,13 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     layers = {intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, ceilingLivingRoom, groundLivingRoom},
     A = {hRoo*IntWallOnKitchenLgth, hRoo*DoorOnKitchenLgth, hRoo*IntWallOnLobbyLgth, hRoo*DoorOnLobbyLgth, hRoo*IntWallOnNBedroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnSBedroomLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
-    steadyStateInitial = {true, true, true, true, true, true, true, true, true, true}));
+    steadyStateInitial = {false, false, false, false, false, false, false, false, false, false},
+    each T_a_start=Tini_bou,
+    each T_b_start=Tini_int),
+    air(T_start=Tini_int),
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    T_start=Tini_int);
 
   Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
     intDoorOpaquePartLivingRoom

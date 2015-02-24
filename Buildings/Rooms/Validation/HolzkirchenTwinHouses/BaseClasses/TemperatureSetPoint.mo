@@ -42,10 +42,6 @@ model TemperatureSetPoint
     u(unit="W"),
     y(unit="J")) "Cooling energy in Joules"
     annotation (Placement(transformation(extent={{0,-60},{20,-40}})));
-  Modelica.Blocks.Math.Mean PHea(f=1/3600) "Hourly averaged heating power"
-    annotation (Placement(transformation(extent={{0,80},{20,100}})));
-  Modelica.Blocks.Math.Mean PCoo(f=1/3600) "Hourly averaged cooling power"
-    annotation (Placement(transformation(extent={{0,-100},{20,-80}})));
   Modelica.Blocks.Interfaces.RealInput TSetHea
     "Heating temperature set point input applied depending on the scenario"
     annotation (Placement(transformation(extent={{-140,30},{-100,70}}),
@@ -81,10 +77,6 @@ equation
       points={{-2,-50},{-19,-50}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(PHea.u,gaiHea. y) annotation (Line(
-      points={{-2,90},{-10,90},{-10,50},{-19,50}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(TSetHea,conHea. u_s) annotation (Line(
       points={{-120,50},{-82,50}},
       color={0,0,127},
@@ -95,10 +87,6 @@ equation
       smooth=Smooth.None));
   connect(multiplex2.y,sum1. u) annotation (Line(
       points={{21,0},{38,0}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(gaiCoo.y, PCoo.u) annotation (Line(
-      points={{-19,-50},{-10,-50},{-10,-90},{-2,-90}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(gaiHea.y, multiplex2.u1[1]) annotation (Line(

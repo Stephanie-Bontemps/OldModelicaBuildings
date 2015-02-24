@@ -110,7 +110,12 @@ model N2HouseModel "Model of the N2 Twin House"
     ExtWallNorthWestLgth=1.79,
     ExtWallSouthUnderWin3Area=2.7722,
     ExtWallSouthWin3Area=7.53215,
-    ExtWallSouthWin2Area=2.76945)
+    ExtWallSouthWin2Area=2.76945,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
   Rooms.SouthBedroom southBedroom(redeclare package Medium = MediumA, nPorts=4,
     IntWallOnCorridorLgth=0.685,
@@ -118,7 +123,12 @@ model N2HouseModel "Model of the N2 Twin House"
     IntWallOnBathroomLgth=2.07,
     ExtWallEastLgth=2.89,
     ExtWallSouthLgth=3.83,
-    IntWallOnLivRoomLgth=2.89)
+    IntWallOnLivRoomLgth=2.89,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{200,-282},{220,-262}})));
   Rooms.NorthBedroom northBedroom(redeclare package Medium = MediumA, nPorts=3,
     ExtWallNorthLgth=3.83,
@@ -127,7 +137,12 @@ model N2HouseModel "Model of the N2 Twin House"
     IntWallOnCorridorLgth=0.685,
     DoorOnCorridorLgth=0.935,
     IntWallOnLivRoomLgth=0.30,
-    IntWallOnLobbyLgth=2.61)
+    IntWallOnLobbyLgth=2.61,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{280,120},{300,140}})));
   Rooms.Corridor corridor(redeclare package Medium = MediumA, nPorts=8,
     IntWallOnNBedroomLgth=0.685,
@@ -137,21 +152,36 @@ model N2HouseModel "Model of the N2 Twin House"
     IntWallOnSBedroomLgth=0.685,
     DoorOnSBedroomLgth=0.935,
     IntWallOnLivRoomLgth=2.055,
-    DoorOnLivRoomLgth=0.935)
+    DoorOnLivRoomLgth=0.935,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{60,20},{80,40}})));
   Rooms.Bathroom bathroom(redeclare package Medium = MediumA, nPorts=4,
     IntWallOnNBedroomLgth=2.07,
     ExtWallEastLgth=2.99,
     IntWallOnSBedroomLgth=2.07,
     IntWallOnCorridorLgth=2.055,
-    DoorOnCorridorLgth=0.935)
+    DoorOnCorridorLgth=0.935,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{240,-62},{260,-42}})));
   Rooms.Kitchen kitchen(redeclare package Medium = MediumA, nPorts=3,
     ExtWallNorthLgth=2.85,
     IntWallOnLobbyLgth=2.61,
     IntWallOnLivRoomLgth=1.915,
     DoorOnLivRoomLgth=0.935,
-    ExtWallWestLgth=2.61)
+    ExtWallWestLgth=2.61,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{-20,240},{0,260}})));
   Rooms.Lobby lobby(redeclare package Medium = MediumA, nPorts=3,
     ExtWallNorthLgth=1.25,
@@ -159,7 +189,12 @@ model N2HouseModel "Model of the N2 Twin House"
     IntWallOnNBedroomLgth=2.61,
     IntWallOnLivRoomLgth=1.315,
     DoorOnLivRoomLgth=0.935,
-    IntWallOnKitchenLgth=2.61)
+    IntWallOnKitchenLgth=2.61,
+    Tini_int=Tini_int,
+    Tini_ext=Tini_ext,
+    Tini_bou=Tini_bou,
+    energyDynamics=energyDynamics,
+    massDynamics=massDynamics)
     annotation (Placement(transformation(extent={{120,180},{140,200}})));
   BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
         transformation(extent={{300,300},{320,320}}),
@@ -175,7 +210,7 @@ model N2HouseModel "Model of the N2 Twin House"
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     columns=2:8) "Scenario of the blinds position applied on the South windows"
     annotation (Placement(transformation(extent={{-320,200},{-300,220}})));
-  Modelica.Thermal.HeatTransfer.Celsius.PrescribedTemperature TairBou[3]
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairBou[3]
     annotation (Placement(transformation(extent={{-242,280},{-222,300}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_a[3]
     annotation (Placement(transformation(extent={{-200,280},{-180,300}})));
@@ -309,6 +344,15 @@ model N2HouseModel "Model of the N2 Twin House"
     kCoo=kCoo)
     annotation (Placement(transformation(extent={{-280,80},{-260,100}})));
 
+  parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
+  parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
+    "Formulation of energy balance";
+  parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
+    "Formulation of mass balance";
 equation
   connect(kitchen.weaBus, weaBus) annotation (Line(
       points={{-1.05,258.95},{-1.05,310},{310,310}},
@@ -516,7 +560,6 @@ equation
       points={{-280,30.5714},{-220,30.5714},{-220,-272},{209.5,-272}},
       color={191,0,0},
       smooth=Smooth.None));
-
   connect(weaBus, corridor.weaBus) annotation (Line(
       points={{310,310},{320,310},{320,80},{78.95,80},{78.95,38.95}},
       color={255,204,51},
@@ -552,7 +595,6 @@ equation
       points={{288.1,123.2},{288.1,-48},{288,-48},{288,-200},{13,-200},{13,-178.05}},
       color={191,0,0},
       smooth=Smooth.None));
-
   connect(port_a[3], lobby.surf_conBou[3]) annotation (Line(
       points={{-190,296.667},{-180,296.667},{-180,160},{134,160},{134,172},{133,
           172},{133,182.333}},
@@ -581,36 +623,30 @@ equation
           -32.2857},{-281,-32.2857}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(northBedroom.ports[1], MulAirLea.ports_b[3]) annotation (Line(
       points={{282.5,123.667},{-240,123.667},{-240,-32},{-260,-32},{-260,
           -31.1429},{-281,-31.1429}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(bathroom.ports[1], MulAirLea.ports_b[4]) annotation (Line(
       points={{242.5,-58.5},{-240,-58.5},{-240,-32},{-281,-32},{-281,-30}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(southBedroom.ports[1], MulAirLea.ports_b[5]) annotation (Line(
       points={{202.5,-278.5},{22,-278.5},{22,-278},{-240,-278},{-240,-32},{-281,
           -32},{-281,-28.8571}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(livingRoom.ports[1], MulAirLea.ports_b[6]) annotation (Line(
       points={{2.5,-176.778},{-118,-176.778},{-118,-176},{-240,-176},{-240,-32},
           {-281,-32},{-281,-27.7143}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(livingRoom.ports[2], MulAirLea.ports_b[7]) annotation (Line(
       points={{2.5,-176.333},{-118,-176.333},{-118,-176},{-240,-176},{-240,-32},
           {-281,-32},{-281,-26.5714}},
       color={0,127,255},
       smooth=Smooth.None));
-
   connect(intGaiKit.y, kitchen.qGai_flow) annotation (Line(
       points={{-39,290},{-32,290},{-32,254},{-21,254}},
       color={0,0,127},
@@ -799,157 +835,157 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[1], kitchen.heaPorAir) annotation (Line(
-      points={{-260,92.0714},{-250,92.0714},{-250,92},{-220,92},{-220,250},{
+      points={{-260,91.5306},{-250,91.5306},{-250,92},{-220,92},{-220,250},{
           -10.5,250}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[2], lobby.heaPorAir) annotation (Line(
-      points={{-260,92.2143},{-250,92.2143},{-250,92},{-220,92},{-220,190},{
+      points={{-260,91.7347},{-250,91.7347},{-250,92},{-220,92},{-220,190},{
           129.5,190}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[3], northBedroom.heaPorAir) annotation (Line(
-      points={{-260,92.3571},{-250,92.3571},{-250,92},{-220,92},{-220,130},{
+      points={{-260,91.9388},{-250,91.9388},{-250,92},{-220,92},{-220,130},{
           289.5,130}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[4], corridor.heaPorAir) annotation (Line(
-      points={{-260,92.5},{-250,92.5},{-250,92},{-220,92},{-220,30},{69.5,30}},
+      points={{-260,92.1429},{-250,92.1429},{-250,92},{-220,92},{-220,30},{69.5,
+          30}},
       color={191,0,0},
       smooth=Smooth.None));
-
   connect(mulHeaCooSch.port_bCon[5], bathroom.heaPorAir) annotation (Line(
-      points={{-260,92.6429},{-250,92.6429},{-250,92},{-220,92},{-220,-52},{
+      points={{-260,92.3469},{-250,92.3469},{-250,92},{-220,92},{-220,-52},{
           249.5,-52}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[6], southBedroom.heaPorAir) annotation (Line(
-      points={{-260,92.7857},{-250,92.7857},{-250,92},{-220,92},{-220,-272},{
+      points={{-260,92.551},{-250,92.551},{-250,92},{-220,92},{-220,-272},{
           209.5,-272}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bCon[7], livingRoom.heaPorAir) annotation (Line(
-      points={{-260,92.9286},{-250,92.9286},{-250,92},{-220,92},{-220,-170},{
+      points={{-260,92.7551},{-250,92.7551},{-250,92},{-220,92},{-220,-170},{
           9.5,-170}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[1], kitchen.heaPorRad) annotation (Line(
-      points={{-260,87.0714},{-220,87.0714},{-220,88},{-160,88},{-160,248.1},{
+      points={{-260,88.6735},{-220,88.6735},{-220,88},{-160,88},{-160,248.1},{
           -10.5,248.1}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[2], lobby.heaPorRad) annotation (Line(
-      points={{-260,87.2143},{-220,87.2143},{-220,88},{-160,88},{-160,188.1},{
+      points={{-260,88.8776},{-220,88.8776},{-220,88},{-160,88},{-160,188.1},{
           129.5,188.1}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[3], northBedroom.heaPorRad) annotation (Line(
-      points={{-260,87.3571},{-220,87.3571},{-220,88},{-160,88},{-160,128.1},{
+      points={{-260,89.0816},{-220,89.0816},{-220,88},{-160,88},{-160,128.1},{
           289.5,128.1}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[4], corridor.heaPorRad) annotation (Line(
-      points={{-260,87.5},{-220,87.5},{-220,88},{-160,88},{-160,28.1},{69.5,28.1}},
+      points={{-260,89.2857},{-220,89.2857},{-220,88},{-160,88},{-160,28.1},{
+          69.5,28.1}},
       color={191,0,0},
       smooth=Smooth.None));
-
   connect(mulHeaCooSch.port_bRad[5], bathroom.heaPorRad) annotation (Line(
-      points={{-260,87.6429},{-220,87.6429},{-220,88},{-160,88},{-160,-53.9},{
+      points={{-260,89.4898},{-220,89.4898},{-220,88},{-160,88},{-160,-53.9},{
           249.5,-53.9}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[6], southBedroom.heaPorRad) annotation (Line(
-      points={{-260,87.7857},{-220,87.7857},{-220,88},{-160,88},{-160,-273.9},{
+      points={{-260,89.6939},{-220,89.6939},{-220,88},{-160,88},{-160,-273.9},{
           209.5,-273.9}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bRad[7], livingRoom.heaPorRad) annotation (Line(
-      points={{-260,87.9286},{-220,87.9286},{-220,88},{-160,88},{-160,-171.9},{
+      points={{-260,89.898},{-220,89.898},{-220,88},{-160,88},{-160,-171.9},{
           9.5,-171.9}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[8], mulHeaCooSch.heaCooFlo[1]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,92.1429},{-281,92.1429}},
+      points={{-299,290},{-292,290},{-292,92.3469},{-281.429,92.3469}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[9], mulHeaCooSch.heaCooFlo[2]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,92.4286},{-281,92.4286}},
+      points={{-299,290},{-292,290},{-292,92.7551},{-281.429,92.7551}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[10], mulHeaCooSch.heaCooFlo[3]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,92.7143},{-281,92.7143}},
+      points={{-299,290},{-292,290},{-292,93.1633},{-281.429,93.1633}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[11], mulHeaCooSch.heaCooFlo[4]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,93},{-281,93}},
+      points={{-299,290},{-292,290},{-292,93.5714},{-281.429,93.5714}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[12], mulHeaCooSch.heaCooFlo[5]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,93.2857},{-281,93.2857}},
+      points={{-299,290},{-292,290},{-292,93.9796},{-281.429,93.9796}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[13], mulHeaCooSch.heaCooFlo[6]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,93.5714},{-281,93.5714}},
+      points={{-299,290},{-292,290},{-292,94.3878},{-281.429,94.3878}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[14], mulHeaCooSch.heaCooFlo[7]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,93.8571},{-281,93.8571}},
+      points={{-299,290},{-292,290},{-292,94.7959},{-281.429,94.7959}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[15], mulHeaCooSch.TSetHea[1]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,86.1429},{-281,86.1429}},
+      points={{-299,290},{-292,290},{-292,84.4898},{-285.714,84.4898}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[16], mulHeaCooSch.TSetHea[2]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,86.4286},{-281,86.4286}},
+      points={{-299,290},{-292,290},{-292,84.898},{-285.714,84.898}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[17], mulHeaCooSch.TSetHea[3]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,86.7143},{-281,86.7143}},
+      points={{-299,290},{-292,290},{-292,85.3061},{-285.714,85.3061}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[18], mulHeaCooSch.TSetHea[4]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,87},{-281,87}},
+      points={{-299,290},{-292,290},{-292,85.7143},{-285.714,85.7143}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[19], mulHeaCooSch.TSetHea[5]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,87.2857},{-281,87.2857}},
+      points={{-299,290},{-292,290},{-292,86.1224},{-285.714,86.1224}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[20], mulHeaCooSch.TSetHea[6]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,87.5714},{-281,87.5714}},
+      points={{-299,290},{-292,290},{-292,86.5306},{-285.714,86.5306}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[21], mulHeaCooSch.TSetHea[7]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,87.8571},{-281,87.8571}},
+      points={{-299,290},{-292,290},{-292,86.9388},{-285.714,86.9388}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[22], mulHeaCooSch.TSetCoo[1]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,80.1429},{-281,80.1429}},
+      points={{-299,290},{-292,290},{-292,82.3469},{-281.429,82.3469}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[23], mulHeaCooSch.TSetCoo[2]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,80.4286},{-281,80.4286}},
+      points={{-299,290},{-292,290},{-292,82.7551},{-281.429,82.7551}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[24], mulHeaCooSch.TSetCoo[3]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,80.7143},{-281,80.7143}},
+      points={{-299,290},{-292,290},{-292,83.1633},{-281.429,83.1633}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[25], mulHeaCooSch.TSetCoo[4]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,81},{-281,81}},
+      points={{-299,290},{-292,290},{-292,83.5714},{-281.429,83.5714}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[26], mulHeaCooSch.TSetCoo[5]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,81.2857},{-281,81.2857}},
+      points={{-299,290},{-292,290},{-292,83.9796},{-281.429,83.9796}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[27], mulHeaCooSch.TSetCoo[6]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,81.5714},{-281,81.5714}},
+      points={{-299,290},{-292,290},{-292,84.3878},{-281.429,84.3878}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[28], mulHeaCooSch.TSetCoo[7]) annotation (Line(
-      points={{-299,290},{-292,290},{-292,81.8571},{-281,81.8571}},
+      points={{-299,290},{-292,290},{-292,84.7959},{-281.429,84.7959}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[1], kitchen.uSha[1]) annotation (Line(
@@ -985,39 +1021,64 @@ equation
           {-80,290},{-61,290}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice) annotation (Line(
-      points={{-299,290},{-292,290},{-292,90},{-281,90}},
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[1]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,89.4898},{-281.429,89.4898}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[2]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,89.898},{-281.429,89.898}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[3]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,90.3061},{-281.429,90.3061}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[4]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,90.7143},{-281.429,90.7143}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[5]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,91.1224},{-281.429,91.1224}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[6]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,91.5306},{-281.429,91.5306}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[7]) annotation (Line(
+      points={{-299,290},{-292,290},{-292,91.9388},{-281.429,91.9388}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[1], kitchen.heaPorAir) annotation (Line(
-      points={{-280,98.0714},{-280,250},{-10.5,250}},
+      points={{-280,85.102},{-280,250},{-10.5,250}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[2], lobby.heaPorAir) annotation (Line(
-      points={{-280,98.2143},{-280,190},{129.5,190}},
+      points={{-280,85.3061},{-280,190},{129.5,190}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[3], northBedroom.heaPorAir) annotation (Line(
-      points={{-280,98.3571},{-280,130},{289.5,130}},
+      points={{-280,85.5102},{-280,130},{289.5,130}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[4], corridor.heaPorAir) annotation (Line(
-      points={{-280,98.5},{-250,98.5},{-250,100},{-220,100},{-220,30},{69.5,30}},
+      points={{-280,85.7143},{-250,85.7143},{-250,100},{-220,100},{-220,30},{
+          69.5,30}},
       color={191,0,0},
       smooth=Smooth.None));
 
   connect(mulHeaCooSch.port_bTSet[5], bathroom.heaPorAir) annotation (Line(
-      points={{-280,98.6429},{-250,98.6429},{-250,100},{-220,100},{-220,-52},{
+      points={{-280,85.9184},{-250,85.9184},{-250,100},{-220,100},{-220,-52},{
           249.5,-52}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[6], southBedroom.heaPorAir) annotation (Line(
-      points={{-280,98.7857},{-250,98.7857},{-250,100},{-220,100},{-220,-272},{
+      points={{-280,86.1224},{-250,86.1224},{-250,100},{-220,100},{-220,-272},{
           209.5,-272}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(mulHeaCooSch.port_bTSet[7], livingRoom.heaPorAir) annotation (Line(
-      points={{-280,98.9286},{-250,98.9286},{-250,100},{-220,100},{-220,-170},{
+      points={{-280,86.3265},{-250,86.3265},{-250,100},{-220,100},{-220,-170},{
           9.5,-170}},
       color={191,0,0},
       smooth=Smooth.None));

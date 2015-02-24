@@ -13,6 +13,11 @@ model SouthBedroom
     "Length of the external wall on the South";
   parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 2.89
     "Length of the wall between South bedroom and living room";
+  parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
 
   extends MixedAir(
     lat=47.874,
@@ -30,13 +35,17 @@ model SouthBedroom
     A = {hRoo*ExtWallEastLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.E},
-    steadyStateInitial = {true}),
+    steadyStateInitial = {false},
+    T_a_start={Tini_ext},
+    T_b_start={Tini_int}),
     datConExtWin(
     layers = {extWallSNSBedroom},
     A = {hRoo*ExtWallSouthLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.S},
-    steadyStateInitial = {true},
+    steadyStateInitial = {false},
+    T_a_start={Tini_ext},
+    T_b_start={Tini_int},
     glaSys = {windowSBedroom},
     hWin = {1.54},
     wWin = {1.23},
@@ -47,12 +56,18 @@ model SouthBedroom
     layers = {intWall2SBedroom, intDoorOpaquePartSBedroom, intWall2SBedroom, intWall2SBedroom, ceilingSBedroom, groundSBedroom},
     A = {hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnBathroomLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
-    steadyStateInitial = {true, true, true, true, true}),
+    steadyStateInitial = {false, false, false, false, false},
+    each T_a_start=Tini_bou,
+    each T_b_start=Tini_int),
     surBou(
     A = {hRoo*IntWallOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9));
+    each absSol = 0.9),
+    air(T_start=Tini_int),
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    T_start=Tini_int);
 
   Data.OpaqueConstructions.Constructions.ExtWallSN extWallSNSBedroom
     annotation (Placement(transformation(extent={{420,-200},{440,-180}})));

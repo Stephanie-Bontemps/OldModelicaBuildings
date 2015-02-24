@@ -10,6 +10,11 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     "Length of the door between kitchen and living room";
   parameter Modelica.SIunits.Length ExtWallWestLgth = 2.61
     "Length of the external wall on the West";
+  parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
 
   extends MixedAir(
     lat=47.874,
@@ -27,13 +32,17 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     A = {hRoo*ExtWallNorthLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
-    steadyStateInitial = {true}),
+    steadyStateInitial = {false},
+    T_a_start={Tini_ext},
+    T_b_start={Tini_int}),
     datConExtWin(
     layers = {extWallWNKitchen},
     A = {hRoo*ExtWallWestLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
     azi = {Buildings.HeatTransfer.Types.Azimuth.N},
-    steadyStateInitial = {true},
+    steadyStateInitial = {false},
+    T_a_start={Tini_ext},
+    T_b_start={Tini_int},
     glaSys = {windowKitchen},
     hWin = {1.54},
     wWin = {1.23},
@@ -44,12 +53,18 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     layers = {intWall2Kitchen, ceilingKitchen, groundKitchen},
     A = {hRoo*IntWallOnLobbyLgth, AFlo, AFlo},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
-    steadyStateInitial = {true, true, true}),
+    steadyStateInitial = {false, false, false},
+    each T_a_start=Tini_bou,
+    each T_b_start=Tini_int),
     surBou(
     A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9));
+    each absSol = 0.9),
+    air(T_start=Tini_int),
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    T_start=Tini_int);
 
   Data.OpaqueConstructions.Constructions.ExtWallSN extWallSNKitchen
     annotation (Placement(transformation(extent={{420,-200},{440,-180}})));
