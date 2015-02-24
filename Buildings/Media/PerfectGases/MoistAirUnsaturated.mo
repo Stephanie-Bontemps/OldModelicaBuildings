@@ -27,7 +27,6 @@ package MoistAirUnsaturated
   end ThermodynamicState;
 
   redeclare replaceable model extends BaseProperties(
-    T(stateSelect=if preferredMediumStates then StateSelect.prefer else StateSelect.default),
     p(stateSelect=if preferredMediumStates then StateSelect.prefer else StateSelect.default),
     Xi(each stateSelect=if preferredMediumStates then StateSelect.prefer else StateSelect.default),
     final standardOrderComponents=true)
@@ -118,7 +117,7 @@ function saturationPressureLiquid
   extends Modelica.Icons.Function;
   input SI.Temperature Tsat "saturation temperature";
   output SI.AbsolutePressure psat "saturation pressure";
-  // This function is declared here explicitely, instead of referencing the function in its
+  // This function is declared here explicitly, instead of referencing the function in its
   // base class, since otherwise Dymola 7.3 does not find the derivative for the model
   // Buildings.Fluid.Sensors.Examples.MassFraction
 algorithm
