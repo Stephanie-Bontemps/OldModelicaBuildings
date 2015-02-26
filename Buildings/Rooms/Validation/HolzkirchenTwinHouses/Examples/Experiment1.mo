@@ -16,9 +16,12 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      redeclare package MediumA = Buildings.Media.IdealGases.SimpleAir)
+      redeclare package MediumA = Buildings.Media.IdealGases.SimpleAir,
+      Tini_int=303.15,
+      Tini_ext=283.15,
+      Tini_bou=303.15)
       annotation (Placement(transformation(extent={{-40,-40},{40,40}})));
-    BaseClasses.ReaderWeatherFile2 weaDat(
+    Houses.BaseClasses.ReaderWeatherFile2 weaDat(
       filNam="D:/Berkeley Lab/Berkeley IEA58/WeatherExp1.txt",
       lon=0.20469221467389,
       lat=0.83555892609977,

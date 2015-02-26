@@ -63,8 +63,7 @@ model Lobby
     A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth, hRoo*IntWallOnKitchenLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9),
-    air(T_start=Tini_int),
+    absSol = {0.17, 0.6, 0.17}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);

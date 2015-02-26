@@ -45,8 +45,7 @@ model Corridor
     A = {hRoo*IntWallOnSBedroomLgth, hRoo*DoorOnSBedroomLgth, hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9),
-    air(T_start=Tini_int),
+    absSol = {0.17, 0.6, 0.17, 0.6}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);

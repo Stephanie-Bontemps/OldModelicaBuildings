@@ -72,7 +72,6 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     steadyStateInitial = {false, false, false, false, false, false, false, false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
-    air(T_start=Tini_int),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
@@ -88,14 +87,15 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     annotation (Placement(transformation(extent={{382,-160},{402,-140}})));
   Data.OpaqueConstructions.Constructions.ExtWallWN extWallWNLivingRoom
     annotation (Placement(transformation(extent={{380,-120},{400,-100}})));
-  Data.OpaqueConstructions.Constructions.ExtWallSNUnderWindow3 extWallSNUnderWindow3_1
+  Data.OpaqueConstructions.Constructions.ExtWallSNUnderWindow3
+    extWallSNUnderWindow3_1
     annotation (Placement(transformation(extent={{420,-80},{440,-60}})));
   Data.OpaqueConstructions.Constructions.ExtWallWS extWallWSLivingRoom
     annotation (Placement(transformation(extent={{420,-120},{440,-100}})));
   Data.OpaqueConstructions.Constructions.ExtWallSN extWallSNLivingRoom
     annotation (Placement(transformation(extent={{380,-80},{400,-60}})));
   Data.GlazingSystems.Window windowLivingRoom(haveExteriorShade=true, shade=
-        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems.RollerBlinds())
+        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-260,
             -220},{460,200}}), graphics));

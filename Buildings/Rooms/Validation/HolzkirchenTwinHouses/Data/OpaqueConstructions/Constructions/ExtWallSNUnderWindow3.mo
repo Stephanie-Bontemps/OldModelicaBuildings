@@ -7,7 +7,11 @@ record ExtWallSNUnderWindow3
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InsulationPU(),
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.2),
-                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InteriorPlaster()});
+                    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
+    absIR_a=0.9,
+    absIR_b=0.9,
+    absSol_a=0.23,
+    absSol_b=0.17);
   annotation (
 Documentation(revisions="<html>
 <ul>

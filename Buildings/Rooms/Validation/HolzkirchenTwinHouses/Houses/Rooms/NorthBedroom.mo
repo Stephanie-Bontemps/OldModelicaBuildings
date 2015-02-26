@@ -65,8 +65,7 @@ model NorthBedroom
     A = {hRoo*IntWallOnBathroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnLivRoomLgth, hRoo*IntWallOnLobbyLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9),
-    air(T_start=Tini_int),
+    absSol = {0.17, 0.17, 0.6, 0.17, 0.17}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
@@ -80,6 +79,6 @@ model NorthBedroom
   Data.OpaqueConstructions.Constructions.Ground groundNBedroom
     annotation (Placement(transformation(extent={{380,-160},{400,-140}})));
   Data.GlazingSystems.Window windowNBedroom(haveExteriorShade=true, shade=
-        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems.RollerBlinds())
+        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{338,-200},{358,-180}})));
 end NorthBedroom;

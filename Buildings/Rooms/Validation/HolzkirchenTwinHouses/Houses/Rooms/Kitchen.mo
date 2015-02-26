@@ -60,8 +60,7 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
     each absIR = 0.9,
-    each absSol = 0.9),
-    air(T_start=Tini_int),
+    absSol = {0.17, 0.6}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
@@ -77,6 +76,6 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
   Data.OpaqueConstructions.Constructions.Ground groundKitchen
     annotation (Placement(transformation(extent={{380,-160},{400,-140}})));
   Data.GlazingSystems.Window windowKitchen(haveExteriorShade=true, shade=
-        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems.RollerBlinds())
+        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
 end Kitchen;

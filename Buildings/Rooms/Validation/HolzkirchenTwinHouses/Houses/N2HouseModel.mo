@@ -96,6 +96,15 @@ model N2HouseModel "Model of the N2 Twin House"
   parameter Real kDooOpeCorLiv
     "Constant output value to choose if the door is always open or closed between corridor and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
                                                                                                         annotation (Dialog(group="Open or closed door schedule"));
+parameter Modelica.SIunits.Temperature Tini_int
+    "Intial temperature in the room";
+  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou
+    "Initial temperature of the boundary conditions";
+  parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
+    "Formulation of energy balance";
+  parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
+    "Formulation of mass balance";
 
   Rooms.LivingRoom livingRoom(redeclare package Medium = MediumA, nPorts=9,
     IntWallOnKitchenLgth=1.915,
@@ -227,7 +236,7 @@ model N2HouseModel "Model of the N2 Twin House"
     "Boundary conditions for ceiling (1 for East, 2 for West) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); heating or cooling power for the different rooms (8: kitchen, 9: lobby, 10: North bedroom, 11: corridor, 12: bathroom, 13: South bedroom, 14: living room); heating temperature set point for the different rooms (15: kitchen, 16: lobby, 17: North bedroom, 18: corridor, 19: bathroom, 20: South bedroom, 21: living room); cooling temperature set point for the different rooms (22: kitchen, 23: lobby, 24: North bedroom, 25: corridor, 26: bathroom, 27: South bedroom, 28: living room); internal gains in the kitchen (29)"
     annotation (Placement(transformation(extent={{-320,280},{-300,300}})));
 
-  BaseClasses.MultiThermalBridge  mulTherBri(
+  BaseClasses.MultiThermalBridge mulTherBri(
     gKit=4.860,
     gLob=4.130,
     gCor=2.469,
@@ -339,20 +348,9 @@ model N2HouseModel "Model of the N2 Twin House"
     yDooFil=yDooFilCorLiv,
     kDooOpe=kDooOpeCorLiv) "Door between corridor and living room"
     annotation (Placement(transformation(extent={{20,-120},{40,-100}})));
-  BaseClasses.MultiHeatingCoolingSchedule mulHeaCooSch(
-    kHea=kHea,
-    kCoo=kCoo)
+  BaseClasses.MultiHeatingCoolingSchedule mulHeaCooSch(kHea=kHea, kCoo=kCoo)
     annotation (Placement(transformation(extent={{-280,80},{-260,100}})));
 
-  parameter Modelica.SIunits.Temperature Tini_int
-    "Intial temperature in the room";
-  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
-  parameter Modelica.SIunits.Temperature Tini_bou
-    "Initial temperature of the boundary conditions";
-  parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
-    "Formulation of energy balance";
-  parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
-    "Formulation of mass balance";
 equation
   connect(kitchen.weaBus, weaBus) annotation (Line(
       points={{-1.05,258.95},{-1.05,310},{310,310}},

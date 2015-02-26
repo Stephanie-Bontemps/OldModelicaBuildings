@@ -62,9 +62,8 @@ model SouthBedroom
     surBou(
     A = {hRoo*IntWallOnLivRoomLgth},
     til = {Buildings.HeatTransfer.Types.Tilt.Wall},
-    each absIR = 0.9,
-    each absSol = 0.9),
-    air(T_start=Tini_int),
+    absIR = {0.9},
+    absSol = {0.17}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
@@ -83,6 +82,6 @@ model SouthBedroom
   Data.OpaqueConstructions.Constructions.Ground groundSBedroom
     annotation (Placement(transformation(extent={{380,-120},{400,-100}})));
   Data.GlazingSystems.Window windowSBedroom(haveExteriorShade=true, shade=
-        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Data.GlazingSystems.RollerBlinds())
+        Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
 end SouthBedroom;
