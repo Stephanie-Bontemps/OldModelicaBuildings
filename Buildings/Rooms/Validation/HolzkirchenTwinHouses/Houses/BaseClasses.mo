@@ -238,7 +238,7 @@ First implementation.
       "Constant output value to choose if the door is always open or closed (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true";
     parameter Modelica.SIunits.Length wOpe=0.935 "Width of opening";
     parameter Modelica.SIunits.Length hOpe=1.98 "Height of opening";
-    parameter Modelica.SIunits.Area LClo=4.675e-03
+    parameter Modelica.SIunits.Area LClo=1e-06
       "Effective leakage area if door model is used";
 
     parameter Modelica.SIunits.Length hA=0
@@ -252,7 +252,12 @@ First implementation.
       redeclare package Medium = MediumB,
       LClo=LClo,
       hA=hA,
-      hB=hB) "Door model used if open door"
+      hB=hB,
+      dp_turbulent(displayUnit="Pa"),
+      dpCloRat(displayUnit="Pa"),
+      mClo=0.5,
+      CDOpe=0.78,
+      mOpe=0.78) "Door model used if open door"
       annotation (Placement(transformation(extent={{0,0},{20,20}})));
     Modelica.Blocks.Sources.Constant constDooOpe(k=kDooOpe) if (yDooFil==true)
       "Constant to choose if the door is open or closed"
@@ -352,31 +357,35 @@ First implementation.
           transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent={{-100,
               -10},{-80,10}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=LKit, redeclare package
-        Medium = MediumB)
-      "Effective air leakage area around the window in the kitchen"
+        Medium = MediumB,
+      m=0.5) "Effective air leakage area around the window in the kitchen"
       annotation (Placement(transformation(extent={{-10,80},{10,100}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=LLob, redeclare package
-        Medium = MediumB)
-      "Effective air leakage area around the door in the lobby"
+        Medium = MediumB,
+      m=0.5) "Effective air leakage area around the door in the lobby"
       annotation (Placement(transformation(extent={{-10,50},{10,70}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=LNorBed, redeclare
-        package Medium = MediumB)
+        package Medium = MediumB,
+      m=0.5)
       "Effective air leakage area around the window in the North bedroom"
       annotation (Placement(transformation(extent={{-10,20},{10,40}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=LBat, redeclare package
-        Medium = MediumB)
-      "Effective air leakage area around the window in the bathroom"
+        Medium = MediumB,
+      m=0.5) "Effective air leakage area around the window in the bathroom"
       annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=LSouBed, redeclare
-        package Medium = MediumB)
+        package Medium = MediumB,
+      m=0.5)
       "Effective air leakage area around the window in the South bedroom"
       annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=LLivRoo1, redeclare
-        package Medium = MediumB)
+        package Medium = MediumB,
+      m=0.5)
       "Effective air leakage area around windows 2 and 3 on the South wall of the living room"
       annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
     Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=LLivRoo2, redeclare
-        package Medium = MediumB)
+        package Medium = MediumB,
+      m=0.5)
       "Effective air leakage area around window 1 on the West wall of the living room"
       annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
     Fluid.Sources.Outside_CpLowRise outEas(
@@ -673,8 +682,8 @@ First implementation.
       "Temperature set point or heating and cooling power" annotation (Placement(
           transformation(extent={{-220,-20},{-180,20}}), iconTransformation(
             extent={{-220,-20},{-180,20}})));
-    Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(threshold=0.5)
-      annotation (Placement(transformation(extent={{-120,0},{-100,20}})));
+    Modelica.Blocks.Math.RealToBoolean realToBoolean
+      annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
   equation
     connect(separate.y2, preHeaCooFloRad.Q_flow) annotation (Line(
         points={{81,-5},{90,-5},{90,-50},{100,-50}},
@@ -757,13 +766,13 @@ First implementation.
         color={191,0,0},
         smooth=Smooth.None));
 
-    connect(schChoice, greaterThreshold.u) annotation (Line(
-        points={{-200,0},{-162,0},{-162,10},{-122,10}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(greaterThreshold.y, switch1.u2) annotation (Line(
-        points={{-99,10},{-42,10},{-42,0},{18,0}},
+    connect(realToBoolean.y, switch1.u2) annotation (Line(
+        points={{-79,0},{18,0}},
         color={255,0,255},
+        smooth=Smooth.None));
+    connect(schChoice, realToBoolean.u) annotation (Line(
+        points={{-200,0},{-102,0}},
+        color={0,0,127},
         smooth=Smooth.None));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
               -180},{180,180}}), graphics), Icon(coordinateSystem(
@@ -943,7 +952,7 @@ First implementation.
     parameter Real kCoo=-1E6
       "Gain value multiplied with input signal for cooling";
 
-    Modelica.Blocks.Logical.GreaterThreshold booTabTorFlo[7](each threshold=0.5)
+    Modelica.Blocks.Math.RealToBoolean       booTabTorFlo[7](each threshold=0.5)
       "Boolean table to choose the scenario(constant temperature set point or imposed heat flow)"
       annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
     Modelica.Blocks.Interfaces.RealInput heaCooFlo[7]
@@ -985,7 +994,7 @@ First implementation.
           transformation(extent={{-150,-100},{-130,-80}}),iconTransformation(
             extent={{-150,-100},{-130,-80}})));
     TemperatureSetPoint TSetPoi[7](each kHea=kHea, each kCoo=kCoo)
-      "Temperature set point for the kitchen"
+      "Temperature set point"
       annotation (Placement(transformation(extent={{-40,-30},{-20,-10}})));
     Modelica.Blocks.Interfaces.RealInput schChoice[7]
       "Temperature set point or heating and cooling power" annotation (Placement(
