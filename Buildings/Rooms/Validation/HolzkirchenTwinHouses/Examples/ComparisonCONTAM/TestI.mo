@@ -12,10 +12,9 @@ model TestI "Test I carried on Dymola and CONTAM"
     kDooOpeCorLiv=1,
     NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
     lat(displayUnit="deg") = 0.83555892609977,
-    redeclare package MediumA =
-        Buildings.Media.GasesConstantDensity.MoistAirUnsaturated,
     NomFichierBouVenHeaCoo=
         "D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooTestCGI.txt",
+    redeclare package MediumA = Buildings.Media.IdealGases.SimpleAir,
     Tini_int=303.15,
     Tini_ext=283.15,
     Tini_bou=283.15)

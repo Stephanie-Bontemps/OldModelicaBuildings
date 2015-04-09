@@ -12,10 +12,9 @@ model TestB "Test B carried on Dymola and CONTAM"
     kDooOpeCorLiv=1,
     NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
     lat(displayUnit="deg") = 0.83555892609977,
-    redeclare package MediumA =
-        Buildings.Media.GasesConstantDensity.MoistAirUnsaturated,
     NomFichierBouVenHeaCoo=
         "D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooTestBFH.txt",
+    redeclare package MediumA = Buildings.Media.IdealGases.SimpleAir,
     Tini_int=303.15,
     Tini_ext=293.15,
     Tini_bou=293.15)
@@ -36,8 +35,8 @@ model TestB "Test B carried on Dymola and CONTAM"
     winSpeSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
     winSpe=0,
     winDirSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-    winDir=0,
-    filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_TestBFH_TMY3.mos")
+    filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_TestBFH_TMY3.mos",
+    winDir=0)
     annotation (Placement(transformation(extent={{0,60},{20,80}})));
 
 equation

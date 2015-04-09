@@ -253,11 +253,12 @@ First implementation.
       LClo=LClo,
       hA=hA,
       hB=hB,
-      dp_turbulent(displayUnit="Pa"),
       dpCloRat(displayUnit="Pa"),
       mClo=0.5,
       CDOpe=0.78,
-      mOpe=0.78) "Door model used if open door"
+      mOpe=0.78,
+      forceErrorControlOnFlow=true,
+      dp_turbulent(displayUnit="Pa")) "Door model used if open door"
       annotation (Placement(transformation(extent={{0,0},{20,20}})));
     Modelica.Blocks.Sources.Constant constDooOpe(k=kDooOpe) if (yDooFil==true)
       "Constant to choose if the door is open or closed"
