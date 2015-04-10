@@ -30,8 +30,8 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     datConExtWin(
     layers = {extWallEBathroom},
     A = {hRoo*ExtWallEastLgth},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall},
-    azi = {Buildings.HeatTransfer.Types.Azimuth.E},
+    til = {Buildings.Types.Tilt.Wall},
+    azi = {Buildings.Types.Azimuth.E},
     steadyStateInitial = {false},
     T_a_start={Tini_ext},
     T_b_start={Tini_int},
@@ -44,13 +44,13 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     datConBou(
     layers = {intWall2Bathroom, ceilingBathroom, groundBathroom},
     A = {hRoo*IntWallOnNBedroomLgth, AFlo, AFlo},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
+    til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
     A = {hRoo*IntWallOnSBedroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
+    til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,

@@ -14,7 +14,7 @@ model TestF "Test F carried on Dymola and CONTAM"
     lat(displayUnit="deg") = 0.83555892609977,
     NomFichierBouVenHeaCoo=
         "D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooTestBFH.txt",
-    redeclare package MediumA = Buildings.Media.IdealGases.SimpleAir,
+    redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
     Tini_int=303.15,
     Tini_ext=293.15,
     Tini_bou=293.15)

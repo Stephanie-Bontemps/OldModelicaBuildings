@@ -7,30 +7,6 @@ package Data
     "Glazing system constructions commonly found in Holzkirchen twin houses"
     extends Modelica.Icons.MaterialPropertiesPackage;
 
-    record Window "Glazing system used in Holzkirchen twin touses"
-      extends HeatTransfer.Data.GlazingSystems.Generic(
-      nLay=2,
-      gas = {ArgonAirGap()},
-      glass = {ExtGlass(), IntGlass()},
-      UFra=1.0,
-      haveExteriorShade=false);
-
-      annotation (
-    defaultComponentName="datGlaSys",
-    Documentation(info="<html>
-  <p>
-  This is a model of a window construction used in Holzkirchen twin houses. It is a double glazing with low emissivity coating and argon fill. 
-  This window construction is used for all the windows on the façade and on the external door.
-  </p>
-  </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
-    end Window;
 
     record ExtGlass "Interpane Clear float 4 mm"
       extends HeatTransfer.Data.Glasses.Generic(
@@ -88,11 +64,12 @@ First implementation.
         x=0.016,
         MM=38.85E-3,
         a_k=2.334E-3,
-        b_k=5.410E-5,
         a_mu=3.413E-6,
         b_mu=6.300E-8,
+        P0(displayUnit="Pa"),
+        b_k=5.410E-5,
         a_c=557.782,
-        b_c=9.19E-4);
+        b_c=9.19e-4);
 
       annotation (
     Documentation(info="<html>
@@ -108,6 +85,30 @@ First implementation.
 </ul>
 </html>"));
     end ArgonAirGap;
+
+    record Window "Glazing system used in Holzkirchen twin touses"
+      extends HeatTransfer.Data.GlazingSystems.Generic(
+      gas = {ArgonAirGap()},
+      glass = {ExtGlass(), IntGlass()},
+      UFra=1.0,
+      haveExteriorShade=false);
+
+      annotation (
+    defaultComponentName="datGlaSys",
+    Documentation(info="<html>
+  <p>
+  This is a model of a window construction used in Holzkirchen twin houses. It is a double glazing with low emissivity coating and argon fill. 
+  This window construction is used for all the windows on the façade and on the external door.
+  </p>
+  </html>",     revisions="<html>
+<ul>
+<li>
+January 16, 2015 by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
+    end Window;
 
     record RollerBlinds "Shade produced by the roller blinds"
       extends HeatTransfer.Data.Shades.Generic(absIR_a=0.32, absIR_b=0.32);
@@ -453,7 +454,7 @@ First implementation.
         final material = {Materials.ExteriorPlaster(),
                           Materials.InsulationPU(),
                           Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(                                                                          x=0.2),
+                          Materials.HoneycombBrick(x=0.2),
                           Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
@@ -474,7 +475,7 @@ First implementation.
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
         final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationPU(                                                                          x=0.08, k=0.022),
+                          Materials.InsulationPU(x=0.08, k=0.022),
                           Materials.FormerExtPlaster(),
                           Materials.HoneycombBrick(),
                           Materials.InteriorPlaster()},
@@ -542,9 +543,9 @@ First implementation.
       record IntWall1 "Internal wall with a thickness of 27cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Materials.InteriorPlaster(                                                                          k=0.35),
-                          Materials.HoneycombBrick(                                                                          x=0.24, k=0.331, d=1000),
-                          Materials.InteriorPlaster(                                                                          k=0.35)},
+        final material = {Materials.InteriorPlaster(k=0.35),
+                          Materials.HoneycombBrick(x=0.24, k=0.331, d=1000),
+                          Materials.InteriorPlaster(k=0.35)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
@@ -563,9 +564,9 @@ First implementation.
       record IntWall2 "Internal wall with a thickness of 14cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Materials.InteriorPlaster(                                                                          k=0.35),
-                          Materials.HoneycombBrick(                                                                          x=0.115, k=0.331, d=1000),
-                          Materials.InteriorPlaster(                                                                          k=0.35)},
+        final material = {Materials.InteriorPlaster(k=0.35),
+                          Materials.HoneycombBrick(x=0.115, k=0.331, d=1000),
+                          Materials.InteriorPlaster(k=0.35)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
@@ -607,11 +608,11 @@ First implementation.
       record Ground "Floor"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.Concrete(                                                                          k=2.1),
+        final material = {Materials.Concrete(k=2.1),
                           Materials.LevellingFill(),
                           Materials.PURDammplatte025Insulation(),
                           Materials.CompositePanelPUR(),
-                          Materials.Screed(                                                                          x=0.065)},
+                          Materials.Screed(x=0.065)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,

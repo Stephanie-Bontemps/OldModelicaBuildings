@@ -351,7 +351,7 @@ First implementation.
       nPorts=2,
       s=sNor,
       redeclare package Medium = MediumB,
-      azi=Buildings.HeatTransfer.Types.Azimuth.N)
+      azi=Buildings.Types.Azimuth.N)
       "Outside boundary using weather data on the North wall"
       annotation (Placement(transformation(extent={{-60,80},{-40,100}})));
     BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
@@ -393,13 +393,13 @@ First implementation.
       nPorts=1,
       s=sEas,
       redeclare package Medium = MediumB,
-      azi=Buildings.HeatTransfer.Types.Azimuth.E)
+      azi=Buildings.Types.Azimuth.E)
       "Outside boundary using weather data on the East wall"
       annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
     Fluid.Sources.Outside_CpLowRise outSou(
       nPorts=2,
       s=sSou,
-      azi=Buildings.HeatTransfer.Types.Azimuth.S,
+      azi=Buildings.Types.Azimuth.S,
       redeclare package Medium = MediumB)
       "Outside boundary using weather data on the South wall"
       annotation (Placement(transformation(extent={{-60,-40},{-40,-20}})));
@@ -407,7 +407,7 @@ First implementation.
       nPorts=2,
       s=sWes,
       redeclare package Medium = MediumB,
-      azi=Buildings.HeatTransfer.Types.Azimuth.W)
+      azi=Buildings.Types.Azimuth.W)
       "Outside boundary using weather data on the West wall"
       annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
 

@@ -37,13 +37,13 @@ model Corridor
     datConBou(
     layers = {intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, ceilingCorridor, groundCorridor},
     A = {hRoo*IntWallOnNBedroomLgth, hRoo*DoorOnNBedroomLgth, hRoo*IntWallOnBathroomLgth, hRoo*DoorOnBathroomLgth, AFlo, AFlo},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Ceiling, Buildings.HeatTransfer.Types.Tilt.Floor},
+    til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false, false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
     A = {hRoo*IntWallOnSBedroomLgth, hRoo*DoorOnSBedroomLgth, hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
-    til = {Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall, Buildings.HeatTransfer.Types.Tilt.Wall},
+    til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6, 0.17, 0.6}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
