@@ -220,6 +220,264 @@ First implementation.
 </html>"));
   end MultiThermalBridge;
 
+  model MultiThermalBridge2
+    "Model of all the thermal bridges in a house with different temperatures for internal bridges"
+    parameter Modelica.SIunits.ThermalConductance gExt[6]
+      "Constant thermal conductance of thermal bridge on outside";
+    parameter Modelica.SIunits.ThermalConductance gWesCei[3]
+      "Constant thermal conductance of thermal bridge on the West ceiling";
+    parameter Modelica.SIunits.ThermalConductance gEasCei[6]
+      "Constant thermal conductance of thermal bridge on the East ceiling";
+    parameter Modelica.SIunits.ThermalConductance gCel[7]
+      "Constant thermal conductance of thermal bridge on the cellar";
+    BoundaryConditions.WeatherData.Bus weaBus "Outer temperature"
+                                              annotation (Placement(
+          transformation(extent={{-110,50},{-70,90}}),  iconTransformation(extent={{-100,60},
+              {-80,80}})));
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_b[22]
+      "Inner temperature boundary condition in each room" annotation (Placement(
+          transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{
+              90,-10},{110,10}})));
+
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriExt[6](G=gExt)
+      "Values of thermal bridges conductance on the outside"
+      annotation (Placement(transformation(extent={{20,60},{40,80}})));
+    Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
+      prescribedTemperature "Outer temperature boundary condition"
+      annotation (Placement(transformation(extent={{-40,60},{-20,80}})));
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TWesCei
+      "Temperature in the West Ceiling"
+      annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TEasCei
+      "Temperature in the East ceiling"
+      annotation (Placement(transformation(extent={{-100,-40},{-80,-20}})));
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TCel
+      "Temperature in the cellar"
+      annotation (Placement(transformation(extent={{-100,-80},{-80,-60}})));
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriWesCei[3](G=
+          gWesCei) "Values of thermal bridges conductance on the East ceiling"
+      annotation (Placement(transformation(extent={{20,20},{40,40}})));
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriEasCei[6](G=
+          gEasCei) "Values of thermal bridges conductance on the East ceiling"
+      annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriCel[7](G=gCel)
+      "Values of thermal bridges conductance on the cellar"
+      annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
+
+  equation
+    connect(theBriCel[1].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[2].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[3].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[4].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[5].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[6].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[7].port_a, TCel) annotation (Line(
+        points={{20,-70},{-90,-70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(weaBus.TDryBul, prescribedTemperature.T) annotation (Line(
+        points={{-90,70},{-42,70}},
+        color={255,204,51},
+        thickness=0.5,
+        smooth=Smooth.None), Text(
+        string="%first",
+        index=-1,
+        extent={{-6,3},{-6,3}}));
+    connect(prescribedTemperature.port, theBriExt[1].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(prescribedTemperature.port, theBriExt[2].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(prescribedTemperature.port, theBriExt[3].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(prescribedTemperature.port, theBriExt[4].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(prescribedTemperature.port, theBriExt[5].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(prescribedTemperature.port, theBriExt[6].port_a) annotation (Line(
+        points={{-20,70},{20,70}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[1].port_a, TWesCei) annotation (Line(
+        points={{20,30},{-90,30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[2].port_a, TWesCei) annotation (Line(
+        points={{20,30},{-90,30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[3].port_a, TWesCei) annotation (Line(
+        points={{20,30},{-90,30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[1].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[2].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[3].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[4].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[5].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[6].port_a,TEasCei)  annotation (Line(
+        points={{20,-30},{-90,-30}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[1].port_b, port_b[1]) annotation (Line(
+        points={{40,70},{68,70},{68,-9.54545},{100,-9.54545}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[2].port_b, port_b[2]) annotation (Line(
+        points={{40,70},{68,70},{68,-8.63636},{100,-8.63636}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[3].port_b, port_b[3]) annotation (Line(
+        points={{40,70},{68,70},{68,-8},{84,-8},{84,-7.72727},{100,-7.72727}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[4].port_b, port_b[4]) annotation (Line(
+        points={{40,70},{68,70},{68,-6.81818},{100,-6.81818}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[5].port_b, port_b[5]) annotation (Line(
+        points={{40,70},{68,70},{68,-5.90909},{100,-5.90909}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriExt[6].port_b, port_b[6]) annotation (Line(
+        points={{40,70},{68,70},{68,-5},{100,-5}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[1].port_b, port_b[7]) annotation (Line(
+        points={{40,30},{68,30},{68,-4.09091},{100,-4.09091}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[2].port_b, port_b[8]) annotation (Line(
+        points={{40,30},{68,30},{68,-3.18182},{100,-3.18182}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriWesCei[3].port_b, port_b[9]) annotation (Line(
+        points={{40,30},{68,30},{68,-2.27273},{100,-2.27273}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[1].port_b, port_b[10]) annotation (Line(
+        points={{40,-30},{68,-30},{68,-1.36364},{100,-1.36364}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[2].port_b, port_b[11]) annotation (Line(
+        points={{40,-30},{68,-30},{68,-0.454545},{100,-0.454545}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[3].port_b, port_b[12]) annotation (Line(
+        points={{40,-30},{68,-30},{68,0.454545},{100,0.454545}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[4].port_b, port_b[13]) annotation (Line(
+        points={{40,-30},{68,-30},{68,1.36364},{100,1.36364}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[5].port_b, port_b[14]) annotation (Line(
+        points={{40,-30},{68,-30},{68,2.27273},{100,2.27273}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriEasCei[6].port_b, port_b[15]) annotation (Line(
+        points={{40,-30},{68,-30},{68,3.18182},{100,3.18182}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[1].port_b, port_b[16]) annotation (Line(
+        points={{40,-70},{68,-70},{68,4.09091},{100,4.09091}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[2].port_b, port_b[17]) annotation (Line(
+        points={{40,-70},{68,-70},{68,5},{100,5}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[3].port_b, port_b[18]) annotation (Line(
+        points={{40,-70},{68,-70},{68,5.90909},{100,5.90909}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[4].port_b, port_b[19]) annotation (Line(
+        points={{40,-70},{68,-70},{68,6.81818},{100,6.81818}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[5].port_b, port_b[20]) annotation (Line(
+        points={{40,-70},{68,-70},{68,7.72727},{100,7.72727}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[6].port_b, port_b[21]) annotation (Line(
+        points={{40,-70},{68,-70},{68,8.63636},{100,8.63636}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    connect(theBriCel[7].port_b, port_b[22]) annotation (Line(
+        points={{40,-70},{68,-70},{68,9.54545},{100,9.54545}},
+        color={191,0,0},
+        smooth=Smooth.None));
+    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+              -100},{100,100}}), graphics), Icon(coordinateSystem(
+            preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics={
+                                 Rectangle(extent={{-100,100},{100,-100}},
+              lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid),
+          Text(
+            extent={{-96,106},{92,138}},
+            lineColor={0,0,255},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            textString="%name")}),
+              defaultComponentName="mulTherBri",
+                Documentation(
+    info="<html>
+  Model for all the thermal bridges in a house. The thermal bridges in each room are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses.ThermalBridge\">
+Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses.ThermalBridge</a>.
+  </html>",
+    revisions="<html>
+<ul>
+<li>
+January 26 2015, by Stephanie Bontemps:<br/>
+First implementation.
+</li>
+</ul>
+</html>"));
+  end MultiThermalBridge2;
+
   model OpenOrClosedDoor
     "Model to choose if the door is open or closed between 2 rooms"
     extends Fluid.Interfaces.PartialFourPortInterface(

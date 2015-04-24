@@ -8,6 +8,8 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     "Length of the wall between kitchen and living room";
   parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between kitchen and living room";
+  parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
+    "Height of the door between kitchen and living room";
   parameter Modelica.SIunits.Length ExtWallWestLgth = 2.61
     "Length of the external wall on the West";
   parameter Modelica.SIunits.Temperature Tini_int
@@ -57,7 +59,7 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth},
+    A = {(hRoo*IntWallOnLivRoomLgth+(hRoo-DoorOnLivRoomHght)*DoorOnLivRoomLgth), DoorOnLivRoomHght*DoorOnLivRoomLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6}),

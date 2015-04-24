@@ -4,16 +4,22 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     "Length of the wall between living room and kitchen";
   parameter Modelica.SIunits.Length DoorOnKitchenLgth = 0.935
     "Length of the door between living room and kitchen";
+  parameter Modelica.SIunits.Length DoorOnKitchenHght = 1.98
+    "Height of the door between living room and kitchen";
   parameter Modelica.SIunits.Length IntWallOnLobbyLgth = 1.315
     "Length of the wall between living room and lobby";
   parameter Modelica.SIunits.Length DoorOnLobbyLgth = 0.935
     "Length of the door between living room and lobby";
+  parameter Modelica.SIunits.Length DoorOnLobbyHght = 1.98
+    "Height of the door between living room and lobby";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 0.30
     "Length of the wall between living room and North bedroom";
   parameter Modelica.SIunits.Length IntWallOnCorridorLgth = 2.055
     "Length of the wall between living room and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between living room and corridor";
+  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+    "Height of the door between living room and corridor";
   parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = 2.89
     "Length of the wall between living room and South bedroom";
   parameter Modelica.SIunits.Area ExtWallSouthUnderWin3Area = 2.7722
@@ -67,7 +73,7 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     sidFin(h = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.16})),
     datConBou(
     layers = {intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, ceilingLivingRoom, groundLivingRoom},
-    A = {hRoo*IntWallOnKitchenLgth, hRoo*DoorOnKitchenLgth, hRoo*IntWallOnLobbyLgth, hRoo*DoorOnLobbyLgth, hRoo*IntWallOnNBedroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnSBedroomLgth, AFlo, AFlo},
+    A = {(hRoo*IntWallOnKitchenLgth+(hRoo-DoorOnKitchenHght)*DoorOnKitchenLgth), DoorOnKitchenHght*DoorOnKitchenLgth, (hRoo*IntWallOnLobbyLgth+(hRoo-DoorOnLobbyHght)*DoorOnLobbyLgth), DoorOnLobbyHght*DoorOnLobbyLgth, hRoo*IntWallOnNBedroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth, hRoo*IntWallOnSBedroomLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false, false, false, false, false, false, false, false},
     each T_a_start=Tini_bou,

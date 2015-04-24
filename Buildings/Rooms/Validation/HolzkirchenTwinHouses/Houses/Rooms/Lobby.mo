@@ -5,12 +5,16 @@ model Lobby
     "Length of the external wall on the North";
   parameter Modelica.SIunits.Length ExtDoorNorthLgth = 1.00
     "Length of the external door on the North";
+  parameter Modelica.SIunits.Length ExtDoorNorthHght = 2.00
+    "Height of the external door on the North";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.61
     "Length of the wall between lobby and North Bedroom";
   parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 1.315
     "Length of the wall between lobby and living room";
   parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between lobby and living room";
+  parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
+    "Height of the door between lobby and living room";
   parameter Modelica.SIunits.Length IntWallOnKitchenLgth = 2.61
     "Length of the wall between lobby and kitchen";
   parameter Modelica.SIunits.Temperature Tini_int
@@ -32,7 +36,7 @@ model Lobby
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     datConExt(
     layers = {extWallSNLobby},
-    A = {hRoo*ExtWallNorthLgth},
+    A = {(hRoo*ExtWallNorthLgth + (hRoo-ExtDoorNorthHght)*ExtDoorNorthLgth)},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -40,7 +44,7 @@ model Lobby
     T_b_start={Tini_int}),
     datConExtWin(
     layers = {extDoorOpaquePartLobby},
-    A = {hRoo*ExtDoorNorthLgth},
+    A = {ExtDoorNorthHght*ExtDoorNorthLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -60,7 +64,7 @@ model Lobby
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnLivRoomLgth, hRoo*DoorOnLivRoomLgth, hRoo*IntWallOnKitchenLgth},
+    A = {(hRoo*IntWallOnLivRoomLgth + (hRoo-DoorOnLivRoomHght)*DoorOnLivRoomLgth), DoorOnLivRoomHght*DoorOnLivRoomLgth, hRoo*IntWallOnKitchenLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6, 0.17}),

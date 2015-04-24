@@ -7,7 +7,6 @@ package Data
     "Glazing system constructions commonly found in Holzkirchen twin houses"
     extends Modelica.Icons.MaterialPropertiesPackage;
 
-
     record ExtGlass "Interpane Clear float 4 mm"
       extends HeatTransfer.Data.Glasses.Generic(
         x=0.004,

@@ -1,5 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses;
-model N2HouseModel2 "Model of the N2 Twin House"
+model N2HouseModel2 "Model of the N2 Twin House without infiltrations"
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
   parameter Modelica.SIunits.Angle lat=47.874 "Latitude";
@@ -506,9 +506,9 @@ equation
           -177.65}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(port_a[3], livingRoom.surf_conBou[1]) annotation (Line(
+  connect(port_a[3], livingRoom.surf_conBou[10]) annotation (Line(
       points={{-190,296.667},{-180,296.667},{-180,-200},{14,-200},{14,-190},{13,
-          -190},{13,-178.45}},
+          -190},{13,-177.55}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(bathroom.weaBus, weaBus) annotation (Line(

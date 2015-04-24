@@ -10,6 +10,8 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     "Length of the wall between bathroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between bathroom and corridor";
+  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+    "Height of the door between bathroom and corridor";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
   parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
@@ -49,7 +51,7 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnSBedroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth},
+    A = {hRoo*IntWallOnSBedroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6}),

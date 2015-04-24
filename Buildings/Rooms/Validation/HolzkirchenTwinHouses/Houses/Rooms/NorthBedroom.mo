@@ -11,6 +11,8 @@ model NorthBedroom
     "Length of the wall between North bedroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between North bedroom and corridor";
+  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+    "Height of the door between North bedroom and corridor";
   parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 0.30
     "Length of the wall between North bedroom and living room";
   parameter Modelica.SIunits.Length IntWallOnLobbyLgth = 2.61
@@ -62,7 +64,7 @@ model NorthBedroom
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnBathroomLgth, hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnLivRoomLgth, hRoo*IntWallOnLobbyLgth},
+    A = {hRoo*IntWallOnBathroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth, hRoo*IntWallOnLivRoomLgth, hRoo*IntWallOnLobbyLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6, 0.17, 0.17}),

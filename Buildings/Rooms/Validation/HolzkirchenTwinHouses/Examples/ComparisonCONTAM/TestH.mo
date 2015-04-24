@@ -41,7 +41,7 @@ model TestH "Test H carried on Dymola and CONTAM"
 
 equation
   connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-      points={{20,70},{38.75,70},{38.75,38.75}},
+      points={{20,70},{32.2222,70},{32.2222,34.4444}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

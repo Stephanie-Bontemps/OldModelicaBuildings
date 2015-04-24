@@ -3,10 +3,10 @@ model N2HouseModel "Model of the N2 Twin House"
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
   parameter String NomFichierBouVenHeaCoo = "NoName"
-    "File where ceiling and floor boundary conditions are stored with ventilation flow rates and temperatures, heating and cooling power, temperatures set points for heating and cooling, internal gains"
+    "File where ceiling and floor boundary conditions are stored with ventilation flow rates and temperatures, internal gains, heating and cooling power, temperatures set points for heating and cooling"
                                                                                                         annotation (Dialog(
         __Dymola_loadSelector(caption=
-            "Select file with ceiling and floor boundary conditions, ventilation flow rates and temperatures, heating and cooling power, temperatures set points for heating and cooling, internal gains")));
+            "Select file with ceiling and floor boundary conditions, ventilation flow rates and temperatures, internal gains, heating and cooling power, temperatures set points for heating and cooling")));
   parameter String NomFichierBlinds = "NoName"
     "File where the scenario of blinds position is stored"                                           annotation (Dialog(
         __Dymola_loadSelector(caption=
@@ -233,24 +233,24 @@ parameter Modelica.SIunits.Temperature Tini_int
 
   Modelica.Blocks.Sources.CombiTimeTable bouVenHeaCoo(
     final tableOnFile=true,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     final tableName="BouVenHeaCoo",
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         NomFichierBouVenHeaCoo),
-    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
-    extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     columns=2:31)
-    "Boundary conditions for ceiling (1 for East, 2 for West) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); heating or cooling power for the different rooms (8: kitchen, 9: lobby, 10: North bedroom, 11: corridor, 12: bathroom, 13: South bedroom, 14: living room); heating temperature set point for the different rooms (15: kitchen, 16: lobby, 17: North bedroom, 18: corridor, 19: bathroom, 20: South bedroom, 21: living room); cooling temperature set point for the different rooms (22: kitchen, 23: lobby, 24: North bedroom, 25: corridor, 26: bathroom, 27: South bedroom, 28: living room); internal gains in the kitchen (29)"
+    "Boundary conditions for ceiling (1 for East, 2 for West) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); Heating or cooling power for the different rooms (8: kitchen, 9: lobby, 10: North bedroom, 11: corridor, 12: bathroom, 13: South bedroom, 14: living room); heating temperature set point for the different rooms (15: kitchen, 16: lobby, 17: North bedroom, 18: corridor, 19: bathroom, 20: South bedroom, 21: living room); cooling temperature set point for the different rooms (22: kitchen, 23: lobby, 24: North bedroom, 25: corridor, 26: bathroom, 27: South bedroom, 28: living room); internal gains in the kitchen (29); scenario type (30)"
     annotation (Placement(transformation(extent={{-340,280},{-320,300}})));
 
   BaseClasses.MultiThermalBridge mulTherBri(
     gKit=4.860,
     gLob=4.130,
+    gNorBed=5.976,
     gCor=2.469,
     gBat=3.313,
-    gLivRoo=10.579,
-    gNorBed=5.976,
-    gSouBed=5.752)
+    gSouBed=5.752,
+    gLivRoo=10.579)
     annotation (Placement(transformation(extent={{-320,20},{-300,40}})));
   Fluid.Sources.MassFlowSource_T venLivRoo(
     redeclare package Medium = MediumA,
@@ -315,10 +315,10 @@ parameter Modelica.SIunits.Temperature Tini_int
     kLatGai=kLatGaiSouBed)
     annotation (Placement(transformation(extent={{140,-226},{160,-206}})));
   BaseClasses.InternalGains intGaiKit(
-    yConGai=false,
     kRadGai=kRadGaiKit,
     kConGai=kConGaiKit,
-    kLatGai=kLatGaiKit)
+    kLatGai=kLatGaiKit,
+    yConGai=false)
     annotation (Placement(transformation(extent={{-78,280},{-58,300}})));
   Modelica.Blocks.Math.Division divOutVen
     "Extraction volume distributed equally to both exhaust ducts"
@@ -528,9 +528,9 @@ equation
           -7,-177.65}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(port_a[3], livingRoom.surf_conBou[1]) annotation (Line(
+  connect(port_a[3], livingRoom.surf_conBou[10]) annotation (Line(
       points={{-210,296.667},{-200,296.667},{-200,-200},{-6,-200},{-6,-190},{-7,
-          -190},{-7,-178.45}},
+          -190},{-7,-177.55}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(bathroom.weaBus, weaBus) annotation (Line(
@@ -583,7 +583,7 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}}));
   connect(weaBus,mulTherBri. weaBus) annotation (Line(
-      points={{290,310},{-340,310},{-340,30},{-319,30}},
+      points={{290,310},{-360,310},{-360,30},{-319,30}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -591,7 +591,7 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}}));
   connect(weaBus, MulAirLea.weaBus) annotation (Line(
-      points={{290,310},{-340,310},{-340,-30},{-319,-30}},
+      points={{290,310},{-360,310},{-360,-30},{-319,-30}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -1032,10 +1032,10 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[29], intGaiKit.tabConGai) annotation (Line(
-      points={{-319,290},{-316,290},{-316,288},{-312,288},{-312,272},{-100,272},
-          {-100,290},{-79,290}},
+      points={{-319,290},{-300,290},{-300,272},{-100,272},{-100,290},{-79,290}},
       color={0,0,127},
       smooth=Smooth.None));
+
   connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[1]) annotation (Line(
       points={{-319,290},{-312,290},{-312,88.7755},{-301.429,88.7755}},
       color={0,0,127},
@@ -1151,9 +1151,9 @@ equation
       smooth=Smooth.None));
   connect(livingRoom.heaPorRad, Trad[7]) annotation (Line(
       points={{-10.5,-171.9},{164.75,-171.9},{164.75,-171.429},{350,-171.429}},
-
       color={191,0,0},
       smooth=Smooth.None));
+
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-360,
             -360},{360,360}}), graphics), Icon(coordinateSystem(
           preserveAspectRatio=false, extent={{-360,-360},{360,360}}), graphics={Text(

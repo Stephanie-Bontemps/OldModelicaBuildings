@@ -5,6 +5,8 @@ model SouthBedroom
     "Length of the wall between South bedroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between South bedroom and corridor";
+  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+    "Height of the door between South bedroom and corridor";
   parameter Modelica.SIunits.Length IntWallOnBathroomLgth = 2.07
     "Length of the wall between South bedroom and bathroom";
   parameter Modelica.SIunits.Length ExtWallEastLgth = 2.89
@@ -54,7 +56,7 @@ model SouthBedroom
     sidFin(h = {0}, gap = {0}, dep = {0.16})),
     datConBou(
     layers = {intWall2SBedroom, intDoorOpaquePartSBedroom, intWall2SBedroom, intWall2SBedroom, ceilingSBedroom, groundSBedroom},
-    A = {hRoo*IntWallOnCorridorLgth, hRoo*DoorOnCorridorLgth, hRoo*IntWallOnBathroomLgth, AFlo, AFlo},
+    A = {(hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth, hRoo*IntWallOnBathroomLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false, false, false},
     each T_a_start=Tini_bou,
