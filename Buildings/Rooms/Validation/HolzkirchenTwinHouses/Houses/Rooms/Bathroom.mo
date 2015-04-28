@@ -1,7 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.07
     "Length of the wall between bathroom and North bedroom";
   parameter Modelica.SIunits.Length ExtWallEastLgth = 2.99
@@ -22,8 +20,6 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo=IntWallOnNBedroomLgth*ExtWallEastLgth,
     nConExt=0,
     nConExtWin=1,

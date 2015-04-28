@@ -2,6 +2,8 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses;
 model N2HouseModel "Model of the N2 Twin House"
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
+  parameter Modelica.SIunits.Angle lat = 47.874 "Latitude";
+  parameter Modelica.SIunits.Length hRoo = 2.495 "Height under ceiling";
   parameter String NomFichierBouVenHeaCoo = "NoName"
     "File where ceiling and floor boundary conditions are stored with ventilation flow rates and temperatures, internal gains, heating and cooling power, temperatures set points for heating and cooling"
                                                                                                         annotation (Dialog(
@@ -96,7 +98,7 @@ model N2HouseModel "Model of the N2 Twin House"
   parameter Real kDooOpeCorLiv
     "Constant output value to choose if the door is always open or closed between corridor and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
                                                                                                         annotation (Dialog(group="Open or closed door schedule"));
-parameter Modelica.SIunits.Temperature Tini_int
+  parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
   parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou
@@ -107,110 +109,68 @@ parameter Modelica.SIunits.Temperature Tini_int
     "Formulation of mass balance";
 
   Rooms.LivingRoom livingRoom(redeclare package Medium = MediumA, nPorts=9,
-    IntWallOnKitchenLgth=1.915,
-    DoorOnKitchenLgth=0.935,
-    IntWallOnLobbyLgth=1.315,
-    DoorOnLobbyLgth=0.935,
-    IntWallOnNBedroomLgth=0.30,
-    IntWallOnCorridorLgth=2.055,
-    DoorOnCorridorLgth=0.935,
-    IntWallOnSBedroomLgth=2.89,
-    ExtWallSouthWestLgth=4.67,
-    ExtWallNorthWestLgth=1.79,
-    ExtWallSouthUnderWin3Area=2.7722,
-    ExtWallSouthWin3Area=7.53215,
-    ExtWallSouthWin2Area=2.76945,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{-20,-180},{0,-160}})));
+
   Rooms.SouthBedroom southBedroom(redeclare package Medium = MediumA, nPorts=4,
-    IntWallOnCorridorLgth=0.685,
-    DoorOnCorridorLgth=0.935,
-    IntWallOnBathroomLgth=2.07,
-    ExtWallEastLgth=2.89,
-    ExtWallSouthLgth=3.83,
-    IntWallOnLivRoomLgth=2.89,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{180,-282},{200,-262}})));
   Rooms.NorthBedroom northBedroom(redeclare package Medium = MediumA, nPorts=3,
-    ExtWallNorthLgth=3.83,
-    ExtWallEastLgth=3.18,
-    IntWallOnBathroomLgth=2.07,
-    IntWallOnCorridorLgth=0.685,
-    DoorOnCorridorLgth=0.935,
-    IntWallOnLivRoomLgth=0.30,
-    IntWallOnLobbyLgth=2.61,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{260,120},{280,140}})));
   Rooms.Corridor corridor(redeclare package Medium = MediumA, nPorts=8,
-    IntWallOnNBedroomLgth=0.685,
-    DoorOnNBedroomLgth=0.935,
-    IntWallOnBathroomLgth=2.055,
-    DoorOnBathroomLgth=0.935,
-    IntWallOnSBedroomLgth=0.685,
-    DoorOnSBedroomLgth=0.935,
-    IntWallOnLivRoomLgth=2.055,
-    DoorOnLivRoomLgth=0.935,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{40,20},{60,40}})));
   Rooms.Bathroom bathroom(redeclare package Medium = MediumA, nPorts=4,
-    IntWallOnNBedroomLgth=2.07,
-    ExtWallEastLgth=2.99,
-    IntWallOnSBedroomLgth=2.07,
-    IntWallOnCorridorLgth=2.055,
-    DoorOnCorridorLgth=0.935,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{220,-62},{240,-42}})));
   Rooms.Kitchen kitchen(redeclare package Medium = MediumA, nPorts=3,
-    ExtWallNorthLgth=2.85,
-    IntWallOnLobbyLgth=2.61,
-    IntWallOnLivRoomLgth=1.915,
-    DoorOnLivRoomLgth=0.935,
-    ExtWallWestLgth=2.61,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat(displayUnit="deg") = lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{-40,240},{-20,260}})));
   Rooms.Lobby lobby(redeclare package Medium = MediumA, nPorts=3,
-    ExtWallNorthLgth=1.25,
-    ExtDoorNorthLgth=1.00,
-    IntWallOnNBedroomLgth=2.61,
-    IntWallOnLivRoomLgth=1.315,
-    DoorOnLivRoomLgth=0.935,
-    IntWallOnKitchenLgth=2.61,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
     energyDynamics=energyDynamics,
     massDynamics=massDynamics,
-    lat=lat)
+    lat=lat,
+    hRoo=hRoo)
     annotation (Placement(transformation(extent={{100,180},{120,200}})));
   BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
         transformation(extent={{280,300},{300,320}}),
@@ -358,7 +318,6 @@ parameter Modelica.SIunits.Temperature Tini_int
   BaseClasses.MultiHeatingCoolingSchedule mulHeaCooSch(kHea=kHea, kCoo=kCoo)
     annotation (Placement(transformation(extent={{-300,80},{-280,100}})));
 
-  parameter Modelica.SIunits.Angle lat=47.874 "Latitude";
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b Tair[7]
     "Air temperature in the different rooms"
     annotation (Placement(transformation(extent={{340,170},{360,190}})));

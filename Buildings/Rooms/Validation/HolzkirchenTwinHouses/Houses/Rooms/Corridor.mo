@@ -1,8 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Corridor
   "Model of the Corridor (Flur - Centre of house) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 0.685
     "Length of the wall between corridor and North bedroom";
   parameter Modelica.SIunits.Length DoorOnNBedroomLgth = 0.935
@@ -34,8 +32,6 @@ model Corridor
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo=(IntWallOnNBedroomLgth + DoorOnNBedroomLgth) * (IntWallOnBathroomLgth + DoorOnBathroomLgth),
     nConExt=0,
     nConExtWin=0,

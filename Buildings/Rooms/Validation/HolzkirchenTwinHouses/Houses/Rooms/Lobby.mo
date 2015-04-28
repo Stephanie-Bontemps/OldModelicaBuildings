@@ -1,8 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Lobby
   "Model of the Lobby (Flur on North side of building) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length ExtWallNorthLgth = 1.255
     "Length of the external wall on the North";
   parameter Modelica.SIunits.Length ExtDoorNorthLgth = 0.995
@@ -26,8 +24,6 @@ model Lobby
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo=(ExtWallNorthLgth + ExtDoorNorthLgth) * IntWallOnNBedroomLgth,
     nConExt=1,
     nConExtWin=1,

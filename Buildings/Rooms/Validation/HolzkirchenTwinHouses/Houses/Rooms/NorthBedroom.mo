@@ -1,8 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model NorthBedroom
   "Model of the North Bedroom (Schladen - referred as bedroom) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length ExtWallNorthLgth = 3.83
     "Length of the external wall on the North";
   parameter Modelica.SIunits.Length ExtWallEastLgth = 3.18
@@ -26,8 +24,6 @@ model NorthBedroom
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo = ExtWallNorthLgth * ExtWallEastLgth,
     nConExt=1,
     nConExtWin=1,

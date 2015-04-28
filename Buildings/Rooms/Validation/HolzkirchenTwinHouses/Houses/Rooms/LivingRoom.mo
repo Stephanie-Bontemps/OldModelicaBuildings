@@ -1,7 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnKitchenLgth = 1.915
     "Length of the wall between living room and kitchen";
   parameter Modelica.SIunits.Length DoorOnKitchenLgth = 0.935
@@ -30,7 +28,7 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     "Area of the external wall on the South with window 3 but without the wall under";
   parameter Modelica.SIunits.Area ExtWallSouthWin2Area = 2.76945
     "Area of the external wall on the South with window 2";
-  parameter Modelica.SIunits.Length ExtWallSouthLgth = (ExtWallSouthUnderWin3Area + ExtWallSouthWin3Area + ExtWallSouthWin2Area)/heiRoo
+  parameter Modelica.SIunits.Length ExtWallSouthLgth = (ExtWallSouthUnderWin3Area + ExtWallSouthWin3Area + ExtWallSouthWin2Area)/hRoo
     "Length of the external wall on the South";
   parameter Modelica.SIunits.Length ExtWallSouthWestLgth = 4.67
     "Length of the external wall on the South West";
@@ -43,8 +41,6 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo=ExtWallSouthLgth*(ExtWallSouthWestLgth+ExtWallNorthWestLgth),
     nConExt=2,
     nConExtWin=3,

@@ -1,7 +1,5 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length ExtWallNorthLgth = 2.85
     "Length of the external wall on the North";
   parameter Modelica.SIunits.Length ExtWallWestLgth = 2.61
@@ -21,8 +19,6 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=latitude,
-    hRoo=heiRoo,
     AFlo=ExtWallNorthLgth*ExtWallWestLgth,
     nConExt=1,
     nConExtWin=1,
