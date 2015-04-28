@@ -1,6 +1,8 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Corridor
   "Model of the Corridor (Flur - Centre of house) in Holzkirchen Twin Houses"
+  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
+  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 0.685
     "Length of the wall between corridor and North bedroom";
   parameter Modelica.SIunits.Length DoorOnNBedroomLgth = 0.935
@@ -9,21 +11,21 @@ model Corridor
     "Height of the door between corridor and North bedroom";
   parameter Modelica.SIunits.Length IntWallOnBathroomLgth = 2.055
     "Length of the wall between corridor and bathroom";
-  parameter Modelica.SIunits.Length DoorOnBathroomLgth = 0.935
+  parameter Modelica.SIunits.Length DoorOnBathroomLgth = DoorOnNBedroomLgth
     "Length of the door between corridor and bathroom";
-  parameter Modelica.SIunits.Length DoorOnBathroomHght = 1.98
+  parameter Modelica.SIunits.Length DoorOnBathroomHght = DoorOnNBedroomHght
     "Height of the door between corridor and bathroom";
-  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = 0.685
+  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = IntWallOnNBedroomLgth
     "Length of the wall between corridor and South bedroom";
-  parameter Modelica.SIunits.Length DoorOnSBedroomLgth = 0.935
+  parameter Modelica.SIunits.Length DoorOnSBedroomLgth = DoorOnNBedroomLgth
     "Length of the door between corridor and South bedroom";
-  parameter Modelica.SIunits.Length DoorOnSBedroomHght = 1.98
+  parameter Modelica.SIunits.Length DoorOnSBedroomHght = DoorOnNBedroomHght
     "Height of the door between corridor and South bedroom";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 2.055
+  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = IntWallOnBathroomLgth
     "Length of the wall between corridor and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
+  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = DoorOnNBedroomLgth
     "Length of the door between corridor and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
+  parameter Modelica.SIunits.Length DoorOnLivRoomHght = DoorOnNBedroomHght
     "Height of the door between corridor and living room";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -32,9 +34,9 @@ model Corridor
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=47.874,
-    hRoo=2.495,
-    AFlo=4.8438,
+    lat=latitude,
+    hRoo=heiRoo,
+    AFlo=(IntWallOnNBedroomLgth + DoorOnNBedroomLgth) * (IntWallOnBathroomLgth + DoorOnBathroomLgth),
     nConExt=0,
     nConExtWin=0,
     nConPar=0,

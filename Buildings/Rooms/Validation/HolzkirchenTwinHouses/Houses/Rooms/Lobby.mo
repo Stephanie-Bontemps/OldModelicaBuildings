@@ -1,21 +1,23 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Lobby
   "Model of the Lobby (Flur on North side of building) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length ExtWallNorthLgth = 1.25
+  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
+  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
+  parameter Modelica.SIunits.Length ExtWallNorthLgth = 1.255
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length ExtDoorNorthLgth = 1.00
+  parameter Modelica.SIunits.Length ExtDoorNorthLgth = 0.995
     "Length of the external door on the North";
-  parameter Modelica.SIunits.Length ExtDoorNorthHght = 2.00
+  parameter Modelica.SIunits.Length ExtDoorNorthHght = 2.025
     "Height of the external door on the North";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.61
     "Length of the wall between lobby and North Bedroom";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 1.315
-    "Length of the wall between lobby and living room";
   parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
     "Length of the door between lobby and living room";
   parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
     "Height of the door between lobby and living room";
-  parameter Modelica.SIunits.Length IntWallOnKitchenLgth = 2.61
+  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = (ExtWallNorthLgth + ExtDoorNorthLgth) - DoorOnLivRoomLgth
+    "Length of the wall between lobby and living room";
+  parameter Modelica.SIunits.Length IntWallOnKitchenLgth = IntWallOnNBedroomLgth
     "Length of the wall between lobby and kitchen";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -24,9 +26,9 @@ model Lobby
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=47.874,
-    hRoo=2.495,
-    AFlo=5.8725,
+    lat=latitude,
+    hRoo=heiRoo,
+    AFlo=(ExtWallNorthLgth + ExtDoorNorthLgth) * IntWallOnNBedroomLgth,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -52,8 +54,8 @@ model Lobby
     hWin = {0.535},
     wWin = {0.595},
     fFra = {0.01},
-    ove(wL = {0.20}, wR = {0.20}, gap = {0.20}, dep = {0.16}),
-    sidFin(h = {0.20}, gap = {0.20}, dep = {0.16}),
+    ove(wL = {0.20}, wR = {0.20}, gap = {0.20}, dep = {0.37}),
+    sidFin(h = {0.20}, gap = {0.20}, dep = {0.37}),
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConBou(

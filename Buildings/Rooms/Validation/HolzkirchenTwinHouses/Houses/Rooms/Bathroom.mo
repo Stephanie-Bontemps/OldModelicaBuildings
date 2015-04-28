@@ -1,17 +1,20 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
+  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
+  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.07
     "Length of the wall between bathroom and North bedroom";
   parameter Modelica.SIunits.Length ExtWallEastLgth = 2.99
     "Length of the external wall on the East";
-  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = 2.07
+  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = IntWallOnNBedroomLgth
     "Length of the wall between bathroom and South bedroom";
-  parameter Modelica.SIunits.Length IntWallOnCorridorLgth = 2.055
-    "Length of the wall between bathroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
     "Length of the door between bathroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
     "Height of the door between bathroom and corridor";
+  parameter Modelica.SIunits.Length IntWallOnCorridorLgth = ExtWallEastLgth - DoorOnCorridorLgth
+    "Length of the wall between bathroom and corridor";
+
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
   parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
@@ -19,9 +22,9 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=47.874,
-    hRoo=2.495,
-    AFlo=6.1893,
+    lat=latitude,
+    hRoo=heiRoo,
+    AFlo=IntWallOnNBedroomLgth*ExtWallEastLgth,
     nConExt=0,
     nConExtWin=1,
     nConPar=0,

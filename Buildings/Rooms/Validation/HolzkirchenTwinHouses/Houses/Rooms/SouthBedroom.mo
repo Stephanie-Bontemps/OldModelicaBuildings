@@ -1,6 +1,8 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model SouthBedroom
   "Model of the South Bedroom (Schlafen - also referred as children's bedroom) in Holzkirchen Twin Houses"
+  parameter Modelica.SIunits.Angle latitude = 47.874 "Latitude";
+  parameter Modelica.SIunits.Length heiRoo = 2.495 "Height under ceiling";
   parameter Modelica.SIunits.Length IntWallOnCorridorLgth = 0.685
     "Length of the wall between South bedroom and corridor";
   parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
@@ -13,7 +15,7 @@ model SouthBedroom
     "Length of the external wall on the East";
   parameter Modelica.SIunits.Length ExtWallSouthLgth = 3.83
     "Length of the external wall on the South";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 2.89
+  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = ExtWallEastLgth
     "Length of the wall between South bedroom and living room";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -22,9 +24,9 @@ model SouthBedroom
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    lat=47.874,
-    hRoo=2.495,
-    AFlo=11.0687,
+    lat=latitude,
+    hRoo=heiRoo,
+    AFlo=ExtWallEastLgth*ExtWallSouthLgth,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
