@@ -459,18 +459,20 @@ package Experiment1
       Tini_bou=303.15)
       annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
     BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
       winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
       winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
       HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.HorizontalRadiation,
       HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
+      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.TemperaturesAndSkyCover,
+
+      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
+      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
+      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
+      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
+      TBlaSkySou=Buildings.BoundaryConditions.Types.DataSource.File,
+      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
       annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
 

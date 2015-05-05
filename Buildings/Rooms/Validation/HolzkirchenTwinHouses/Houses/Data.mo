@@ -90,7 +90,8 @@ First implementation.
       gas = {ArgonAirGap()},
       glass = {ExtGlass(), IntGlass()},
       UFra=1.0,
-      haveExteriorShade=false);
+      haveExteriorShade=false,
+        absSolFra=0.4);
 
       annotation (
     defaultComponentName="datGlaSys",
@@ -434,7 +435,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -458,7 +460,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -481,7 +484,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -504,7 +508,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -527,7 +532,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -548,7 +554,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
@@ -569,7 +576,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
-          absSol_b=0.17);
+          absSol_b=0.17,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(revisions="<html>
 <ul>

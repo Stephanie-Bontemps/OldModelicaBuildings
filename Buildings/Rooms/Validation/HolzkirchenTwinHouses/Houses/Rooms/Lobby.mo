@@ -32,6 +32,8 @@ model Lobby
     nSurBou=3,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    bouConExt(HDifTil(each rho = 0.23)),
+    bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNLobby},
     A = {(hRoo*ExtWallNorthLgth + (hRoo-ExtDoorNorthHght)*ExtDoorNorthLgth)},

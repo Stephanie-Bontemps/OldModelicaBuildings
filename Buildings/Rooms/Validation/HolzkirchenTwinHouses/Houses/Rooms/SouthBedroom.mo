@@ -30,6 +30,8 @@ model SouthBedroom
     nSurBou=1,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    bouConExt(HDifTil(each rho = 0.23)),
+    bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallESBedroom},
     A = {hRoo*ExtWallEastLgth},

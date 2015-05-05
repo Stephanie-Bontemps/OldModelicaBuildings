@@ -27,6 +27,8 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     nSurBou=2,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    bouConExt(HDifTil(each rho = 0.23)),
+    bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNKitchen},
     A = {hRoo*ExtWallNorthLgth},

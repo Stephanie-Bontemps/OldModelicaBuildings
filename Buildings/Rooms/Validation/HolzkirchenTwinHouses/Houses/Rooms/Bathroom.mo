@@ -28,6 +28,8 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     nSurBou=3,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    bouConExt(HDifTil(each rho = 0.23)),
+    bouConExtWin(HDifTil(each rho = 0.23)),
     datConExtWin(
     layers = {extWallEBathroom},
     A = {hRoo*ExtWallEastLgth},

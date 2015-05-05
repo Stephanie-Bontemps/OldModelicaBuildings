@@ -49,6 +49,8 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     nSurBou=0,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    bouConExt(HDifTil(each rho = 0.23)),
+    bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNUnderWindow3_1, extWallWSLivingRoom},
     A = {ExtWallSouthWin3Area, hRoo*ExtWallSouthWestLgth},
@@ -69,8 +71,8 @@ model LivingRoom "Model of the Living Room (Wohnen) in Holzkirchen Twin Houses"
     hWin = {1.54, 2.37, 1.54},
     wWin = {3.34, 1.11, 1.23},
     fFra = {0.2004, 0.3004, 0.3175},
-    ove(wL = {0, 0, 0}, wR = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.16}),
-    sidFin(h = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.16})),
+    ove(wL = {0, 0, 0}, wR = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.12}),
+    sidFin(h = {0, 0, 0}, gap = {0, 0, 0}, dep = {0.16, 0.16, 0.12})),
     datConBou(
     layers = {intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, ceilingLivingRoom, groundLivingRoom},
     A = {(hRoo*IntWallOnKitchenLgth+(hRoo-DoorOnKitchenHght)*DoorOnKitchenLgth), DoorOnKitchenHght*DoorOnKitchenLgth, (hRoo*IntWallOnLobbyLgth+(hRoo-DoorOnLobbyHght)*DoorOnLobbyLgth), DoorOnLobbyHght*DoorOnLobbyLgth, hRoo*IntWallOnNBedroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth, hRoo*IntWallOnSBedroomLgth, AFlo, AFlo},
