@@ -1,29 +1,29 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Corridor
   "Model of the Corridor (Flur - Centre of house) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 0.685
+  parameter Modelica.SIunits.Length intWallOnNBedroomLgth = 0.685
     "Length of the wall between corridor and North bedroom";
-  parameter Modelica.SIunits.Length DoorOnNBedroomLgth = 0.935
+  parameter Modelica.SIunits.Length doorOnNBedroomLgth = 0.935
     "Length of the door between corridor and North bedroom";
-  parameter Modelica.SIunits.Length DoorOnNBedroomHght = 1.98
+  parameter Modelica.SIunits.Length doorOnNBedroomHght = 1.98
     "Height of the door between corridor and North bedroom";
-  parameter Modelica.SIunits.Length IntWallOnBathroomLgth = 2.055
+  parameter Modelica.SIunits.Length intWallOnBathroomLgth = 2.055
     "Length of the wall between corridor and bathroom";
-  parameter Modelica.SIunits.Length DoorOnBathroomLgth = DoorOnNBedroomLgth
+  parameter Modelica.SIunits.Length doorOnBathroomLgth = doorOnNBedroomLgth
     "Length of the door between corridor and bathroom";
-  parameter Modelica.SIunits.Length DoorOnBathroomHght = DoorOnNBedroomHght
+  parameter Modelica.SIunits.Length doorOnBathroomHght = doorOnNBedroomHght
     "Height of the door between corridor and bathroom";
-  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = IntWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length intWallOnSBedroomLgth = intWallOnNBedroomLgth
     "Length of the wall between corridor and South bedroom";
-  parameter Modelica.SIunits.Length DoorOnSBedroomLgth = DoorOnNBedroomLgth
+  parameter Modelica.SIunits.Length doorOnSBedroomLgth = doorOnNBedroomLgth
     "Length of the door between corridor and South bedroom";
-  parameter Modelica.SIunits.Length DoorOnSBedroomHght = DoorOnNBedroomHght
+  parameter Modelica.SIunits.Length doorOnSBedroomHght = doorOnNBedroomHght
     "Height of the door between corridor and South bedroom";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = IntWallOnBathroomLgth
+  parameter Modelica.SIunits.Length intWallOnLivRoomLgth = intWallOnBathroomLgth
     "Length of the wall between corridor and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = DoorOnNBedroomLgth
+  parameter Modelica.SIunits.Length doorOnLivRoomLgth = doorOnNBedroomLgth
     "Length of the door between corridor and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomHght = DoorOnNBedroomHght
+  parameter Modelica.SIunits.Length doorOnLivRoomHght = doorOnNBedroomHght
     "Height of the door between corridor and living room";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -32,7 +32,7 @@ model Corridor
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    AFlo=(IntWallOnNBedroomLgth + DoorOnNBedroomLgth) * (IntWallOnBathroomLgth + DoorOnBathroomLgth),
+    AFlo=(intWallOnNBedroomLgth + doorOnNBedroomLgth) * (intWallOnBathroomLgth + doorOnBathroomLgth),
     nConExt=0,
     nConExtWin=0,
     nConPar=0,
@@ -42,13 +42,13 @@ model Corridor
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     datConBou(
     layers = {intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, ceilingCorridor, groundCorridor},
-    A = {(hRoo*IntWallOnNBedroomLgth+(hRoo-DoorOnNBedroomHght)*DoorOnNBedroomLgth), DoorOnNBedroomHght*DoorOnNBedroomLgth, (hRoo*IntWallOnBathroomLgth+(hRoo-DoorOnBathroomHght)*DoorOnBathroomLgth), DoorOnBathroomHght*DoorOnBathroomLgth, AFlo, AFlo},
+    A = {(hRoo*intWallOnNBedroomLgth+(hRoo-doorOnNBedroomHght)*doorOnNBedroomLgth), doorOnNBedroomHght*doorOnNBedroomLgth, (hRoo*intWallOnBathroomLgth+(hRoo-doorOnBathroomHght)*doorOnBathroomLgth), doorOnBathroomHght*doorOnBathroomLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false, false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {(hRoo*IntWallOnSBedroomLgth+(hRoo-DoorOnSBedroomHght)*DoorOnSBedroomLgth), DoorOnSBedroomHght*DoorOnSBedroomLgth, (hRoo*IntWallOnLivRoomLgth+(hRoo-DoorOnLivRoomHght)*DoorOnLivRoomLgth), DoorOnLivRoomHght*DoorOnLivRoomLgth},
+    A = {(hRoo*intWallOnSBedroomLgth+(hRoo-doorOnSBedroomHght)*doorOnSBedroomLgth), doorOnSBedroomHght*doorOnSBedroomLgth, (hRoo*intWallOnLivRoomLgth+(hRoo-doorOnLivRoomHght)*doorOnLivRoomLgth), doorOnLivRoomHght*doorOnLivRoomLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6, 0.17, 0.6}),

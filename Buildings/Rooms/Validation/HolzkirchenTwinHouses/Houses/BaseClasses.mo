@@ -3,14 +3,15 @@ package BaseClasses
   "Package with base classes for Buildings.Rooms.Validation.HolzkirchenTwinHouses"
 extends Modelica.Icons.BasesPackage;
   model ThermalBridge "Thermal bridge description using a conduction model"
-
+    parameter Modelica.SIunits.ThermalConductance g
+      "Constant thermal conductance of thermal bridge";
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor(G=g)
       "Value of global thermal bridges conductance"
              annotation (Placement(transformation(extent={{20,-10},{40,10}})));
     Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
       prescribedTemperature "Outer temperature boundary condition"
       annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_b1
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_b
       "Inner temperature boundary condition"                    annotation (
         Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(
             extent={{90,-10},{110,10}})));
@@ -18,10 +19,9 @@ extends Modelica.Icons.BasesPackage;
       "Outer temperature"
       annotation (Placement(transformation(extent={{-100,-10},{-80,10}}),
           iconTransformation(extent={{-100,-10},{-80,10}})));
-    parameter Modelica.SIunits.ThermalConductance g
-      "Constant thermal conductance of thermal bridge";
+
   equation
-    connect(thermalConductor.port_b,port_b1)  annotation (Line(
+    connect(thermalConductor.port_b,port_b)  annotation (Line(
         points={{40,0},{100,0}},
         color={191,0,0},
         smooth=Smooth.None));
@@ -48,7 +48,27 @@ extends Modelica.Icons.BasesPackage;
             lineColor={0,0,255},
             fillColor={255,255,255},
             fillPattern=FillPattern.Solid,
-            textString="%name")}), defaultComponentName="theBri",
+            textString="%name"),
+          Bitmap(extent={{-80,98},{80,-98}}, fileName=
+                "modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/ThermalBridge.PNG"),
+          Text(
+            extent={{-104,20},{-58,8}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="weather"),
+          Text(
+            extent={{-34,46},{60,34}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="g=%g"),
+          Text(
+            extent={{76,24},{122,12}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="Tint")}),  defaultComponentName="theBri",
                 Documentation(
     info="<html>
   Model for thermal bridges in a room considering a conduction model where the thermal element transportes heat without storing it.
@@ -64,7 +84,20 @@ First implementation.
   end ThermalBridge;
 
   model MultiThermalBridge "Model of all the thermal bridges in a house"
-
+    parameter Modelica.SIunits.ThermalConductance gKit
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gLob
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gNorBed
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gCor
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gBat
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gSouBed
+      "Constant thermal conductance of thermal bridge";
+    parameter Modelica.SIunits.ThermalConductance gLivRoo
+      "Constant thermal conductance of thermal bridge";
     ThermalBridge theBriKit(g=gKit) "Thermal bridge conductance of the kitchen"
       annotation (Placement(transformation(extent={{-20,80},{0,100}})));
     ThermalBridge theBriLob(g=gLob) "Thermal bridge conductance of the lobby"
@@ -92,20 +125,7 @@ First implementation.
       "Inner temperature boundary condition in each room"
       annotation (Placement(transformation(extent={{90,-10},{110,10}}),
           iconTransformation(extent={{90,-10},{110,10}})));
-    parameter Modelica.SIunits.ThermalConductance gKit
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gLob
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gNorBed
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gCor
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gBat
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gSouBed
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gLivRoo
-      "Constant thermal conductance of thermal bridge";
+
   equation
     connect(weaBus, theBriKit.weaBus) annotation (Line(
         points={{-90,0},{-56,0},{-56,90},{-19,90}},
@@ -163,31 +183,31 @@ First implementation.
         string="%first",
         index=-1,
         extent={{-6,3},{-6,3}}));
-    connect(theBriKit.port_b1,port_b [1]) annotation (Line(
+    connect(theBriKit.port_b,port_b [1]) annotation (Line(
         points={{0,90},{42,90},{42,-8.57143},{100,-8.57143}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriLob.port_b1,port_b [2]) annotation (Line(
+    connect(theBriLob.port_b,port_b [2]) annotation (Line(
         points={{0,60},{42,60},{42,-5.71429},{100,-5.71429}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriNorBed.port_b1,port_b [3]) annotation (Line(
+    connect(theBriNorBed.port_b,port_b [3]) annotation (Line(
         points={{0,30},{42,30},{42,-2.85714},{100,-2.85714}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriCor.port_b1,port_b [4]) annotation (Line(
+    connect(theBriCor.port_b,port_b [4]) annotation (Line(
         points={{0,0},{100,0}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriBat.port_b1,port_b [5]) annotation (Line(
+    connect(theBriBat.port_b,port_b [5]) annotation (Line(
         points={{0,-30},{42,-30},{42,2.85714},{100,2.85714}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriSouBed.port_b1,port_b [6]) annotation (Line(
+    connect(theBriSouBed.port_b,port_b [6]) annotation (Line(
         points={{0,-60},{42,-60},{42,5.71429},{100,5.71429}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(theBriLivRoo.port_b1,port_b [7]) annotation (Line(
+    connect(theBriLivRoo.port_b,port_b [7]) annotation (Line(
         points={{0,-90},{42,-90},{42,8.57143},{100,8.57143}},
         color={191,0,0},
         smooth=Smooth.None));
@@ -203,7 +223,20 @@ First implementation.
             lineColor={0,0,255},
             fillColor={255,255,255},
             fillPattern=FillPattern.Solid,
-            textString="%name")}),
+            textString="%name"),
+          Text(
+            extent={{-104,20},{-58,8}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="weather"),
+          Bitmap(extent={{-60,98},{60,-98}}, fileName="modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/MultiThermalBridges.PNG"),
+          Text(
+            extent={{76,24},{122,12}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="Tint")}),
               defaultComponentName="mulTherBri",
                 Documentation(
     info="<html>
@@ -239,9 +272,6 @@ First implementation.
           transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{
               90,-10},{110,10}})));
 
-    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriExt[6](G=gExt)
-      "Values of thermal bridges conductance on the outside"
-      annotation (Placement(transformation(extent={{20,60},{40,80}})));
     Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
       prescribedTemperature "Outer temperature boundary condition"
       annotation (Placement(transformation(extent={{-40,60},{-20,80}})));
@@ -254,6 +284,9 @@ First implementation.
     Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TCel
       "Temperature in the cellar"
       annotation (Placement(transformation(extent={{-100,-80},{-80,-60}})));
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriExt[6](G=gExt)
+      "Values of thermal bridges conductance on the outside"
+      annotation (Placement(transformation(extent={{20,60},{40,80}})));
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriWesCei[3](G=
           gWesCei) "Values of thermal bridges conductance on the East ceiling"
       annotation (Placement(transformation(extent={{20,20},{40,40}})));
@@ -461,7 +494,39 @@ First implementation.
             lineColor={0,0,255},
             fillColor={255,255,255},
             fillPattern=FillPattern.Solid,
-            textString="%name")}),
+            textString="%name"),
+          Text(
+            extent={{-104,90},{-58,78}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="weather"),
+          Bitmap(extent={{-50,108},{70,-88}}, fileName=
+                "modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/MultiThermalBridges.PNG"),
+          Text(
+            extent={{-102,54},{-56,42}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TWesCei"),
+          Text(
+            extent={{-104,-6},{-58,-18}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TEasCei"),
+          Text(
+            extent={{-112,-46},{-66,-58}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TCel"),
+          Text(
+            extent={{76,22},{122,10}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="Tint")}),
               defaultComponentName="mulTherBri",
                 Documentation(
     info="<html>
@@ -480,6 +545,19 @@ First implementation.
 
   model OpenOrClosedDoor
     "Model to choose if the door is open or closed between 2 rooms"
+    parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFil=true
+      "Value of Boolean output for the kind of scenario for the door (yDooFil = true: constant value, yDooFil = false: time varying scenario)";
+    parameter Real kDooOpe
+      "Constant output value to choose if the door is always open or closed (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true";
+    parameter Modelica.SIunits.Length wOpe=0.935 "Width of opening";
+    parameter Modelica.SIunits.Length hOpe=1.98 "Height of opening";
+    parameter Modelica.SIunits.Area lClo=1e-06
+      "Effective leakage area if door model is used";
+
+    parameter Modelica.SIunits.Length hA=0
+      "Height of reference pressure zone A";
+    parameter Modelica.SIunits.Length hB=0
+      "Height of reference pressure zone B";
     extends Fluid.Interfaces.PartialFourPortInterface(
       redeclare package Medium1 = MediumB,
       redeclare package Medium2 = MediumB,
@@ -490,25 +568,12 @@ First implementation.
 
     replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
       annotation (__Dymola_choicesAllMatching=true);
-    parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFil=true
-      "Value of Boolean output for the kind of scenario for the door (yDooFil = true: constant value, yDooFil = false: time varying scenario)";
-    parameter Real kDooOpe
-      "Constant output value to choose if the door is always open or closed (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true";
-    parameter Modelica.SIunits.Length wOpe=0.935 "Width of opening";
-    parameter Modelica.SIunits.Length hOpe=1.98 "Height of opening";
-    parameter Modelica.SIunits.Area LClo=1e-06
-      "Effective leakage area if door model is used";
-
-    parameter Modelica.SIunits.Length hA=0
-      "Height of reference pressure zone A";
-    parameter Modelica.SIunits.Length hB=0
-      "Height of reference pressure zone B";
 
     Airflow.Multizone.DoorDiscretizedOperable doo(
       wOpe=wOpe,
       hOpe=hOpe,
       redeclare package Medium = MediumB,
-      LClo=LClo,
+      LClo=lClo,
       hA=hA,
       hB=hB,
       dpCloRat(displayUnit="Pa"),
@@ -523,8 +588,8 @@ First implementation.
       annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
     Modelica.Blocks.Interfaces.RealInput uDooOpe if (yDooFil==false)
       "Connect to file with 0 and 1 values for open or closed door" annotation (
-        Placement(transformation(extent={{-140,-18},{-100,22}}),
-          iconTransformation(extent={{-140,-18},{-100,22}})));
+        Placement(transformation(extent={{-140,-20},{-100,20}}),
+          iconTransformation(extent={{-140,-20},{-100,20}})));
 
   equation
     connect(port_a1, doo.port_a1) annotation (Line(
@@ -548,7 +613,7 @@ First implementation.
         color={0,0,127},
         smooth=Smooth.None));
     connect(uDooOpe, doo.y) annotation (Line(
-        points={{-120,2},{-30,2},{-30,10},{-1,10}},
+        points={{-120,0},{-30,0},{-30,10},{-1,10}},
         color={0,0,127},
         smooth=Smooth.None));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
@@ -556,6 +621,52 @@ First implementation.
             preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics={
             Rectangle(extent={{-100,100},{100,-100}}, lineColor={0,0,0},
             fillColor={255,255,255},
+            fillPattern=FillPattern.Solid),
+          Text(
+            extent={{-144,36},{-98,24}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="uDooOpe"),
+          Rectangle(
+            extent={{-60,82},{60,-82}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={85,75,55},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{-52,74},{58,-82}},
+            lineColor={0,0,0},
+            fillColor={215,215,215},
+            fillPattern=FillPattern.Solid),
+          Polygon(
+            points={{58,74},{-34,68},{-34,-88},{58,-82},{58,74}},
+            lineColor={0,0,0},
+            fillColor={95,95,95},
+            fillPattern=FillPattern.Solid),
+          Polygon(
+            points={{-26,-8},{-12,-6},{-12,-12},{-26,-14},{-26,-8}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{-100,2},{-44,-2}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={255,128,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{-44,2},{-38,-14}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={255,128,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{-38,-10},{-26,-14}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={255,128,0},
             fillPattern=FillPattern.Solid)}),                                      defaultComponentName="OpeCloDoo",
                 Documentation(
     info="<html>
@@ -583,18 +694,18 @@ First implementation.
 
     replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
       annotation (__Dymola_choicesAllMatching=true);
-    parameter Modelica.SIunits.Area LKit
+    parameter Modelica.SIunits.Area lKit
       "Effective leakage area of the kitchen";
-    parameter Modelica.SIunits.Area LLob "Effective leakage area of the lobby";
-    parameter Modelica.SIunits.Area LNorBed
+    parameter Modelica.SIunits.Area lLob "Effective leakage area of the lobby";
+    parameter Modelica.SIunits.Area lNorBed
       "Effective leakage area of the North bedroom";
-    parameter Modelica.SIunits.Area LBat
+    parameter Modelica.SIunits.Area lBat
       "Effective leakage area of the bathroom";
-    parameter Modelica.SIunits.Area LSouBed
+    parameter Modelica.SIunits.Area lSouBed
       "Effective leakage area of the South bedroom";
-    parameter Modelica.SIunits.Area LLivRoo1
+    parameter Modelica.SIunits.Area lLivRoo1
       "Effective leakage area of the windows 2 and 3 on the South wall of the living room";
-    parameter Modelica.SIunits.Area LLivRoo2
+    parameter Modelica.SIunits.Area lLivRoo2
       "Effective leakage area of window 1 on the West wall of the living room";
     parameter Real sNor
       "Side ratio, s=length of this wall/length of adjacent wall (North)";
@@ -615,34 +726,34 @@ First implementation.
     BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
           transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent={{-100,
               -10},{-80,10}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=LKit, redeclare package
+    Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=lKit, redeclare package
         Medium = MediumB,
       m=0.5) "Effective air leakage area around the window in the kitchen"
       annotation (Placement(transformation(extent={{-10,80},{10,100}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=LLob, redeclare package
+    Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=lLob, redeclare package
         Medium = MediumB,
       m=0.5) "Effective air leakage area around the door in the lobby"
       annotation (Placement(transformation(extent={{-10,50},{10,70}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=LNorBed, redeclare
+    Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=lNorBed, redeclare
         package Medium = MediumB,
       m=0.5)
       "Effective air leakage area around the window in the North bedroom"
       annotation (Placement(transformation(extent={{-10,20},{10,40}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=LBat, redeclare package
+    Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=lBat, redeclare package
         Medium = MediumB,
       m=0.5) "Effective air leakage area around the window in the bathroom"
       annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=LSouBed, redeclare
+    Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=lSouBed, redeclare
         package Medium = MediumB,
       m=0.5)
       "Effective air leakage area around the window in the South bedroom"
       annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=LLivRoo1, redeclare
+    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=lLivRoo1, redeclare
         package Medium = MediumB,
       m=0.5)
       "Effective air leakage area around windows 2 and 3 on the South wall of the living room"
       annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=LLivRoo2, redeclare
+    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=lLivRoo2, redeclare
         package Medium = MediumB,
       m=0.5)
       "Effective air leakage area around window 1 on the West wall of the living room"
@@ -778,8 +889,15 @@ First implementation.
             textString="%name"), Rectangle(extent={{-100,100},{100,-100}},
               lineColor={0,0,0},
             fillColor={255,255,255},
-            fillPattern=FillPattern.Solid)}),
-                                    defaultComponentName="MulAirLea",
+            fillPattern=FillPattern.Solid),
+          Bitmap(extent={{-80,100},{80,-98}}, fileName=
+                "modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/MultiEffectiveAirLeakageArea.png"),
+          Text(
+            extent={{-104,20},{-58,8}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="weather")}),defaultComponentName="MulAirLea",
                 Documentation(
     info="<html>
   Model for all the effective air leakage areas in a house with their associated outside boundary. The effective air leakage area in each room are supposed to be around the windows and they are modeled using an instance of <a href=\"Buildings.Airflow.Multizone.EffectiveAirLeakageArea\">
@@ -847,12 +965,61 @@ January 30 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
-</html>"));
+</html>"),
+      Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
+              100}}), graphics={
+          Text(
+            extent={{-130,40},{-110,20}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="u"),
+          Text(
+            extent={{100,80},{120,60}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="y1"),
+          Text(
+            extent={{100,-20},{120,-40}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="y2"),
+          Text(
+            extent={{6,72},{100,60}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="k1=%k1"),
+          Text(
+            extent={{6,-28},{100,-40}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="k2=%k2"),
+          Line(
+            points={{-100,0},{2,0},{2,50},{100,50}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None),
+          Line(
+            points={{2,0},{2,-50},{100,-50}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None)}));
   end Separate;
 
   model HeatingCoolingSchedule
     "Heating and cooling experimental schedule using imposed constant temperature or imposed heat or cooling power"
-
+    parameter Boolean startValue=false
+      "Start value of y. At time = table[1], y changes to 'not startValue'";
+    //parameter Modelica.SIunits.Time table[:]={0,1}
+    //  "Vector of time points. At every time point, the output y gets its opposite value (e.g., table={0,1}). 0 = Temperature set point and 1 = Heat or cooling flow imposed";
+    parameter Real kHea=1E6
+      "Gain value multiplied with input signal for heating";
+    parameter Real kCoo=-1E6
+      "Gain value multiplied with input signal for cooling";
     Modelica.Blocks.Interfaces.RealInput heaCooFlo
       "Heat or cooling power input applied depending on the scenario" annotation (
        Placement(transformation(extent={{-220,70},{-180,110}}),
@@ -922,14 +1089,6 @@ First implementation.
     Modelica.Blocks.Math.Mean TRooHou(f=1/3600, y(start=293.15))
       "Hourly averaged room air temperature"
       annotation (Placement(transformation(extent={{140,-120},{160,-100}})));
-    parameter Boolean startValue=false
-      "Start value of y. At time = table[1], y changes to 'not startValue'";
-    //parameter Modelica.SIunits.Time table[:]={0,1}
-    //  "Vector of time points. At every time point, the output y gets its opposite value (e.g., table={0,1}). 0 = Temperature set point and 1 = Heat or cooling flow imposed";
-    parameter Real kHea=1E6
-      "Gain value multiplied with input signal for heating";
-    parameter Real kCoo=-1E6
-      "Gain value multiplied with input signal for cooling";
 
     Modelica.Blocks.Logical.Switch switch1
       annotation (Placement(transformation(extent={{20,-10},{40,10}})));
@@ -1118,9 +1277,9 @@ First implementation.
       "Cooling temperature set point input applied depending on the scenario"
       annotation (Placement(transformation(extent={{-140,-70},{-100,-30}}),
           iconTransformation(extent={{-140,-80},{-100,-40}})));
-    Modelica.Blocks.Interfaces.RealOutput y annotation (Placement(transformation(
-            extent={{100,-10},{120,10}}), iconTransformation(extent={{100,-10},{120,
-              10}})));
+    Modelica.Blocks.Interfaces.RealOutput heaCooP "Heating or cooling power"
+      annotation (Placement(transformation(extent={{100,-10},{120,10}}),
+          iconTransformation(extent={{100,-10},{120,10}})));
     Modelica.Blocks.Interfaces.RealInput TRooAir
       "Calculated air temperature in the room"
       annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
@@ -1161,11 +1320,11 @@ First implementation.
         points={{-19,50},{-10,50},{-10,6},{-2,6}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(sum1.y, y) annotation (Line(
+    connect(sum1.y, heaCooP) annotation (Line(
         points={{61,0},{110,0}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(y, y) annotation (Line(
+    connect(heaCooP, heaCooP) annotation (Line(
         points={{110,0},{110,0}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -1188,7 +1347,55 @@ First implementation.
             lineColor={0,0,255},
             fillColor={255,255,255},
             fillPattern=FillPattern.Solid,
-            textString="%name")}), defaultComponentName="TSetPoi",
+            textString="%name"),
+          Text(
+            extent={{-142,92},{-96,80}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TsetHea"),
+          Text(
+            extent={{-142,32},{-96,20}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TRooAir"),
+          Text(
+            extent={{-142,-28},{-96,-40}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TsetCoo"),
+          Text(
+            extent={{96,22},{142,10}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="heaCooP"),
+          Bitmap(extent={{-40,96},{98,-98}}, fileName=
+                "modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/TemperatureSetPoint.png"),
+          Text(
+            extent={{2,72},{48,60}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="kHea=%kHea"),
+          Text(
+            extent={{4,-46},{50,-58}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="kCoo=%kCoo"),
+          Line(
+            points={{-100,60},{62,60},{62,0},{100,0}},
+            color={0,0,0},
+            smooth=Smooth.None,
+            thickness=0.5),
+          Line(
+            points={{-100,-60},{62,-60},{62,0}},
+            color={0,0,0},
+            smooth=Smooth.None,
+            thickness=0.5)}),      defaultComponentName="TSetPoi",
                 Documentation(
     info="<html>
   Model to heat or to cool a room with an imposed temperature.
@@ -1248,7 +1455,7 @@ First implementation.
 
     Modelica.Blocks.Logical.Switch swi[7]
       annotation (Placement(transformation(extent={{0,-10},{20,10}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bTSet[7]
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_aTSet[7]
       "Calculated temperature used for the set point" annotation (Placement(
           transformation(extent={{-150,-100},{-130,-80}}),iconTransformation(
             extent={{-150,-100},{-130,-80}})));
@@ -1261,7 +1468,7 @@ First implementation.
             extent={{-180,-20},{-140,20}})));
   equation
 
-    connect(port_bTSet, TRooAir.port) annotation (Line(
+    connect(port_aTSet, TRooAir.port) annotation (Line(
         points={{-140,-90},{-130,-90},{-130,-60},{-120,-60}},
         color={191,0,0},
         smooth=Smooth.None));
@@ -1277,7 +1484,7 @@ First implementation.
         points={{-160,-120},{-60,-120},{-60,-26},{-42,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(TSetPoi.y, swi.u3) annotation (Line(
+    connect(TSetPoi.heaCooP, swi.u3) annotation (Line(
         points={{-19,-20},{-10,-20},{-10,-8},{-2,-8}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -1325,7 +1532,51 @@ First implementation.
             lineColor={0,0,255},
             fillColor={255,255,255},
             fillPattern=FillPattern.Solid,
-            textString="%name")}), defaultComponentName="mulHeaCooSch",
+            textString="%name"),
+          Text(
+            extent={{-188,102},{-142,90}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="heaCooFlo"),
+          Text(
+            extent={{-186,32},{-140,20}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="schChoice"),
+          Text(
+            extent={{-190,-28},{-144,-40}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TsetHea"),
+          Text(
+            extent={{-192,-88},{-146,-100}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TsetCoo"),
+          Text(
+            extent={{-116,-84},{-68,-96}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="TRooAir"),
+          Bitmap(extent={{-8,138},{138,-136}}, fileName="modelica://Buildings/Resources/Images/Rooms/Validation/HolzkirchenTwinHouses/Houses/BaseClasses/TemperatureSetPoint.png"),
+          Text(
+            extent={{76,38},{124,26}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="Convection"),
+          Text(
+            extent={{76,-24},{124,-36}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="Radiation")}),
+                                   defaultComponentName="mulHeaCooSch",
                 Documentation(
     info="<html>
   Model to choose the kind of scenario used depending on the period in the experiment. A constant temperature set point can be used if boolean=false or an imposed heat or cooling power if boolean=true.
@@ -1367,7 +1618,7 @@ First implementation.
     Modelica.Blocks.Sources.Constant qLatGai(k=kLatGai) if (yLatGai==true)
       "Latent heat gain"
       annotation (Placement(transformation(extent={{-100,-30},{-80,-10}})));
-    Modelica.Blocks.Interfaces.RealOutput y[3]
+    Modelica.Blocks.Interfaces.RealOutput intGai[3] "Internal Gains"
       annotation (Placement(transformation(extent={{100,-10},{120,10}})));
     Modelica.Blocks.Interfaces.RealInput tabRadGai if (yRadGai==false)
       "Table with radiative gains"
@@ -1383,7 +1634,7 @@ First implementation.
           iconTransformation(extent={{-120,-60},{-100,-40}})));
 
   equation
-    connect(multiplex3_1.y, y) annotation (Line(
+    connect(multiplex3_1.y, intGai) annotation (Line(
         points={{61,0},{110,0}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -1427,7 +1678,8 @@ First implementation.
 </li>
 </ul>
 </html>"),
-      Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+      Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
+              100}}),
           graphics={
           Text(
             extent={{-94,106},{94,138}},
@@ -1437,7 +1689,82 @@ First implementation.
             textString="%name"), Rectangle(extent={{-100,100},{100,-100}},
               lineColor={0,0,0},
             fillColor={255,255,255},
-            fillPattern=FillPattern.Solid)}));
+            fillPattern=FillPattern.Solid),
+          Text(
+            extent={{-140,70},{-100,60}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="tabRadGai"),
+          Text(
+            extent={{-140,20},{-100,10}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="tabConGai"),
+          Text(
+            extent={{-140,-30},{-100,-40}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="tabLatGai"),
+          Text(
+            extent={{82,20},{122,10}},
+            lineColor={0,0,127},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="intGai"),
+          Text(
+            extent={{-98,90},{-52,78}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="kRadGai=%kRadGai"),
+          Text(
+            extent={{-98,32},{-52,20}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="kConGai=%kConGai"),
+          Text(
+            extent={{-98,-20},{-52,-32}},
+            lineColor={0,0,0},
+            fillColor={61,61,61},
+            fillPattern=FillPattern.Solid,
+            textString="kLatGai=%kLatGai"),
+          Line(
+            points={{-100,50},{46,50},{46,6},{100,6}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None),
+          Line(
+            points={{-50,84},{46,84},{46,50}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None,
+            pattern=LinePattern.Dash),
+          Line(
+            points={{-100,0},{100,0}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None),
+          Line(
+            points={{-50,26},{22,26},{22,0}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None,
+            pattern=LinePattern.Dash),
+          Line(
+            points={{-100,-50},{0,-50},{0,-6},{100,-6}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None),
+          Line(
+            points={{-52,-26},{0,-26}},
+            color={0,0,0},
+            thickness=0.5,
+            smooth=Smooth.None,
+            pattern=LinePattern.Dash)}));
   end InternalGains;
 
   block ReaderWeatherFile2

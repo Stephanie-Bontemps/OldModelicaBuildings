@@ -1,16 +1,16 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length ExtWallNorthLgth = 2.85
+  parameter Modelica.SIunits.Length extWallNorthLgth = 2.85
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length ExtWallWestLgth = 2.61
+  parameter Modelica.SIunits.Length extWallWestLgth = 2.61
     "Length of the external wall on the West";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
+  parameter Modelica.SIunits.Length doorOnLivRoomLgth = 0.935
     "Length of the door between kitchen and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
+  parameter Modelica.SIunits.Length doorOnLivRoomHght = 1.98
     "Height of the door between kitchen and living room";
-  parameter Modelica.SIunits.Length IntWallOnLobbyLgth = ExtWallWestLgth
+  parameter Modelica.SIunits.Length intWallOnLobbyLgth = extWallWestLgth
     "Length of the wall between kitchen and lobby";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = ExtWallNorthLgth - DoorOnLivRoomLgth
+  parameter Modelica.SIunits.Length intWallOnLivRoomLgth = extWallNorthLgth - doorOnLivRoomLgth
     "Length of the wall between kitchen and living room";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -19,7 +19,7 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    AFlo=ExtWallNorthLgth*ExtWallWestLgth,
+    AFlo=extWallNorthLgth*extWallWestLgth,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -31,7 +31,7 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNKitchen},
-    A = {hRoo*ExtWallNorthLgth},
+    A = {hRoo*extWallNorthLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -39,7 +39,7 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     T_b_start={Tini_int}),
     datConExtWin(
     layers = {extWallWNKitchen},
-    A = {hRoo*ExtWallWestLgth},
+    A = {hRoo*extWallWestLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -53,13 +53,13 @@ model Kitchen "Model of the Kitchen (Küche) in Holzkirchen Twin Houses"
     sidFin(h = {0}, gap = {0}, dep = {0.12})),
     datConBou(
     layers = {intWall2Kitchen, ceilingKitchen, groundKitchen},
-    A = {hRoo*IntWallOnLobbyLgth, AFlo, AFlo},
+    A = {hRoo*intWallOnLobbyLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {(hRoo*IntWallOnLivRoomLgth+(hRoo-DoorOnLivRoomHght)*DoorOnLivRoomLgth), DoorOnLivRoomHght*DoorOnLivRoomLgth},
+    A = {(hRoo*intWallOnLivRoomLgth+(hRoo-doorOnLivRoomHght)*doorOnLivRoomLgth), doorOnLivRoomHght*doorOnLivRoomLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6}),

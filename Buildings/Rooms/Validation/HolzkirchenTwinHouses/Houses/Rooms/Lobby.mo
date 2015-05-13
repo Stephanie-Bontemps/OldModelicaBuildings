@@ -1,21 +1,21 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Lobby
   "Model of the Lobby (Flur on North side of building) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length ExtWallNorthLgth = 1.255
+  parameter Modelica.SIunits.Length extWallNorthLgth = 1.255
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length ExtDoorNorthLgth = 0.995
+  parameter Modelica.SIunits.Length extDoorNorthLgth = 0.995
     "Length of the external door on the North";
-  parameter Modelica.SIunits.Length ExtDoorNorthHght = 2.025
+  parameter Modelica.SIunits.Length extDoorNorthHght = 2.025
     "Height of the external door on the North";
-  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.61
+  parameter Modelica.SIunits.Length intWallOnNBedroomLgth = 2.61
     "Length of the wall between lobby and North Bedroom";
-  parameter Modelica.SIunits.Length DoorOnLivRoomLgth = 0.935
+  parameter Modelica.SIunits.Length doorOnLivRoomLgth = 0.935
     "Length of the door between lobby and living room";
-  parameter Modelica.SIunits.Length DoorOnLivRoomHght = 1.98
+  parameter Modelica.SIunits.Length doorOnLivRoomHght = 1.98
     "Height of the door between lobby and living room";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = (ExtWallNorthLgth + ExtDoorNorthLgth) - DoorOnLivRoomLgth
+  parameter Modelica.SIunits.Length intWallOnLivRoomLgth = (extWallNorthLgth + extDoorNorthLgth) - doorOnLivRoomLgth
     "Length of the wall between lobby and living room";
-  parameter Modelica.SIunits.Length IntWallOnKitchenLgth = IntWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length intWallOnKitchenLgth = intWallOnNBedroomLgth
     "Length of the wall between lobby and kitchen";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -24,7 +24,7 @@ model Lobby
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    AFlo=(ExtWallNorthLgth + ExtDoorNorthLgth) * IntWallOnNBedroomLgth,
+    AFlo=(extWallNorthLgth + extDoorNorthLgth) * intWallOnNBedroomLgth,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -36,7 +36,7 @@ model Lobby
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNLobby},
-    A = {(hRoo*ExtWallNorthLgth + (hRoo-ExtDoorNorthHght)*ExtDoorNorthLgth)},
+    A = {(hRoo*extWallNorthLgth + (hRoo-extDoorNorthHght)*extDoorNorthLgth)},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -44,7 +44,7 @@ model Lobby
     T_b_start={Tini_int}),
     datConExtWin(
     layers = {extDoorOpaquePartLobby},
-    A = {ExtDoorNorthHght*ExtDoorNorthLgth},
+    A = {extDoorNorthHght*extDoorNorthLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -58,13 +58,13 @@ model Lobby
     T_b_start={Tini_int}),
     datConBou(
     layers = {intWall1Lobby, ceilingLobby, groundLobby},
-    A = {hRoo*IntWallOnNBedroomLgth, AFlo, AFlo},
+    A = {hRoo*intWallOnNBedroomLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {(hRoo*IntWallOnLivRoomLgth + (hRoo-DoorOnLivRoomHght)*DoorOnLivRoomLgth), DoorOnLivRoomHght*DoorOnLivRoomLgth, hRoo*IntWallOnKitchenLgth},
+    A = {(hRoo*intWallOnLivRoomLgth + (hRoo-doorOnLivRoomHght)*doorOnLivRoomLgth), doorOnLivRoomHght*doorOnLivRoomLgth, hRoo*intWallOnKitchenLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6, 0.17}),

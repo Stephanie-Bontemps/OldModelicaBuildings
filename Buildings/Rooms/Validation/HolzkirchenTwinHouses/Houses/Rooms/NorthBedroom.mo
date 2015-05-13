@@ -1,21 +1,21 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model NorthBedroom
   "Model of the North Bedroom (Schladen - referred as bedroom) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length ExtWallNorthLgth = 3.83
+  parameter Modelica.SIunits.Length extWallNorthLgth = 3.83
     "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length ExtWallEastLgth = 3.18
+  parameter Modelica.SIunits.Length extWallEastLgth = 3.18
     "Length of the external wall on the East";
-  parameter Modelica.SIunits.Length IntWallOnBathroomLgth = 2.07
+  parameter Modelica.SIunits.Length intWallOnBathroomLgth = 2.07
     "Length of the wall between North bedroom and bathroom";
-  parameter Modelica.SIunits.Length IntWallOnCorridorLgth = 0.685
+  parameter Modelica.SIunits.Length intWallOnCorridorLgth = 0.685
     "Length of the wall between North bedroom and corridor";
-  parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
+  parameter Modelica.SIunits.Length doorOnCorridorLgth = 0.935
     "Length of the door between North bedroom and corridor";
-  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+  parameter Modelica.SIunits.Length doorOnCorridorHght = 1.98
     "Height of the door between North bedroom and corridor";
-  parameter Modelica.SIunits.Length IntWallOnLivRoomLgth = 0.30
+  parameter Modelica.SIunits.Length intWallOnLivRoomLgth = 0.30
     "Length of the wall between North bedroom and living room";
-  parameter Modelica.SIunits.Length IntWallOnLobbyLgth = 2.61
+  parameter Modelica.SIunits.Length intWallOnLobbyLgth = 2.61
     "Length of the wall between North bedroom and lobby";
   parameter Modelica.SIunits.Temperature Tini_int
     "Intial temperature in the room";
@@ -24,7 +24,7 @@ model NorthBedroom
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    AFlo = ExtWallNorthLgth * ExtWallEastLgth,
+    AFlo = extWallNorthLgth * extWallEastLgth,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -36,7 +36,7 @@ model NorthBedroom
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallENBedroom},
-    A = {hRoo*ExtWallEastLgth},
+    A = {hRoo*extWallEastLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
     steadyStateInitial = {false},
@@ -44,7 +44,7 @@ model NorthBedroom
     T_b_start={Tini_int}),
     datConExtWin(
     layers = {extWallSNNBedroom},
-    A = {hRoo*ExtWallNorthLgth},
+    A = {hRoo*extWallNorthLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false, false, false},
@@ -64,7 +64,7 @@ model NorthBedroom
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnBathroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth, hRoo*IntWallOnLivRoomLgth, hRoo*IntWallOnLobbyLgth},
+    A = {hRoo*intWallOnBathroomLgth, (hRoo*intWallOnCorridorLgth+(hRoo-doorOnCorridorHght)*doorOnCorridorLgth), doorOnCorridorHght*doorOnCorridorLgth, hRoo*intWallOnLivRoomLgth, hRoo*intWallOnLobbyLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6, 0.17, 0.17}),

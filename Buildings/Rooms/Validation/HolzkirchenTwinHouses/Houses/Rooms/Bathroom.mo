@@ -1,16 +1,16 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length IntWallOnNBedroomLgth = 2.07
+  parameter Modelica.SIunits.Length intWallOnNBedroomLgth = 2.07
     "Length of the wall between bathroom and North bedroom";
-  parameter Modelica.SIunits.Length ExtWallEastLgth = 2.99
+  parameter Modelica.SIunits.Length extWallEastLgth = 2.99
     "Length of the external wall on the East";
-  parameter Modelica.SIunits.Length IntWallOnSBedroomLgth = IntWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length intWallOnSBedroomLgth = intWallOnNBedroomLgth
     "Length of the wall between bathroom and South bedroom";
-  parameter Modelica.SIunits.Length DoorOnCorridorLgth = 0.935
+  parameter Modelica.SIunits.Length doorOnCorridorLgth = 0.935
     "Length of the door between bathroom and corridor";
-  parameter Modelica.SIunits.Length DoorOnCorridorHght = 1.98
+  parameter Modelica.SIunits.Length doorOnCorridorHght = 1.98
     "Height of the door between bathroom and corridor";
-  parameter Modelica.SIunits.Length IntWallOnCorridorLgth = ExtWallEastLgth - DoorOnCorridorLgth
+  parameter Modelica.SIunits.Length intWallOnCorridorLgth = extWallEastLgth - doorOnCorridorLgth
     "Length of the wall between bathroom and corridor";
 
   parameter Modelica.SIunits.Temperature Tini_int
@@ -20,7 +20,7 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     "Initial temperature of the boundary conditions";
 
   extends MixedAir(
-    AFlo=IntWallOnNBedroomLgth*ExtWallEastLgth,
+    AFlo=intWallOnNBedroomLgth*extWallEastLgth,
     nConExt=0,
     nConExtWin=1,
     nConPar=0,
@@ -32,7 +32,7 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExtWin(
     layers = {extWallEBathroom},
-    A = {hRoo*ExtWallEastLgth},
+    A = {hRoo*extWallEastLgth},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
     steadyStateInitial = {false},
@@ -46,13 +46,13 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     sidFin(h = {0}, gap = {0}, dep = {0.12})),
     datConBou(
     layers = {intWall2Bathroom, ceilingBathroom, groundBathroom},
-    A = {hRoo*IntWallOnNBedroomLgth, AFlo, AFlo},
+    A = {hRoo*intWallOnNBedroomLgth, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*IntWallOnSBedroomLgth, (hRoo*IntWallOnCorridorLgth+(hRoo-DoorOnCorridorHght)*DoorOnCorridorLgth), DoorOnCorridorHght*DoorOnCorridorLgth},
+    A = {hRoo*intWallOnSBedroomLgth, (hRoo*intWallOnCorridorLgth+(hRoo-doorOnCorridorHght)*doorOnCorridorLgth), doorOnCorridorHght*doorOnCorridorLgth},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6}),

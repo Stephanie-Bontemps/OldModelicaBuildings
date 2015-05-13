@@ -14,8 +14,8 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      NomFichierBouVenHeaCoo="D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooExp1Old.txt",
-      NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
+      nomFichierBouVenHeaCoo="D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooExp1Old.txt",
+      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
       Tini_int=303.15,
@@ -38,7 +38,7 @@ package Experiment1
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
       annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
 
-    Modelica.Blocks.Sources.CombiTimeTable Measurements(
+    Modelica.Blocks.Sources.CombiTimeTable measurements(
       tableOnFile=true,
       tableName="data",
       fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
@@ -51,7 +51,7 @@ package Experiment1
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add Residuals[7](each k1=-1, each k2=+1)
+    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
     Modelica.Blocks.Math.Add3 add3_1(
       k1=+1/3,
@@ -72,47 +72,47 @@ package Experiment1
         points={{-1.11111,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, Residuals.u1) annotation (Line(
+    connect(TairC.T, residuals.u1) annotation (Line(
         points={{40,20},{50,20},{50,-14},{58,-14}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[10], Residuals[1].u2) annotation (Line(
+    connect(measurements.y[10], residuals[1].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[11], Residuals[2].u2) annotation (Line(
+    connect(measurements.y[11], residuals[2].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[12], Residuals[3].u2) annotation (Line(
+    connect(measurements.y[12], residuals[3].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[7], Residuals[4].u2) annotation (Line(
+    connect(measurements.y[7], residuals[4].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[8], Residuals[5].u2) annotation (Line(
+    connect(measurements.y[8], residuals[5].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[9], Residuals[6].u2) annotation (Line(
+    connect(measurements.y[9], residuals[6].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[4], add3_1.u1) annotation (Line(
+    connect(measurements.y[4], add3_1.u1) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[5], add3_1.u2) annotation (Line(
+    connect(measurements.y[5], add3_1.u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[6], add3_1.u3) annotation (Line(
+    connect(measurements.y[6], add3_1.u3) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(add3_1.y, Residuals[7].u2) annotation (Line(
+    connect(add3_1.y, residuals[7].u2) annotation (Line(
         points={{-19,-90},{50,-90},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -139,11 +139,11 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
+      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      NomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      NomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
+      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
@@ -194,11 +194,11 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
+      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      NomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      NomFichierBouVenIntGai=
+      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      nomFichierBouVenIntGai=
           "D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
       Tini_int=303.15,
       Tini_ext=283.15,
@@ -220,7 +220,7 @@ package Experiment1
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
       annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
 
-    Modelica.Blocks.Sources.CombiTimeTable Measurements(
+    Modelica.Blocks.Sources.CombiTimeTable measurements(
       tableOnFile=true,
       tableName="data",
       fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
@@ -233,7 +233,7 @@ package Experiment1
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add Residuals[7](each k1=-1, each k2=+1)
+    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
     Modelica.Blocks.Math.Add3 add3_1(
       k1=+1/3,
@@ -254,47 +254,47 @@ package Experiment1
         points={{-1.11111,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, Residuals.u1) annotation (Line(
+    connect(TairC.T, residuals.u1) annotation (Line(
         points={{40,20},{50,20},{50,-14},{58,-14}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[10], Residuals[1].u2) annotation (Line(
+    connect(measurements.y[10], residuals[1].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[11], Residuals[2].u2) annotation (Line(
+    connect(measurements.y[11], residuals[2].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[12], Residuals[3].u2) annotation (Line(
+    connect(measurements.y[12], residuals[3].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[7], Residuals[4].u2) annotation (Line(
+    connect(measurements.y[7], residuals[4].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[8], Residuals[5].u2) annotation (Line(
+    connect(measurements.y[8], residuals[5].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[9], Residuals[6].u2) annotation (Line(
+    connect(measurements.y[9], residuals[6].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[4], add3_1.u1) annotation (Line(
+    connect(measurements.y[4], add3_1.u1) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[5], add3_1.u2) annotation (Line(
+    connect(measurements.y[5], add3_1.u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[6], add3_1.u3) annotation (Line(
+    connect(measurements.y[6], add3_1.u3) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(add3_1.y, Residuals[7].u2) annotation (Line(
+    connect(add3_1.y, residuals[7].u2) annotation (Line(
         points={{-19,-90},{50,-90},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -321,11 +321,11 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
+      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      NomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      NomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
+      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
@@ -347,7 +347,7 @@ package Experiment1
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
       annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
 
-    Modelica.Blocks.Sources.CombiTimeTable Measurements(
+    Modelica.Blocks.Sources.CombiTimeTable measurements(
       tableOnFile=true,
       tableName="data",
       fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
@@ -360,7 +360,7 @@ package Experiment1
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add Residuals[7](each k1=-1, each k2=+1)
+    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
     Modelica.Blocks.Math.Add3 add3_1(
       k1=+1/3,
@@ -381,47 +381,47 @@ package Experiment1
         points={{-1.11111,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, Residuals.u1) annotation (Line(
+    connect(TairC.T, residuals.u1) annotation (Line(
         points={{40,20},{50,20},{50,-14},{58,-14}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[10], Residuals[1].u2) annotation (Line(
+    connect(measurements.y[10], residuals[1].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[11], Residuals[2].u2) annotation (Line(
+    connect(measurements.y[11], residuals[2].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[12], Residuals[3].u2) annotation (Line(
+    connect(measurements.y[12], residuals[3].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[7], Residuals[4].u2) annotation (Line(
+    connect(measurements.y[7], residuals[4].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[8], Residuals[5].u2) annotation (Line(
+    connect(measurements.y[8], residuals[5].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[9], Residuals[6].u2) annotation (Line(
+    connect(measurements.y[9], residuals[6].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[4], add3_1.u1) annotation (Line(
+    connect(measurements.y[4], add3_1.u1) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[5], add3_1.u2) annotation (Line(
+    connect(measurements.y[5], add3_1.u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[6], add3_1.u3) annotation (Line(
+    connect(measurements.y[6], add3_1.u3) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(add3_1.y, Residuals[7].u2) annotation (Line(
+    connect(add3_1.y, residuals[7].u2) annotation (Line(
         points={{-19,-90},{50,-90},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
@@ -448,11 +448,11 @@ package Experiment1
       kDooOpeBatCor=1,
       kDooOpeSthBedCor=1,
       kDooOpeCorLiv=1,
-      NomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
+      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      NomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      NomFichierBouVenIntGai=
+      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      nomFichierBouVenIntGai=
           "D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
       Tini_int=303.15,
       Tini_ext=283.15,
@@ -466,7 +466,6 @@ package Experiment1
       HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
       HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
       calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.TemperaturesAndSkyCover,
-
       pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
@@ -476,7 +475,7 @@ package Experiment1
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
       annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
 
-    Modelica.Blocks.Sources.CombiTimeTable Measurements(
+    Modelica.Blocks.Sources.CombiTimeTable measurements(
       tableOnFile=true,
       tableName="data",
       fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
@@ -489,7 +488,7 @@ package Experiment1
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add Residuals[7](each k1=-1, each k2=+1)
+    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
     Modelica.Blocks.Math.Add3 add3_1(
       k1=+1/3,
@@ -510,47 +509,47 @@ package Experiment1
         points={{-1.11111,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, Residuals.u1) annotation (Line(
+    connect(TairC.T, residuals.u1) annotation (Line(
         points={{40,20},{50,20},{50,-14},{58,-14}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[10], Residuals[1].u2) annotation (Line(
+    connect(measurements.y[10], residuals[1].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[11], Residuals[2].u2) annotation (Line(
+    connect(measurements.y[11], residuals[2].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[12], Residuals[3].u2) annotation (Line(
+    connect(measurements.y[12], residuals[3].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[7], Residuals[4].u2) annotation (Line(
+    connect(measurements.y[7], residuals[4].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[8], Residuals[5].u2) annotation (Line(
+    connect(measurements.y[8], residuals[5].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[9], Residuals[6].u2) annotation (Line(
+    connect(measurements.y[9], residuals[6].u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[4], add3_1.u1) annotation (Line(
+    connect(measurements.y[4], add3_1.u1) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[5], add3_1.u2) annotation (Line(
+    connect(measurements.y[5], add3_1.u2) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(Measurements.y[6], add3_1.u3) annotation (Line(
+    connect(measurements.y[6], add3_1.u3) annotation (Line(
         points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(add3_1.y, Residuals[7].u2) annotation (Line(
+    connect(add3_1.y, residuals[7].u2) annotation (Line(
         points={{-19,-90},{50,-90},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
