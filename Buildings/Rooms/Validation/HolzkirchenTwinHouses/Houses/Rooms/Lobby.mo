@@ -50,7 +50,7 @@ model Lobby
     steadyStateInitial = {false},
     glaSys = {windowLobby},
     hWin = {0.535},
-    wWin = {0.595},
+    wWin = {0.585},
     fFra = {0.01},
     ove(wL = {0.20}, wR = {0.20}, gap = {0.20}, dep = {0.37}),
     sidFin(h = {0.20}, gap = {0.20}, dep = {0.37}),
