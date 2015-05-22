@@ -62,7 +62,10 @@ model SouthBedroomSS
     lat=0.83555892609977,
     timZon=3600)
     annotation (Placement(transformation(extent={{80,60},{100,80}})));
-  Houses.BaseClasses.HeatingCoolingSchedule heaCooSch(kHea=0, kCoo=0)
+  Houses.BaseClasses.MultiHeatingCoolingSchedule
+                                            heaCooSch(        kCoo=0,
+    kHea=1e6,
+    nRoo=1)
     annotation (Placement(transformation(extent={{-120,-56},{-84,-20}})));
   Modelica.Blocks.Sources.CombiTimeTable bliPos(
     final tableOnFile=true,
@@ -80,7 +83,8 @@ equation
       smooth=Smooth.None));
 
   connect(southBedroom.ports[1], MulAirLea.ports_b[5]) annotation (Line(
-      points={{122.5,-15},{80,-15},{80,-132},{-102,-132},{-102,-128.857},{-121,-128.857}},
+      points={{122.5,-15},{80,-15},{80,-132},{-102,-132},{-102,-128.857},{-121,
+          -128.857}},
       color={0,127,255},
       smooth=Smooth.None));
 
@@ -105,31 +109,27 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(heaCooSch.port_bCon, southBedroom.heaPorAir) annotation (Line(
-      points={{-84,-33},{94,-33},{94,-10},{129.5,-10}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(heaCooSch.port_bTSet, southBedroom.heaPorAir) annotation (Line(
-      points={{-84,-38},{96,-38},{96,-10},{129.5,-10}},
+      points={{-84,-34.1429},{94,-34.1429},{94,-10},{129.5,-10}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(heaCooSch.port_bRad, southBedroom.heaPorRad) annotation (Line(
-      points={{-84,-43},{96,-43},{96,-11.9},{129.5,-11.9}},
+      points={{-84,-41.8571},{96,-41.8571},{96,-11.9},{129.5,-11.9}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[13], heaCooSch.heaCooFlo) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-28},{-122,-28}},
+      points={{-139,90},{-132,90},{-132,-29},{-122.571,-29}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[20], heaCooSch.TSetHea) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-44},{-122,-44}},
+      points={{-139,90},{-132,90},{-132,-45.7143},{-122.571,-45.7143}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[27], heaCooSch.TSetCoo) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-50},{-122,-50}},
+      points={{-139,90},{-132,90},{-132,-53.4286},{-122.571,-53.4286}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[30], heaCooSch.schChoice) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-38},{-122,-38}},
+      points={{-139,90},{-132,90},{-132,-38},{-122.571,-38}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y, TairBou.T) annotation (Line(
@@ -168,6 +168,11 @@ equation
       smooth=Smooth.None));
   connect(port_a[21], southBedroom.surf_surBou[1]) annotation (Line(
       points={{-70,93.6667},{-20,93.6667},{-20,-60},{128.1,-60},{128.1,-17}},
+      color={191,0,0},
+      smooth=Smooth.None));
+  connect(heaCooSch.port_aTSet[1], southBedroom.heaPorAir) annotation (Line(
+      points={{-120,-49.5714},{-10,-49.5714},{-10,-50},{100,-50},{100,-10},{
+          129.5,-10}},
       color={191,0,0},
       smooth=Smooth.None));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,

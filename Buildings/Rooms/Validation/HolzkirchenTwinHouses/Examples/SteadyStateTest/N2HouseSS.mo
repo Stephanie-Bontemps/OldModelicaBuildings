@@ -1,7 +1,7 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Examples.SteadyStateTest;
 model N2HouseSS "Test of the model of the N2 House in Steaty State"
   extends Modelica.Icons.Example;
-  Houses.N2HouseModel N2House(
+  Houses.N2House.N2HouseModel1 N2House(
     NomFichierBlinds="D:/Berkeley Lab/Berkeley IEA58/N2BliPosExp1.txt",
     kCoo=0,
     kDooOpeKitLiv=0,
@@ -28,7 +28,7 @@ model N2HouseSS "Test of the model of the N2 House in Steaty State"
 
 equation
   connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-      points={{20,70},{38.75,70},{38.75,38.75}},
+      points={{20,70},{32.2222,70},{32.2222,34.4444}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

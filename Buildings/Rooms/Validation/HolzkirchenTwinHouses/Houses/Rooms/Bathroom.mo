@@ -1,26 +1,26 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
-model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length intWallOnNBedroomLgth = 2.07
-    "Length of the wall between bathroom and North bedroom";
-  parameter Modelica.SIunits.Length extWallEastLgth = 2.99
-    "Length of the external wall on the East";
-  parameter Modelica.SIunits.Length intWallOnSBedroomLgth = intWallOnNBedroomLgth
-    "Length of the wall between bathroom and South bedroom";
-  parameter Modelica.SIunits.Length doorOnCorridorLgth = 0.935
+model Bathroom "Model of the bathroom (bad WC) in Holzkirchen Twin Houses"
+  parameter Modelica.SIunits.Length lIntWalOnNorBed = 2.07
+    "Length of the wall between bathroom and north bedroom";
+  parameter Modelica.SIunits.Length lExtWalEas = 2.99
+    "Length of the external wall on the east";
+  parameter Modelica.SIunits.Length lIntWalOnSouBed = lIntWalOnNorBed
+    "Length of the wall between bathroom and south bedroom";
+  parameter Modelica.SIunits.Length lDooOnCor = 0.935
     "Length of the door between bathroom and corridor";
-  parameter Modelica.SIunits.Length doorOnCorridorHght = 1.98
+  parameter Modelica.SIunits.Length hDooOnCor = 1.98
     "Height of the door between bathroom and corridor";
-  parameter Modelica.SIunits.Length intWallOnCorridorLgth = extWallEastLgth - doorOnCorridorLgth
+  parameter Modelica.SIunits.Length lIntWalOnCor = lExtWalEas - lDooOnCor
     "Length of the wall between bathroom and corridor";
-
-  parameter Modelica.SIunits.Temperature Tini_int
+  parameter Modelica.SIunits.Temperature Tini_int = 293.15
     "Intial temperature in the room";
-  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
-  parameter Modelica.SIunits.Temperature Tini_bou
+  parameter Modelica.SIunits.Temperature Tini_ext = 293.15
+    "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
 
-  extends MixedAir(
-    AFlo=intWallOnNBedroomLgth*extWallEastLgth,
+  extends Buildings.Rooms.MixedAir(
+    AFlo=lIntWalOnNorBed*lExtWalEas,
     nConExt=0,
     nConExtWin=1,
     nConPar=0,
@@ -32,7 +32,7 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExtWin(
     layers = {extWallEBathroom},
-    A = {hRoo*extWallEastLgth},
+    A = {hRoo*lExtWalEas},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
     steadyStateInitial = {false},
@@ -46,13 +46,13 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     sidFin(h = {0}, gap = {0}, dep = {0.12})),
     datConBou(
     layers = {intWall2Bathroom, ceilingBathroom, groundBathroom},
-    A = {hRoo*intWallOnNBedroomLgth, AFlo, AFlo},
+    A = {hRoo*lIntWalOnNorBed, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {hRoo*intWallOnSBedroomLgth, (hRoo*intWallOnCorridorLgth+(hRoo-doorOnCorridorHght)*doorOnCorridorLgth), doorOnCorridorHght*doorOnCorridorLgth},
+    A = {hRoo*lIntWalOnSouBed, (hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.17, 0.6}),
@@ -60,15 +60,20 @@ model Bathroom "Model of the Bathroom (Bad WC) in Holzkirchen Twin Houses"
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
 
-  Data.OpaqueConstructions.Constructions.IntWall2 intWall2Bathroom
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall2
+                                                                                                        intWall2Bathroom
     annotation (Placement(transformation(extent={{420,-200},{440,-180}})));
-  Data.OpaqueConstructions.Constructions.ExtWallE extWallEBathroom
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallE
+                                                                                                        extWallEBathroom
     annotation (Placement(transformation(extent={{380,-200},{400,-180}})));
-  Data.OpaqueConstructions.Constructions.Ceiling ceilingBathroom
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ceiling
+                                                                                                        ceilingBathroom
     annotation (Placement(transformation(extent={{420,-160},{440,-140}})));
-  Data.OpaqueConstructions.Constructions.Ground groundBathroom
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ground
+                                                                                                        groundBathroom
     annotation (Placement(transformation(extent={{380,-160},{400,-140}})));
-  Data.GlazingSystems.Window windowBathroom(haveExteriorShade=true, shade=
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.Window
+                                                                                     windowBathroom(haveExteriorShade=true, shade=
         Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
 end Bathroom;

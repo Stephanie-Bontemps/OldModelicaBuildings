@@ -62,8 +62,11 @@ model KitchenSS
     lat=0.83555892609977,
     timZon=3600)
     annotation (Placement(transformation(extent={{80,60},{100,80}})));
-  Houses.BaseClasses.HeatingCoolingSchedule heaCooSch(kHea=0, kCoo=0)
-    annotation (Placement(transformation(extent={{-120,-56},{-84,-20}})));
+  Houses.BaseClasses.MultiHeatingCoolingSchedule
+                                            heaCooSch(        kCoo=0,
+    nRoo=1,
+    kHea=1e6)
+    annotation (Placement(transformation(extent={{-118,-56},{-82,-20}})));
   Modelica.Blocks.Sources.CombiTimeTable bliPos(
     final tableOnFile=true,
     final tableName="BliPos",
@@ -106,31 +109,27 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(heaCooSch.port_bCon, kitchen.heaPorAir) annotation (Line(
-      points={{-84,-33},{94,-33},{94,-10},{129.5,-10}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(heaCooSch.port_bTSet, kitchen.heaPorAir) annotation (Line(
-      points={{-84,-38},{96,-38},{96,-10},{129.5,-10}},
+      points={{-82,-34.1429},{94,-34.1429},{94,-10},{129.5,-10}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(heaCooSch.port_bRad, kitchen.heaPorRad) annotation (Line(
-      points={{-84,-43},{96,-43},{96,-11.9},{129.5,-11.9}},
+      points={{-82,-41.8571},{96,-41.8571},{96,-11.9},{129.5,-11.9}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[8], heaCooSch.heaCooFlo) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-29},{-122,-29}},
+      points={{-139,90},{-132,90},{-132,-29},{-120.571,-29}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[15], heaCooSch.TSetHea) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-44},{-122,-44}},
+      points={{-139,90},{-132,90},{-132,-45.7143},{-120.571,-45.7143}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[22], heaCooSch.TSetCoo) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-50},{-122,-50}},
+      points={{-139,90},{-132,90},{-132,-53.4286},{-120.571,-53.4286}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y[30], heaCooSch.schChoice) annotation (Line(
-      points={{-139,90},{-132,90},{-132,-38},{-122,-38}},
+      points={{-139,90},{-132,90},{-132,-38},{-120.571,-38}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenHeaCoo.y, TairBou.T) annotation (Line(
@@ -166,6 +165,11 @@ equation
   connect(bliPos.y[1], kitchen.uSha[1]) annotation (Line(
       points={{-139,50},{-10,50},{-10,-2},{119,-2}},
       color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCooSch.port_aTSet[1], kitchen.heaPorAir) annotation (Line(
+      points={{-118,-49.5714},{-10,-49.5714},{-10,-50},{100,-50},{100,-10},{
+          129.5,-10}},
+      color={191,0,0},
       smooth=Smooth.None));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
             -180},{180,180}}), graphics), Icon(coordinateSystem(

@@ -1,9 +1,8 @@
-within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses;
-model N2HouseModel "Model of the N2 Twin House"
+within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House;
+model N2SouthModel
+  "Model of the south part of the N2 Twin House (bathroom, corridor, south bedroom, living room) using Model6"
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
-  parameter Modelica.SIunits.Angle lat = 47.874 "Latitude";
-  parameter Modelica.SIunits.Length hRoo = 2.495 "Height under ceiling";
   parameter String nomFichierBouVenHeaCoo = "NoName"
     "File where ceiling and floor boundary conditions are stored with ventilation flow rates and temperatures, internal gains, heating and cooling power, temperatures set points for heating and cooling"
                                                                                                         annotation (Dialog(
@@ -13,112 +12,70 @@ model N2HouseModel "Model of the N2 Twin House"
     "File where the scenario of blinds position is stored"                                           annotation (Dialog(
         __Dymola_loadSelector(caption=
             "Select blinds position file")));
-
-  parameter Real kHea=1E6 "Gain value multiplied with input signal for heating"
-                                                                                annotation (Dialog(group="Heating and cooling schedules"));
-  parameter Real kCoo=-1E6
-    "Gain value multiplied with input signal for cooling"                        annotation (Dialog(group="Heating and cooling schedules"));
-
-  parameter Real kRadGaiKit=0
-    "Constant output value for radiative gains in the kitchen" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiKit=0
-    "Constant output value for convective heat gains in the kitchen" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiKit=0
-    "Constant output value for latent heat gains in the kitchen" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiLob=0
-    "Constant output value for radiative gains in the lobby" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiLob=0
-    "Constant output value for convective heat gains in the lobby" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiLob=0
-    "Constant output value for latent heat gains in the lobby" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiNorBed=0
-    "Constant output value for radiative gains in the North bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiNorBed=0
-    "Constant output value for convective heat gains in the North bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiNorBed=0
-    "Constant output value for latent heat gains in the North bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiCor=0
-    "Constant output value for radiative gains in the corridor" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiCor=0
-    "Constant output value for convective heat gains in the corridor" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiCor=0
-    "Constant output value for latent heat gains in the corridor" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiBat=0
-    "Constant output value for radiative gains in the bathroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiBat=0
-    "Constant output value for convective heat gains in the bathroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiBat=0
-    "Constant output value for latent heat gains in the bathroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiSouBed=0
-    "Constant output value for radiative gains in the South bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiSouBed=0
-    "Constant output value for convective heat gains in the South bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiSouBed=0
-    "Constant output value for latent heat gains in the South bedroom" annotation (Dialog(group="Internal gains"));
-  parameter Real kRadGaiLivRoo=0
-    "Constant output value for radiative gains in the living room" annotation (Dialog(group="Internal gains"));
-  parameter Real kConGaiLivRoo=0
-    "Constant output value for convective heat gains in the living room" annotation (Dialog(group="Internal gains"));
-  parameter Real kLatGaiLivRoo=0
-    "Constant output value for latent heat gains in the living room" annotation (Dialog(group="Internal gains"));
-
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilKitLiv=true
-    "Value of Boolean output for the kind of scenario for the door between kitchen and living room (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeKitLiv
-    "Constant output value to choose if the door is always open or closed between kitchen and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilLobLiv=true
-    "Value of Boolean output for the kind of scenario for the door between lobby and living room (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeLobLiv
-    "Constant output value to choose if the door is always open or closed between lobby and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilNthBedCor=true
-    "Value of Boolean output for the kind of scenario for the door between North bedroom and corridor (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeNthBedCor
-    "Constant output value to choose if the door is always open or closed between North bedroom and corridor(kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilBatCor=true
-    "Value of Boolean output for the kind of scenario for the door between bathroom and corridor(yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeBatCor
-    "Constant output value to choose if the door is always open or closed between bathroom and corridor (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilSthBedCor=true
-    "Value of Boolean output for the kind of scenario for the door between South bedroom and corridor (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeSthBedCor
-    "Constant output value to choose if the door is always open or closed between South bedroom and corridor (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilCorLiv=true
-    "Value of Boolean output for the kind of scenario for the door between corridor and living room (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Real kDooOpeCorLiv
-    "Constant output value to choose if the door is always open or closed between corridor and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
-                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
-  parameter Modelica.SIunits.Temperature Tini_int
+  parameter Modelica.SIunits.Angle lat = 0.83555892609977 "Latitude";
+  parameter Modelica.SIunits.Length hRoo = 2.495 "Height under ceiling";
+  parameter Modelica.SIunits.Temperature Tini_int = 293.15
     "Intial temperature in the room";
-  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
-  parameter Modelica.SIunits.Temperature Tini_bou
+  parameter Modelica.SIunits.Temperature Tini_ext = 293.15
+    "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
   parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of energy balance";
   parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of mass balance";
 
-  Rooms.LivingRoom livingRoom(redeclare package Medium = MediumA, nPorts=9,
-    Tini_int=Tini_int,
-    Tini_ext=Tini_ext,
-    Tini_bou=Tini_bou,
-    energyDynamics=energyDynamics,
-    massDynamics=massDynamics,
-    lat=lat,
-    hRoo=hRoo)
-    annotation (Placement(transformation(extent={{-20,-180},{0,-160}})));
+  parameter Real kHea=1E6 "Gain value multiplied with input signal for heating"
+                                                                                annotation (Dialog(group="Heating and cooling schedules"));
+  parameter Real kCoo=-1E6
+    "Gain value multiplied with input signal for cooling"                        annotation (Dialog(group="Heating and cooling schedules"));
 
-  Rooms.SouthBedroom southBedroom(redeclare package Medium = MediumA, nPorts=4,
+  parameter Real kRadGaiCor(unit = "W/m2")=0
+    "Constant value for radiative gains in the corridor" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kConGaiCor(unit = "W/m2")=0
+    "Constant value for convective gains in the corridor" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kLatGaiCor(unit = "W/m2")=0
+    "Constant value for latent gains in the corridor" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kRadGaiBat(unit = "W/m2")=0
+    "Constant value for radiative gains in the bathroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kConGaiBat(unit = "W/m2")=0
+    "Constant value for convective gains in the bathroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kLatGaiBat(unit = "W/m2")=0
+    "Constant value for latent gains in the bathroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kRadGaiSouBed(unit = "W/m2")=0
+    "Constant value for radiative gains in the south bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kConGaiSouBed(unit = "W/m2")=0
+    "Constant value for convective gains in the south bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kLatGaiSouBed(unit = "W/m2")=0
+    "Constant value for latent gains in the south bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kRadGaiLivRoo(unit = "W/m2")=0
+    "Constant value for radiative gains in the living room" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kConGaiLivRoo(unit = "W/m2")=0
+    "Constant value for convective gains in the living room" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Real kLatGaiLivRoo(unit = "W/m2")=0
+    "Constant value for latent gains in the living room" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+
+  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilBatCor=true
+    "Kind of scenario for the door between bathroom and corridor(yDooFil = true: constant value, yDooFil = false: time varying scenario)"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+  parameter Real kDooOpeBatCor = 0
+    "Constant value to choose if the door is always open or closed between bathroom and corridor (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilSthBedCor=true
+    "Kind of scenario for the door between south bedroom and corridor (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+  parameter Real kDooOpeSthBedCor = 0
+    "Constant value to choose if the door is always open or closed between south bedroom and corridor (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+  parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFilCorLiv=true
+    "Kind of scenario for the door between corridor and living room (yDooFil = true: constant value, yDooFil = false: time varying scenario)"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+  parameter Real kDooOpeCorLiv = 0
+    "Constant value to choose if the door is always open or closed between corridor and living room (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true"
+                                                                                                        annotation (Dialog(group="Open or closed door schedule"));
+
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.LivingRoom livingRoom(redeclare
+      package Medium =                                                                                           MediumA,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
@@ -126,8 +83,9 @@ model N2HouseModel "Model of the N2 Twin House"
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo)
-    annotation (Placement(transformation(extent={{180,-282},{200,-262}})));
-  Rooms.NorthBedroom northBedroom(redeclare package Medium = MediumA, nPorts=3,
+    annotation (Placement(transformation(extent={{60,-82},{80,-62}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.SouthBedroom southBedroom(redeclare
+      package Medium =                                                                                               MediumA,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
@@ -135,8 +93,9 @@ model N2HouseModel "Model of the N2 Twin House"
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo)
-    annotation (Placement(transformation(extent={{260,120},{280,140}})));
-  Rooms.Corridor corridor(redeclare package Medium = MediumA, nPorts=8,
+    annotation (Placement(transformation(extent={{180,-200},{200,-180}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.Corridor corridor(redeclare
+      package Medium =                                                                                       MediumA,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
@@ -144,8 +103,9 @@ model N2HouseModel "Model of the N2 Twin House"
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo)
-    annotation (Placement(transformation(extent={{40,20},{60,40}})));
-  Rooms.Bathroom bathroom(redeclare package Medium = MediumA, nPorts=4,
+    annotation (Placement(transformation(extent={{0,160},{20,180}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.Bathroom bathroom(redeclare
+      package Medium =                                                                                       MediumA,
     Tini_int=Tini_int,
     Tini_ext=Tini_ext,
     Tini_bou=Tini_bou,
@@ -153,29 +113,11 @@ model N2HouseModel "Model of the N2 Twin House"
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo)
-    annotation (Placement(transformation(extent={{220,-62},{240,-42}})));
-  Rooms.Kitchen kitchen(redeclare package Medium = MediumA, nPorts=3,
-    Tini_int=Tini_int,
-    Tini_ext=Tini_ext,
-    Tini_bou=Tini_bou,
-    energyDynamics=energyDynamics,
-    massDynamics=massDynamics,
-    lat=lat,
-    hRoo=hRoo)
-    annotation (Placement(transformation(extent={{-40,240},{-20,260}})));
-  Rooms.Lobby lobby(redeclare package Medium = MediumA, nPorts=3,
-    Tini_int=Tini_int,
-    Tini_ext=Tini_ext,
-    Tini_bou=Tini_bou,
-    energyDynamics=energyDynamics,
-    massDynamics=massDynamics,
-    lat=lat,
-    hRoo=hRoo)
-    annotation (Placement(transformation(extent={{100,180},{120,200}})));
-  BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
-        transformation(extent={{280,300},{300,320}}),
-                                                    iconTransformation(extent={{280,300},
-            {300,320}})));
+    annotation (Placement(transformation(extent={{120,40},{140,60}})));
+  Buildings.BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
+        transformation(extent={{238,240},{258,260}}),
+                                                    iconTransformation(extent={{238,240},
+            {258,260}})));
   Modelica.Blocks.Sources.CombiTimeTable bliPos(
     final tableOnFile=true,
     final fileName=
@@ -184,53 +126,49 @@ model N2HouseModel "Model of the N2 Twin House"
     final tableName="BliPos",
     smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
-    columns=2:8) "Scenario of the blinds position applied on the South windows"
-    annotation (Placement(transformation(extent={{-340,200},{-320,220}})));
+    columns=2:8) "Scenario of the blinds position applied on the south windows"
+    annotation (Placement(transformation(extent={{-240,60},{-220,80}})));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairBou[3]
-    annotation (Placement(transformation(extent={{-262,280},{-242,300}})));
+    annotation (Placement(transformation(extent={{-180,220},{-160,240}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_a[3]
-    annotation (Placement(transformation(extent={{-220,280},{-200,300}})));
+    annotation (Placement(transformation(extent={{-140,220},{-120,240}})));
 
-  Modelica.Blocks.Sources.CombiTimeTable bouVenHeaCoo(
+  Modelica.Blocks.Sources.CombiTimeTable bouVenIntGain(
     final tableOnFile=true,
     smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
-    final tableName="BouVenHeaCoo",
+    final tableName="BouVenIntGai",
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
-        nomFichierBouVenHeaCoo),
-    columns=2:31)
-    "Boundary conditions for ceiling (1 for East, 2 for West) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); Heating or cooling power for the different rooms (8: kitchen, 9: lobby, 10: North bedroom, 11: corridor, 12: bathroom, 13: South bedroom, 14: living room); heating temperature set point for the different rooms (15: kitchen, 16: lobby, 17: North bedroom, 18: corridor, 19: bathroom, 20: South bedroom, 21: living room); cooling temperature set point for the different rooms (22: kitchen, 23: lobby, 24: North bedroom, 25: corridor, 26: bathroom, 27: South bedroom, 28: living room); internal gains in the kitchen (29); scenario type (30)"
-    annotation (Placement(transformation(extent={{-340,280},{-320,300}})));
+        nomFichierBouVenIntGai),
+    columns=2:9)
+    "Boundary conditions for ceiling (1 for east, 2 for west) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); internal gains in the kitchen (8)"
+    annotation (Placement(transformation(extent={{-240,220},{-220,240}})));
 
-  BaseClasses.MultiThermalBridge mulTherBri(
-    gKit=4.860,
-    gLob=4.130,
-    gNorBed=5.976,
-    gCor=2.469,
-    gBat=3.313,
-    gSouBed=5.752,
-    gLivRoo=10.579)
-    annotation (Placement(transformation(extent={{-320,20},{-300,40}})));
-  Fluid.Sources.MassFlowSource_T venLivRoo(
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge2
+                                                                                          mulTherBri(gExt={1.750,0.869,2.024,0.996,1.968,
+        4.383},
+    gEasCei={0.532,1.464,0.865,0.812,1.405,1.127},
+    gWesCei={1.169,0.610,1.123},
+    gCel={1.941,2.118,2.489,1.604,1.505,2.379,3.945})
+    annotation (Placement(transformation(extent={{-80,220},{-60,240}})));
+  Buildings.Fluid.Sources.MassFlowSource_T venLivRoo(
     redeclare package Medium = MediumA,
     use_m_flow_in=true,
-    use_T_in=true,
-    nPorts=1) "Supply ventilation in the living room"
-    annotation (Placement(transformation(extent={{-260,-160},{-240,-140}})));
-  Fluid.Sources.MassFlowSource_T venSouBed(
-    nPorts=1,
+    use_T_in=true) "Supply ventilation in the living room"
+    annotation (Placement(transformation(extent={{-180,180},{-160,200}})));
+  Buildings.Fluid.Sources.MassFlowSource_T venSouBed(
     redeclare package Medium = MediumA,
     use_m_flow_in=true,
-    use_T_in=true) "Ventilation extraction in the South bedroom"
-    annotation (Placement(transformation(extent={{-220,-200},{-200,-180}})));
-  Fluid.Sources.MassFlowSource_T venBat(
-    nPorts=1,
+    use_T_in=true) "Ventilation extraction in the south bedroom"
+    annotation (Placement(transformation(extent={{-140,160},{-120,180}})));
+  Buildings.Fluid.Sources.MassFlowSource_T venBat(
     redeclare package Medium = MediumA,
     use_m_flow_in=true,
     use_T_in=true) "Ventilation extraction in the bathroom"
-    annotation (Placement(transformation(extent={{-220,-240},{-200,-220}})));
-  BaseClasses.MultiEffectiveAirLeakageArea mulAirLea(
+    annotation (Placement(transformation(extent={{-140,120},{-120,140}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiEffectiveAirLeakageArea
+                                                                                                   mulAirLea(
     redeclare package MediumB = MediumA,
     sNor=1,
     sEas=1,
@@ -243,879 +181,401 @@ model N2HouseModel "Model of the N2 Twin House"
     lSouBed=1.71e-04,
     lLivRoo1=6.10e-04,
     lLivRoo2=1.71e-04)
-    annotation (Placement(transformation(extent={{-320,-40},{-300,-20}})));
-  BaseClasses.InternalGains intGaiLob(
-    kRadGai=kRadGaiLob,
-    kConGai=kConGaiLob,
-    kLatGai=kLatGaiLob)
-    annotation (Placement(transformation(extent={{60,220},{80,240}})));
-  BaseClasses.InternalGains intGaiNorBed(
-    kRadGai=kRadGaiNorBed,
-    kConGai=kConGaiNorBed,
-    kLatGai=kLatGaiNorBed)
-    annotation (Placement(transformation(extent={{220,160},{240,180}})));
-  BaseClasses.InternalGains intGaiCor(
+    annotation (Placement(transformation(extent={{-240,20},{-220,40}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.InternalGains
+                                                                                    intGaiCor(
     kRadGai=kRadGaiCor,
     kConGai=kConGaiCor,
     kLatGai=kLatGaiCor)
-    annotation (Placement(transformation(extent={{0,60},{20,80}})));
-  BaseClasses.InternalGains intGaiBat(
+    annotation (Placement(transformation(extent={{-40,180},{-20,200}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.InternalGains
+                                                                                    intGaiBat(
     kRadGai=kRadGaiBat,
     kConGai=kConGaiBat,
     kLatGai=kLatGaiBat)
-    annotation (Placement(transformation(extent={{180,-30},{200,-10}})));
-  BaseClasses.InternalGains intGaiLivRoo(
+    annotation (Placement(transformation(extent={{80,60},{100,80}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.InternalGains
+                                                                                    intGaiLivRoo(
     kRadGai=kRadGaiLivRoo,
     kConGai=kConGaiLivRoo,
     kLatGai=kLatGaiLivRoo)
-    annotation (Placement(transformation(extent={{-60,-140},{-40,-120}})));
-  BaseClasses.InternalGains intGaiSouBed(
+    annotation (Placement(transformation(extent={{20,-62},{40,-42}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.InternalGains
+                                                                                    intGaiSouBed(
     kRadGai=kRadGaiSouBed,
     kConGai=kConGaiSouBed,
     kLatGai=kLatGaiSouBed)
-    annotation (Placement(transformation(extent={{140,-226},{160,-206}})));
-  BaseClasses.InternalGains intGaiKit(
-    kRadGai=kRadGaiKit,
-    kConGai=kConGaiKit,
-    kLatGai=kLatGaiKit,
-    yConGai=false)
-    annotation (Placement(transformation(extent={{-78,280},{-58,300}})));
+    annotation (Placement(transformation(extent={{140,-180},{160,-160}})));
   Modelica.Blocks.Math.Division divOutVen
     "Extraction volume distributed equally to both exhaust ducts"
-    annotation (Placement(transformation(extent={{-260,-300},{-240,-280}})));
+    annotation (Placement(transformation(extent={{-180,140},{-160,160}})));
   Modelica.Blocks.Sources.Constant const(k=-2)
-    annotation (Placement(transformation(extent={{-320,-300},{-300,-280}})));
-  BaseClasses.OpenOrClosedDoor dooKitLiv(
-    redeclare package MediumB = MediumA,
-    yDooFil=yDooFilKitLiv,
-    kDooOpe=kDooOpeKitLiv) "Door between kitchen and living room"
-    annotation (Placement(transformation(extent={{-142,40},{-122,60}})));
-  BaseClasses.OpenOrClosedDoor dooLobLiv(
-    yDooFil=yDooFilLobLiv,
-    kDooOpe=kDooOpeLobLiv,
-    redeclare package MediumB = MediumA) "Door between lobby and living room"
-    annotation (Placement(transformation(extent={{-60,40},{-40,60}})));
-  BaseClasses.OpenOrClosedDoor dooNthBedCor(
-    redeclare package MediumB = MediumA,
-    yDooFil=yDooFilNthBedCor,
-    kDooOpe=kDooOpeNthBedCor) "Door between North bedroom and corridor"
-    annotation (Placement(transformation(extent={{120,40},{140,60}})));
-  BaseClasses.OpenOrClosedDoor dooBatCor(
-    redeclare package MediumB = MediumA,
-    yDooFil=yDooFilBatCor,
-    kDooOpe=kDooOpeBatCor) "Door between bathroom and corridor"
-    annotation (Placement(transformation(extent={{120,-40},{140,-20}})));
-  BaseClasses.OpenOrClosedDoor dooSthBedCor(
-    redeclare package MediumB = MediumA,
-    yDooFil=yDooFilSthBedCor,
-    kDooOpe=kDooOpeSthBedCor) "Door between South bedroom and corridor"
-    annotation (Placement(transformation(extent={{80,-120},{100,-100}})));
-  BaseClasses.OpenOrClosedDoor dooCorLiv(
-    redeclare package MediumB = MediumA,
-    yDooFil=yDooFilCorLiv,
-    kDooOpe=kDooOpeCorLiv) "Door between corridor and living room"
-    annotation (Placement(transformation(extent={{0,-120},{20,-100}})));
-  BaseClasses.MultiHeatingCoolingSchedule mulHeaCooSch(kHea=kHea, kCoo=kCoo)
-    annotation (Placement(transformation(extent={{-300,80},{-280,100}})));
+    annotation (Placement(transformation(extent={{-240,140},{-220,160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiHeatingCoolingSchedule
+                                                                                                  mulHeaCooSch(kHea=kHea, kCoo=kCoo)
+    annotation (Placement(transformation(extent={{-180,100},{-160,120}})));
 
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b Tair[7]
     "Air temperature in the different rooms"
-    annotation (Placement(transformation(extent={{340,170},{360,190}})));
+    annotation (Placement(transformation(extent={{240,140},{260,160}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b Trad[7]
     "Radiative temperature in the different rooms"
-    annotation (Placement(transformation(extent={{340,-190},{360,-170}})));
+    annotation (Placement(transformation(extent={{240,-160},{260,-140}})));
+  Modelica.Blocks.Sources.CombiTimeTable heaCoo(
+    final tableOnFile=true,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
+    final tableName="HeaCoo",
+    final fileName=
+        Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
+        nomFichierHeaCoo),
+    columns=2:23)
+    "Heating or cooling power for the different rooms (1: kitchen, 2: lobby, 3: north bedroom, 4: corridor, 5: bathroom, 6: south bedroom, 7: living room); heating temperature set point for the different rooms (8: kitchen, 9: lobby, 10: north bedroom, 11: corridor, 12: bathroom, 13: south bedroom, 14: living room); cooling temperature set point for the different rooms (15: kitchen, 16: lobby, 17: north bedroom, 18: corridor, 19: bathroom, 20: south bedroom, 21: living room); scenario type (22)"
+    annotation (Placement(transformation(extent={{-240,100},{-220,120}})));
+  Modelica.Blocks.Sources.CombiTimeTable bouOthRoo(
+    final tableOnFile=true,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
+    final tableName="BouOthRoo",
+    final fileName=
+        Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
+        nomFichierBouOthRoo),
+    columns=2:5)
+    "Measured temperature in the other rooms around the studied rooms"
+    annotation (Placement(transformation(extent={{-240,-20},{-220,0}})));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairOthRoo[3]
+    annotation (Placement(transformation(extent={{-180,-20},{-160,0}})));
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_a1[3]
+    annotation (Placement(transformation(extent={{-140,-20},{-120,0}})));
+  Airflow.Multizone.Orifice           oriLob(redeclare package Medium = MediumA, A=1e-6)
+    "Orifice modelling the door between the lobby and the living room"
+    annotation (Placement(transformation(extent={{-140,-100},{-120,-80}})));
+protected
+  Fluid.Sources.Boundary_pT           bouLivRoo(nPorts=1, use_T_in=true,
+    redeclare package Medium = MediumA)
+    "Boundary conditions in the living room"
+    annotation (Placement(transformation(extent={{-180,-100},{-160,-80}})));
+public
+  Airflow.Multizone.Orifice           oriLob1(
+                                             redeclare package Medium = MediumA, A=1e-6)
+    "Orifice modelling the door between the lobby and the living room"
+    annotation (Placement(transformation(extent={{-140,-140},{-120,-120}})));
+protected
+  Fluid.Sources.Boundary_pT           bouLivRoo1(
+                                                nPorts=1, use_T_in=true,
+    redeclare package Medium = MediumA)
+    "Boundary conditions in the living room"
+    annotation (Placement(transformation(extent={{-180,-140},{-160,-120}})));
+public
+  Airflow.Multizone.Orifice           oriLob2(
+                                             redeclare package Medium = MediumA, A=1e-6)
+    "Orifice modelling the door between the lobby and the living room"
+    annotation (Placement(transformation(extent={{-140,-60},{-120,-40}})));
+protected
+  Fluid.Sources.Boundary_pT           bouLivRoo2(
+                                                nPorts=1, use_T_in=true,
+    redeclare package Medium = MediumA)
+    "Boundary conditions in the living room"
+    annotation (Placement(transformation(extent={{-180,-60},{-160,-40}})));
+public
+  Airflow.Multizone.DoorDiscretizedOpen doo
+    annotation (Placement(transformation(extent={{-20,100},{0,120}})));
+  Airflow.Multizone.DoorDiscretizedOpen doo1
+    annotation (Placement(transformation(extent={{128,-6},{148,14}})));
+  Airflow.Multizone.DoorDiscretizedOpen doo2
+    annotation (Placement(transformation(extent={{106,-116},{126,-96}})));
 equation
-  connect(kitchen.weaBus, weaBus) annotation (Line(
-      points={{-21.05,258.95},{-21.05,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(lobby.weaBus, weaBus) annotation (Line(
-      points={{118.95,198.95},{118.95,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(northBedroom.weaBus, weaBus) annotation (Line(
-      points={{278.95,138.95},{278.95,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(southBedroom.weaBus, weaBus) annotation (Line(
-      points={{198.95,-263.05},{198.95,-142},{300,-142},{300,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(livingRoom.weaBus, weaBus) annotation (Line(
-      points={{-1.05,-161.05},{-1.05,-142},{300,-142},{300,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(kitchen.surf_conBou[1], lobby.surf_surBou[3]) annotation (Line(
-      points={{-27,241.667},{-60,241.667},{-60,160},{108.1,160},{108.1,183.333}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(kitchen.surf_surBou[1], livingRoom.surf_conBou[1]) annotation (Line(
-      points={{-31.9,242.75},{-31.9,-200},{-6,-200},{-6,-190},{-7,-190},{-7,
-          -178.45}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(kitchen.surf_surBou[2], livingRoom.surf_conBou[2]) annotation (Line(
-      points={{-31.9,243.25},{-31.9,-200},{-6,-200},{-6,-190},{-7,-190},{-7,
-          -178.35}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(lobby.surf_conBou[1], northBedroom.surf_surBou[5]) annotation (Line(
-      points={{113,181.667},{80,181.667},{80,100},{268.1,100},{268.1,123.4}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(lobby.surf_surBou[1], livingRoom.surf_conBou[3]) annotation (Line(
-      points={{108.1,182.667},{108.1,-8},{108,-8},{108,-200},{-7,-200},{-7,
-          -178.25}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(lobby.surf_surBou[2], livingRoom.surf_conBou[4]) annotation (Line(
-      points={{108.1,183},{108.1,-2},{108,-2},{108,-200},{-7,-200},{-7,-178.15}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.surf_surBou[1], bathroom.surf_conBou[1]) annotation (
-      Line(
-      points={{268.1,122.6},{268.1,22},{268,22},{268,-80},{233,-80},{233,
-          -60.3333}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.surf_surBou[2], corridor.surf_conBou[1]) annotation (
-      Line(
-      points={{268.1,122.8},{268.1,62},{268,62},{268,0},{53,0},{53,21.5833}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.surf_surBou[3], corridor.surf_conBou[2]) annotation (
-      Line(
-      points={{268.1,123},{268.1,62},{268,62},{268,0},{53,0},{53,21.75}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bathroom.surf_surBou[2], corridor.surf_conBou[3]) annotation (Line(
-      points={{228.1,-59},{228.1,-70},{228,-70},{228,-80},{53,-80},{53,21.9167}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bathroom.surf_surBou[3], corridor.surf_conBou[4]) annotation (Line(
-      points={{228.1,-58.6667},{228.1,-70},{228,-70},{228,-80},{53,-80},{53,
-          22.0833}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.surf_surBou[1], southBedroom.surf_conBou[1]) annotation (
-      Line(
-      points={{48.1,22.625},{48.1,-300},{194,-300},{194,-290},{193,-290},{193,
-          -280.4}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.surf_surBou[2], southBedroom.surf_conBou[2]) annotation (
-      Line(
-      points={{48.1,22.875},{48.1,-300},{194,-300},{194,-290},{193,-290},{193,
-          -280.2}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.surf_surBou[3], livingRoom.surf_conBou[6]) annotation (Line(
-      points={{48.1,23.125},{48.1,-88},{48,-88},{48,-200},{-7,-200},{-7,-177.95}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.surf_surBou[4], livingRoom.surf_conBou[7]) annotation (Line(
-      points={{48.1,23.375},{48.1,-88},{48,-88},{48,-200},{-7,-200},{-7,-177.85}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(southBedroom.surf_surBou[1], livingRoom.surf_conBou[8]) annotation (
-      Line(
-      points={{188.1,-279},{188.1,-288},{188,-288},{188,-300},{-7,-300},{-7,
-          -177.75}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[1], northBedroom.surf_conBou[1]) annotation (Line(
-      points={{-210,283.333},{-206,283.333},{-206,284},{-200,284},{-200,100},{
-          272,100},{272,110},{273,110},{273,121.75}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], northBedroom.surf_conBou[2]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,100},{273,100},{273,122.25}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[1], corridor.surf_conBou[5]) annotation (Line(
-      points={{-210,283.333},{-200,283.333},{-200,0},{54,0},{54,12},{53,12},{53,
-          22.25}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], corridor.surf_conBou[6]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,0},{54,0},{54,12},{53,12},{53,
-          22.4167}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[1], bathroom.surf_conBou[2]) annotation (Line(
-      points={{-210,283.333},{-200,283.333},{-200,-80},{234,-80},{234,-60},{233,
-          -60}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], bathroom.surf_conBou[3]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,-80},{234,-80},{234,-70},{233,
-          -70},{233,-59.6667}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[1], southBedroom.surf_conBou[4]) annotation (Line(
-      points={{-210,283.333},{-200,283.333},{-200,-300},{194,-300},{194,-290},{
-          193,-290},{193,-279.8}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], southBedroom.surf_conBou[5]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,-300},{194,-300},{194,-290},{
-          193,-290},{193,-279.6}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[2], livingRoom.surf_conBou[9]) annotation (Line(
-      points={{-210,290},{-200,290},{-200,-200},{-6,-200},{-6,-184},{-7,-184},{
-          -7,-177.65}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], livingRoom.surf_conBou[10]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,-200},{-6,-200},{-6,-190},{-7,
-          -190},{-7,-177.55}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bathroom.weaBus, weaBus) annotation (Line(
-      points={{238.95,-43.05},{238.95,80},{300,80},{300,310},{290,310}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}}));
-  connect(mulTherBri.port_b[1], kitchen.heaPorAir) annotation (Line(
-      points={{-300,29.1429},{-280,29.1429},{-280,30},{-240,30},{-240,250},{
-          -30.5,250}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[2], lobby.heaPorAir) annotation (Line(
-      points={{-300,29.4286},{-280,29.4286},{-280,30},{-240,30},{-240,190},{
-          109.5,190}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[3], northBedroom.heaPorAir) annotation (Line(
-      points={{-300,29.7143},{-280,29.7143},{-280,30},{-240,30},{-240,130},{
-          269.5,130}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[4], corridor.heaPorAir) annotation (Line(
-      points={{-300,30},{49.5,30}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[5], bathroom.heaPorAir) annotation (Line(
-      points={{-300,30.2857},{-270,30.2857},{-270,30},{-240,30},{-240,-52},{
-          229.5,-52}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[7], livingRoom.heaPorAir) annotation (Line(
-      points={{-300,30.8571},{-270,30.8571},{-270,30},{-240,30},{-240,-170},{
-          -10.5,-170}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulTherBri.port_b[6], southBedroom.heaPorAir) annotation (Line(
-      points={{-300,30.5714},{-240,30.5714},{-240,-272},{189.5,-272}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(weaBus, corridor.weaBus) annotation (Line(
-      points={{290,310},{300,310},{300,80},{58.95,80},{58.95,38.95}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%first",
-      index=-1,
-      extent={{-6,3},{-6,3}}));
-  connect(weaBus,mulTherBri. weaBus) annotation (Line(
-      points={{290,310},{-360,310},{-360,30},{-319,30}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None), Text(
-      string="%first",
-      index=-1,
-      extent={{-6,3},{-6,3}}));
   connect(weaBus, mulAirLea.weaBus) annotation (Line(
-      points={{290,310},{-360,310},{-360,-30},{-319,-30}},
+      points={{248,250},{-250,250},{-250,30},{-239,30}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
       string="%first",
       index=-1,
       extent={{-6,3},{-6,3}}));
-  connect(bathroom.surf_surBou[1], southBedroom.surf_conBou[3]) annotation (
-      Line(
-      points={{228.1,-59.3333},{228.1,-180},{228,-180},{228,-300},{193,-300},{
-          193,-280}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.surf_surBou[4], livingRoom.surf_conBou[5]) annotation (
-      Line(
-      points={{268.1,123.2},{268.1,-48},{268,-48},{268,-200},{-7,-200},{-7,
-          -178.05}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], lobby.surf_conBou[3]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,160},{114,160},{114,172},{113,
-          172},{113,182.333}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[2], lobby.surf_conBou[2]) annotation (Line(
-      points={{-210,290},{-200,290},{-200,160},{114,160},{114,172},{113,172},{
-          113,182}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[2], kitchen.surf_conBou[2]) annotation (Line(
-      points={{-210,290},{-200,290},{-200,220},{-27,220},{-27,242}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(port_a[3], kitchen.surf_conBou[3]) annotation (Line(
-      points={{-210,296.667},{-200,296.667},{-200,220},{-27,220},{-27,242.333}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulAirLea.ports_b[1], kitchen.ports[1]) annotation (Line(
-      points={{-301,-33.4286},{-280,-33.4286},{-280,-32},{-260,-32},{-260,
-          243.667},{-37.5,243.667}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(lobby.ports[1], mulAirLea.ports_b[2]) annotation (Line(
-      points={{102.5,183.667},{-260,183.667},{-260,-32},{-280,-32},{-280,
-          -32.2857},{-301,-32.2857}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(northBedroom.ports[1], mulAirLea.ports_b[3]) annotation (Line(
-      points={{262.5,123.667},{-260,123.667},{-260,-32},{-280,-32},{-280,
-          -31.1429},{-301,-31.1429}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(bathroom.ports[1], mulAirLea.ports_b[4]) annotation (Line(
-      points={{222.5,-58.5},{-260,-58.5},{-260,-32},{-301,-32},{-301,-30}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(southBedroom.ports[1], mulAirLea.ports_b[5]) annotation (Line(
-      points={{182.5,-278.5},{2,-278.5},{2,-278},{-260,-278},{-260,-32},{-301,
-          -32},{-301,-28.8571}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[1], mulAirLea.ports_b[6]) annotation (Line(
-      points={{-17.5,-176.778},{-138,-176.778},{-138,-176},{-260,-176},{-260,
-          -32},{-301,-32},{-301,-27.7143}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[2], mulAirLea.ports_b[7]) annotation (Line(
-      points={{-17.5,-176.333},{-138,-176.333},{-138,-176},{-260,-176},{-260,
-          -32},{-301,-32},{-301,-26.5714}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(intGaiKit.intGai, kitchen.qGai_flow) annotation (Line(
-      points={{-57,290},{-52,290},{-52,254},{-41,254}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(intGaiLob.intGai, lobby.qGai_flow) annotation (Line(
-      points={{81,230},{90,230},{90,194},{99,194}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(intGaiNorBed.intGai, northBedroom.qGai_flow) annotation (Line(
-      points={{241,170},{250,170},{250,134},{259,134}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(intGaiCor.intGai, corridor.qGai_flow) annotation (Line(
-      points={{21,70},{30,70},{30,34},{39,34}},
+      points={{-19,190},{-12,190},{-12,174},{-1,174}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(intGaiBat.intGai, bathroom.qGai_flow) annotation (Line(
-      points={{201,-20},{210,-20},{210,-48},{219,-48}},
+      points={{101,70},{112,70},{112,54},{119,54}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(intGaiLivRoo.intGai, livingRoom.qGai_flow) annotation (Line(
-      points={{-39,-130},{-30,-130},{-30,-166},{-21,-166}},
+      points={{41,-52},{48,-52},{48,-68},{59,-68}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(intGaiSouBed.intGai, southBedroom.qGai_flow) annotation (Line(
-      points={{161,-216},{170,-216},{170,-268},{179,-268}},
+      points={{161,-170},{170,-170},{170,-186},{179,-186}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[1], TairBou[1].T) annotation (Line(
-      points={{-319,290},{-264,290}},
+  connect(bouVenIntGain.y[1], TairBou[1].T) annotation (Line(
+      points={{-219,230},{-182,230}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[2], TairBou[2].T) annotation (Line(
-      points={{-319,290},{-264,290}},
+  connect(bouVenIntGain.y[2], TairBou[2].T) annotation (Line(
+      points={{-219,230},{-182,230}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[3], TairBou[3].T) annotation (Line(
-      points={{-319,290},{-264,290}},
+  connect(bouVenIntGain.y[3], TairBou[3].T) annotation (Line(
+      points={{-219,230},{-182,230}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(TairBou.port, port_a) annotation (Line(
-      points={{-242,290},{-210,290}},
+      points={{-160,230},{-130,230}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(venLivRoo.ports[1], livingRoom.ports[3]) annotation (Line(
-      points={{-240,-150},{-180,-150},{-180,-175.889},{-17.5,-175.889}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(venSouBed.ports[1], southBedroom.ports[2]) annotation (Line(
-      points={{-200,-190},{-180,-190},{-180,-278},{2,-278},{2,-277.5},{182.5,
-          -277.5}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(venBat.ports[1], bathroom.ports[2]) annotation (Line(
-      points={{-200,-230},{180,-230},{180,-57.5},{222.5,-57.5}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[4], venLivRoo.T_in) annotation (Line(
-      points={{-319,290},{-280,290},{-280,-146},{-262,-146}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[5], venSouBed.T_in) annotation (Line(
-      points={{-319,290},{-280,290},{-280,-186},{-222,-186}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[5], venBat.T_in) annotation (Line(
-      points={{-319,290},{-280,290},{-280,-226},{-222,-226}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[6], venLivRoo.m_flow_in) annotation (Line(
-      points={{-319,290},{-280,290},{-280,-142},{-260,-142}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(divOutVen.y, venBat.m_flow_in) annotation (Line(
-      points={{-239,-290},{-230,-290},{-230,-222},{-220,-222}},
+      points={{-159,150},{-150,150},{-150,138},{-140,138}},
       color={0,0,127},
-      smooth=Smooth.None));
-  connect(kitchen.ports[2], dooKitLiv.port_a1) annotation (Line(
-      points={{-37.5,245},{-160,245},{-160,56},{-142,56}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(kitchen.ports[3], dooKitLiv.port_b2) annotation (Line(
-      points={{-37.5,246.333},{-160,246.333},{-160,44},{-142,44}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooKitLiv.port_b1, livingRoom.ports[4]) annotation (Line(
-      points={{-122,56},{-100,56},{-100,-176},{-22,-176},{-22,-175.444},{-17.5,
-          -175.444}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooKitLiv.port_a2, livingRoom.ports[5]) annotation (Line(
-      points={{-122,44},{-100,44},{-100,-175},{-17.5,-175}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[1], dooCorLiv.port_b1) annotation (Line(
-      points={{42.5,23.25},{34,23.25},{34,-104},{20,-104}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[2], dooCorLiv.port_a2) annotation (Line(
-      points={{42.5,23.75},{34,23.75},{34,-116},{20,-116}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[6], dooCorLiv.port_a1) annotation (Line(
-      points={{-17.5,-174.556},{-26,-174.556},{-26,-104},{0,-104}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[7], dooCorLiv.port_b2) annotation (Line(
-      points={{-17.5,-174.111},{-26,-174.111},{-26,-116},{0,-116}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooNthBedCor.port_b1, northBedroom.ports[2]) annotation (Line(
-      points={{140,56},{220,56},{220,125},{262.5,125}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooNthBedCor.port_a2, northBedroom.ports[3]) annotation (Line(
-      points={{140,44},{220,44},{220,126.333},{262.5,126.333}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[3], dooNthBedCor.port_a1) annotation (Line(
-      points={{42.5,24.25},{72,24.25},{72,24},{100,24},{100,56},{120,56}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[4], dooNthBedCor.port_b2) annotation (Line(
-      points={{42.5,24.75},{72,24.75},{72,24},{100,24},{100,44},{120,44}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooBatCor.port_b1, bathroom.ports[3]) annotation (Line(
-      points={{140,-24},{156,-24},{156,-56.5},{222.5,-56.5}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooBatCor.port_a2, bathroom.ports[4]) annotation (Line(
-      points={{140,-36},{156,-36},{156,-56},{190,-56},{190,-55.5},{222.5,-55.5}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[5], dooBatCor.port_a1) annotation (Line(
-      points={{42.5,25.25},{42.5,0},{42,0},{42,-24},{120,-24}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[6], dooBatCor.port_b2) annotation (Line(
-      points={{42.5,25.75},{42.5,-36},{120,-36}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(southBedroom.ports[3], dooSthBedCor.port_b1) annotation (Line(
-      points={{182.5,-276.5},{182,-276.5},{182,-278},{120,-278},{120,-104},{100,
-          -104}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(southBedroom.ports[4], dooSthBedCor.port_a2) annotation (Line(
-      points={{182.5,-275.5},{182.5,-274},{120,-274},{120,-116},{100,-116}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[7], dooSthBedCor.port_a1) annotation (Line(
-      points={{42.5,26.25},{42.5,-38},{42,-38},{42,-104},{80,-104}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(corridor.ports[8], dooSthBedCor.port_b2) annotation (Line(
-      points={{42.5,26.75},{42.5,-116},{80,-116}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[8], dooLobLiv.port_a1) annotation (Line(
-      points={{-17.5,-173.667},{-80,-173.667},{-80,56},{-60,56}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(livingRoom.ports[9], dooLobLiv.port_b2) annotation (Line(
-      points={{-17.5,-173.222},{-80,-173.222},{-80,44},{-60,44}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooLobLiv.port_b1, lobby.ports[2]) annotation (Line(
-      points={{-40,56},{-10,56},{-10,185},{102.5,185}},
-      color={0,127,255},
-      smooth=Smooth.None));
-  connect(dooLobLiv.port_a2, lobby.ports[3]) annotation (Line(
-      points={{-40,44},{-10,44},{-10,186.333},{102.5,186.333}},
-      color={0,127,255},
       smooth=Smooth.None));
   connect(const.y, divOutVen.u2) annotation (Line(
-      points={{-299,-290},{-286,-290},{-286,-296},{-262,-296}},
+      points={{-219,150},{-206,150},{-206,144},{-182,144}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(divOutVen.y, venSouBed.m_flow_in) annotation (Line(
-      points={{-239,-290},{-230,-290},{-230,-182},{-220,-182}},
+      points={{-159,150},{-150,150},{-150,178},{-140,178}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[7], divOutVen.u1) annotation (Line(
-      points={{-319,290},{-280,290},{-280,-284},{-262,-284}},
+  connect(heaCoo.y[1], mulHeaCooSch.heaCooFlo[1]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,113.776},{-181.429,113.776}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[1], kitchen.heaPorAir) annotation (Line(
-      points={{-280,91.5306},{-270,91.5306},{-270,92},{-240,92},{-240,250},{
-          -30.5,250}},
+  connect(heaCoo.y[2], mulHeaCooSch.heaCooFlo[2]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,114.184},{-181.429,114.184}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[3], mulHeaCooSch.heaCooFlo[3]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,114.592},{-181.429,114.592}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[4], mulHeaCooSch.heaCooFlo[4]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,115},{-181.429,115}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[5], mulHeaCooSch.heaCooFlo[5]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,115.408},{-181.429,115.408}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[6], mulHeaCooSch.heaCooFlo[6]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,115.816},{-181.429,115.816}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[7], mulHeaCooSch.heaCooFlo[7]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,116.224},{-181.429,116.224}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[8], mulHeaCooSch.TSetHea[1]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,104.49},{-181.429,104.49}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[9], mulHeaCooSch.TSetHea[2]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,104.898},{-181.429,104.898}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[10], mulHeaCooSch.TSetHea[3]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,105.306},{-181.429,105.306}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[11], mulHeaCooSch.TSetHea[4]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,105.714},{-181.429,105.714}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[12], mulHeaCooSch.TSetHea[5]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,106.122},{-181.429,106.122}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[13], mulHeaCooSch.TSetHea[6]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,106.531},{-181.429,106.531}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[14], mulHeaCooSch.TSetHea[7]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,106.939},{-181.429,106.939}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[15], mulHeaCooSch.TSetCoo[1]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,100.204},{-181.429,100.204}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[16], mulHeaCooSch.TSetCoo[2]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,100.612},{-181.429,100.612}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[17], mulHeaCooSch.TSetCoo[3]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,101.02},{-181.429,101.02}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[18], mulHeaCooSch.TSetCoo[4]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,101.429},{-181.429,101.429}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[19], mulHeaCooSch.TSetCoo[5]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,101.837},{-181.429,101.837}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[20], mulHeaCooSch.TSetCoo[6]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,102.245},{-181.429,102.245}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[21], mulHeaCooSch.TSetCoo[7]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,102.653},{-181.429,102.653}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[1]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,108.776},{-181.429,108.776}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[2]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,109.184},{-181.429,109.184}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[3]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,109.592},{-181.429,109.592}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[4]) annotation (Line(
+      points={{-219,110},{-181.429,110}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[5]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,110.408},{-181.429,110.408}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[6]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,110.816},{-181.429,110.816}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[7]) annotation (Line(
+      points={{-219,110},{-212,110},{-212,111.224},{-181.429,111.224}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(TairOthRoo.port,port_a1)  annotation (Line(
+      points={{-160,-10},{-130,-10}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[2], lobby.heaPorAir) annotation (Line(
-      points={{-280,91.7347},{-270,91.7347},{-270,92},{-240,92},{-240,190},{
-          109.5,190}},
+  connect(bouOthRoo.y[1],TairOthRoo [1].T) annotation (Line(
+      points={{-219,-10},{-182,-10}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouOthRoo.y[2],TairOthRoo [2].T) annotation (Line(
+      points={{-219,-10},{-182,-10}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouOthRoo.y[3],TairOthRoo [3].T) annotation (Line(
+      points={{-219,-10},{-182,-10}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(bouOthRoo.y[4],TairOthRoo [4].T) annotation (Line(
+      points={{-219,-10},{-182,-10}},
+      color={0,0,127},
+      smooth=Smooth.None));
+  connect(port_a[2], mulTherBri.TWesCei) annotation (Line(
+      points={{-130,230},{-110,230},{-110,233},{-79,233}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[3], northBedroom.heaPorAir) annotation (Line(
-      points={{-280,91.9388},{-270,91.9388},{-270,92},{-240,92},{-240,130},{
-          269.5,130}},
+  connect(port_a[1], mulTherBri.TEasCei) annotation (Line(
+      points={{-130,223.333},{-110,223.333},{-110,227},{-79,227}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[4], corridor.heaPorAir) annotation (Line(
-      points={{-280,92.1429},{-270,92.1429},{-270,92},{-240,92},{-240,30},{49.5,
-          30}},
+  connect(port_a[3], mulTherBri.TCel) annotation (Line(
+      points={{-130,236.667},{-110,236.667},{-110,223},{-79,223}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[5], bathroom.heaPorAir) annotation (Line(
-      points={{-280,92.3469},{-270,92.3469},{-270,92},{-240,92},{-240,-52},{
-          229.5,-52}},
-      color={191,0,0},
+  connect(weaBus, mulTherBri.weaBus) annotation (Line(
+      points={{248,250},{-79,250},{-79,237}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}}));
+  connect(weaBus, corridor.weaBus) annotation (Line(
+      points={{248,250},{18.95,250},{18.95,178.95}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}}));
+  connect(weaBus, bathroom.weaBus) annotation (Line(
+      points={{248,250},{138.95,250},{138.95,58.95}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}}));
+  connect(weaBus, livingRoom.weaBus) annotation (Line(
+      points={{248,250},{78.95,250},{78.95,-63.05}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}}));
+  connect(weaBus, southBedroom.weaBus) annotation (Line(
+      points={{248,250},{198.95,250},{198.95,-181.05}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}}));
+  connect(bouLivRoo.ports[1],oriLob. port_a) annotation (Line(
+      points={{-160,-90},{-140,-90}},
+      color={0,127,255},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[6], southBedroom.heaPorAir) annotation (Line(
-      points={{-280,92.551},{-270,92.551},{-270,92},{-240,92},{-240,-272},{
-          189.5,-272}},
-      color={191,0,0},
+  connect(bouLivRoo1.ports[1], oriLob1.port_a) annotation (Line(
+      points={{-160,-130},{-140,-130}},
+      color={0,127,255},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bCon[7], livingRoom.heaPorAir) annotation (Line(
-      points={{-280,92.7551},{-270,92.7551},{-270,92},{-240,92},{-240,-170},{
-          -10.5,-170}},
-      color={191,0,0},
+  connect(bouLivRoo2.ports[1], oriLob2.port_a) annotation (Line(
+      points={{-160,-50},{-140,-50}},
+      color={0,127,255},
       smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[1], kitchen.heaPorRad) annotation (Line(
-      points={{-280,87.2449},{-240,87.2449},{-240,88},{-180,88},{-180,248.1},{
-          -30.5,248.1}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[2], lobby.heaPorRad) annotation (Line(
-      points={{-280,87.449},{-240,87.449},{-240,88},{-180,88},{-180,188.1},{
-          109.5,188.1}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[3], northBedroom.heaPorRad) annotation (Line(
-      points={{-280,87.6531},{-240,87.6531},{-240,88},{-180,88},{-180,128.1},{
-          269.5,128.1}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[4], corridor.heaPorRad) annotation (Line(
-      points={{-280,87.8571},{-240,87.8571},{-240,88},{-180,88},{-180,28.1},{
-          49.5,28.1}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[5], bathroom.heaPorRad) annotation (Line(
-      points={{-280,88.0612},{-240,88.0612},{-240,88},{-180,88},{-180,-53.9},{
-          229.5,-53.9}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[6], southBedroom.heaPorRad) annotation (Line(
-      points={{-280,88.2653},{-240,88.2653},{-240,88},{-180,88},{-180,-273.9},{
-          189.5,-273.9}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_bRad[7], livingRoom.heaPorRad) annotation (Line(
-      points={{-280,88.4694},{-240,88.4694},{-240,88},{-180,88},{-180,-171.9},{
-          -10.5,-171.9}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[8], mulHeaCooSch.heaCooFlo[1]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,93.7755},{-301.429,93.7755}},
+  connect(bouVenIntGain.y[6], venLivRoo.m_flow_in) annotation (Line(
+      points={{-219,230},{-200,230},{-200,198},{-180,198}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[9], mulHeaCooSch.heaCooFlo[2]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,94.1837},{-301.429,94.1837}},
+  connect(bouVenIntGain.y[4], venLivRoo.T_in) annotation (Line(
+      points={{-219,230},{-200,230},{-200,194},{-182,194}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[10], mulHeaCooSch.heaCooFlo[3]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,94.5918},{-301.429,94.5918}},
+  connect(bouVenIntGain.y[7], divOutVen.u1) annotation (Line(
+      points={{-219,230},{-200,230},{-200,156},{-182,156}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[11], mulHeaCooSch.heaCooFlo[4]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,95},{-301.429,95}},
+  connect(bouVenIntGain.y[5], venSouBed.T_in) annotation (Line(
+      points={{-219,230},{-200,230},{-200,174},{-142,174}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[12], mulHeaCooSch.heaCooFlo[5]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,95.4082},{-301.429,95.4082}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[13], mulHeaCooSch.heaCooFlo[6]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,95.8163},{-301.429,95.8163}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[14], mulHeaCooSch.heaCooFlo[7]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,96.2245},{-301.429,96.2245}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[15], mulHeaCooSch.TSetHea[1]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,84.4898},{-301.429,84.4898}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[16], mulHeaCooSch.TSetHea[2]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,84.898},{-301.429,84.898}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[17], mulHeaCooSch.TSetHea[3]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,85.3061},{-301.429,85.3061}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[18], mulHeaCooSch.TSetHea[4]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,85.7143},{-301.429,85.7143}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[19], mulHeaCooSch.TSetHea[5]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,86.1224},{-301.429,86.1224}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[20], mulHeaCooSch.TSetHea[6]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,86.5306},{-301.429,86.5306}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[21], mulHeaCooSch.TSetHea[7]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,86.9388},{-301.429,86.9388}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[22], mulHeaCooSch.TSetCoo[1]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,80.2041},{-301.429,80.2041}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[23], mulHeaCooSch.TSetCoo[2]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,80.6122},{-301.429,80.6122}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[24], mulHeaCooSch.TSetCoo[3]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,81.0204},{-301.429,81.0204}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[25], mulHeaCooSch.TSetCoo[4]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,81.4286},{-301.429,81.4286}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[26], mulHeaCooSch.TSetCoo[5]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,81.8367},{-301.429,81.8367}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[27], mulHeaCooSch.TSetCoo[6]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,82.2449},{-301.429,82.2449}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[28], mulHeaCooSch.TSetCoo[7]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,82.6531},{-301.429,82.6531}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bliPos.y[1], kitchen.uSha[1]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,256},{-41,256},{-41,258}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bliPos.y[2], northBedroom.uSha[1]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,138},{259,138}},
+  connect(bouVenIntGain.y[5], venBat.T_in) annotation (Line(
+      points={{-219,230},{-200,230},{-200,134},{-142,134}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[3], bathroom.uSha[1]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,-44},{219,-44}},
+      points={{-219,70},{-50,70},{-50,58},{119,58}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[4], southBedroom.uSha[1]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,-264},{179,-264}},
+      points={{-219,70},{-50,70},{-50,-182},{179,-182}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[5], livingRoom.uSha[1]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,-162.667},{-21,-162.667}},
+      points={{-219,70},{-50,70},{-50,-64.6667},{59,-64.6667}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[6], livingRoom.uSha[2]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,-162},{-21,-162}},
+      points={{-219,70},{-50,70},{-50,-64},{59,-64}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bliPos.y[7], livingRoom.uSha[3]) annotation (Line(
-      points={{-319,210},{-220,210},{-220,-161.333},{-21,-161.333}},
+      points={{-219,70},{-50,70},{-50,-63.3333},{59,-63.3333}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[29], intGaiKit.tabConGai) annotation (Line(
-      points={{-319,290},{-300,290},{-300,272},{-100,272},{-100,290},{-79,290}},
-      color={0,0,127},
-      smooth=Smooth.None));
-
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[1]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,88.7755},{-301.429,88.7755}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[2]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,89.1837},{-301.429,89.1837}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[3]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,89.5918},{-301.429,89.5918}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[4]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,90},{-301.429,90}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[5]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,90.4082},{-301.429,90.4082}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[6]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,90.8163},{-301.429,90.8163}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenHeaCoo.y[30], mulHeaCooSch.schChoice[7]) annotation (Line(
-      points={{-319,290},{-312,290},{-312,91.2245},{-301.429,91.2245}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[1], kitchen.heaPorAir) annotation (Line(
-      points={{-300,82.9592},{-300,250},{-30.5,250}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[2], lobby.heaPorAir) annotation (Line(
-      points={{-300,83.1633},{-300,190},{109.5,190}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[3], northBedroom.heaPorAir) annotation (Line(
-      points={{-300,83.3673},{-300,130},{269.5,130}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[4], corridor.heaPorAir) annotation (Line(
-      points={{-300,83.5714},{-270,83.5714},{-270,100},{-240,100},{-240,30},{
-          49.5,30}},
-      color={191,0,0},
-      smooth=Smooth.None));
-
-  connect(mulHeaCooSch.port_aTSet[5], bathroom.heaPorAir) annotation (Line(
-      points={{-300,83.7755},{-270,83.7755},{-270,100},{-240,100},{-240,-52},{
-          229.5,-52}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[6], southBedroom.heaPorAir) annotation (Line(
-      points={{-300,83.9796},{-270,83.9796},{-270,100},{-240,100},{-240,-272},{
-          189.5,-272}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(mulHeaCooSch.port_aTSet[7], livingRoom.heaPorAir) annotation (Line(
-      points={{-300,84.1837},{-270,84.1837},{-270,100},{-240,100},{-240,-170},{
-          -10.5,-170}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(kitchen.heaPorAir, Tair[1]) annotation (Line(
-      points={{-30.5,250},{320,250},{320,171.429},{350,171.429}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(lobby.heaPorAir, Tair[2]) annotation (Line(
-      points={{109.5,190},{320,190},{320,174.286},{350,174.286}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.heaPorAir, Tair[3]) annotation (Line(
-      points={{269.5,130},{320,130},{320,177.143},{350,177.143}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.heaPorAir, Tair[4]) annotation (Line(
-      points={{49.5,30},{320,30},{320,180},{350,180}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bathroom.heaPorAir, Tair[5]) annotation (Line(
-      points={{229.5,-52},{320,-52},{320,182.857},{350,182.857}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(southBedroom.heaPorAir, Tair[6]) annotation (Line(
-      points={{189.5,-272},{320,-272},{320,185.714},{350,185.714}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(livingRoom.heaPorAir, Tair[7]) annotation (Line(
-      points={{-10.5,-170},{320,-170},{320,188.571},{350,188.571}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(kitchen.heaPorRad, Trad[1]) annotation (Line(
-      points={{-30.5,248.1},{340,248.1},{340,-188.571},{350,-188.571}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(lobby.heaPorRad, Trad[2]) annotation (Line(
-      points={{109.5,188.1},{340,188.1},{340,-185.714},{350,-185.714}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(northBedroom.heaPorRad, Trad[3]) annotation (Line(
-      points={{269.5,128.1},{340,128.1},{340,-182.857},{350,-182.857}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(corridor.heaPorRad, Trad[4]) annotation (Line(
-      points={{49.5,28.1},{340,28.1},{340,-180},{350,-180}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(bathroom.heaPorRad, Trad[5]) annotation (Line(
-      points={{229.5,-53.9},{340,-53.9},{340,-177.143},{350,-177.143}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(southBedroom.heaPorRad, Trad[6]) annotation (Line(
-      points={{189.5,-273.9},{340,-273.9},{340,-174.286},{350,-174.286}},
-      color={191,0,0},
-      smooth=Smooth.None));
-  connect(livingRoom.heaPorRad, Trad[7]) annotation (Line(
-      points={{-10.5,-171.9},{164.75,-171.9},{164.75,-171.429},{350,-171.429}},
-      color={191,0,0},
-      smooth=Smooth.None));
-
-  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-360,
-            -360},{360,360}}), graphics), Icon(coordinateSystem(
-          preserveAspectRatio=false, extent={{-360,-360},{360,360}}), graphics={Text(
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-260,
+            -260},{260,260}}), graphics), Icon(coordinateSystem(
+          preserveAspectRatio=false, extent={{-260,-260},{260,260}}), graphics={Text(
           extent={{-198,416},{194,360}},
           lineColor={0,0,255},
           fillColor={0,0,255},
@@ -1138,6 +598,12 @@ equation
                + "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",
           fileName="D:/Berkeley Lab/Berkeley IEA58/House view of North and South.png"),
         Text(
+          extent={{262,360},{320,338}},
+          lineColor={0,0,0},
+          fillColor={61,61,61},
+          fillPattern=FillPattern.Solid,
+          textString="weather"),
+        Text(
           extent={{322,222},{360,200}},
           lineColor={0,0,0},
           fillColor={61,61,61},
@@ -1148,11 +614,6 @@ equation
           lineColor={0,0,0},
           fillColor={61,61,61},
           fillPattern=FillPattern.Solid,
-          textString="radiation"),
-        Text(
-          extent={{260,340},{318,318}},
-          lineColor={0,0,0},
-          fillColor={61,61,61},
-          fillPattern=FillPattern.Solid,
-          textString="weather")}),defaultComponentName="N2House");
-end N2HouseModel;
+          textString="radiation")}),
+                                  defaultComponentName="N2House");
+end N2SouthModel;

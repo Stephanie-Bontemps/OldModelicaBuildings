@@ -1,7 +1,7 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Examples.ComparisonCONTAM;
 model TestD "Test D carried on Dymola and CONTAM"
   extends Modelica.Icons.Example;
-  Houses.N2HouseModel  N2House(
+  Houses.N2House.N2HouseModel1 N2House(
     kHea=1E6,
     kCoo=0,
     kDooOpeKitLiv=0,

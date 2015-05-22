@@ -1,30 +1,31 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model Lobby
-  "Model of the Lobby (Flur on North side of building) in Holzkirchen Twin Houses"
-  parameter Modelica.SIunits.Length extWallNorthLgth = 1.255
-    "Length of the external wall on the North";
-  parameter Modelica.SIunits.Length extDoorNorthLgth = 0.995
-    "Length of the external door on the North";
-  parameter Modelica.SIunits.Length extDoorNorthHght = 2.025
-    "Height of the external door on the North";
-  parameter Modelica.SIunits.Length intWallOnNBedroomLgth = 2.61
-    "Length of the wall between lobby and North Bedroom";
-  parameter Modelica.SIunits.Length doorOnLivRoomLgth = 0.935
+  "Model of the lobby (flur on north side of building) in Holzkirchen Twin Houses"
+  parameter Modelica.SIunits.Length lExtWalNor = 1.255
+    "Length of the external wall on the north";
+  parameter Modelica.SIunits.Length lExtDooNor = 0.995
+    "Length of the external door on the north";
+  parameter Modelica.SIunits.Length hExtDooNor = 2.025
+    "Height of the external door on the north";
+  parameter Modelica.SIunits.Length lIntWalOnNorBed = 2.61
+    "Length of the wall between lobby and north Bedroom";
+  parameter Modelica.SIunits.Length lDooOnLivRoo = 0.935
     "Length of the door between lobby and living room";
-  parameter Modelica.SIunits.Length doorOnLivRoomHght = 1.98
+  parameter Modelica.SIunits.Length hDooOnLivRoo = 1.98
     "Height of the door between lobby and living room";
-  parameter Modelica.SIunits.Length intWallOnLivRoomLgth = (extWallNorthLgth + extDoorNorthLgth) - doorOnLivRoomLgth
+  parameter Modelica.SIunits.Length lIntWalOnLivRoo = (lExtWalNor + lExtDooNor) - lDooOnLivRoo
     "Length of the wall between lobby and living room";
-  parameter Modelica.SIunits.Length intWallOnKitchenLgth = intWallOnNBedroomLgth
+  parameter Modelica.SIunits.Length lIntWalOnKit = lIntWalOnNorBed
     "Length of the wall between lobby and kitchen";
-  parameter Modelica.SIunits.Temperature Tini_int
+  parameter Modelica.SIunits.Temperature Tini_int = 293.15
     "Intial temperature in the room";
-  parameter Modelica.SIunits.Temperature Tini_ext "Outside initial temperature";
-  parameter Modelica.SIunits.Temperature Tini_bou
+  parameter Modelica.SIunits.Temperature Tini_ext = 293.15
+    "Outside initial temperature";
+  parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
 
-  extends MixedAir(
-    AFlo=(extWallNorthLgth + extDoorNorthLgth) * intWallOnNBedroomLgth,
+  extends Buildings.Rooms.MixedAir(
+    AFlo=(lExtWalNor + lExtDooNor) * lIntWalOnNorBed,
     nConExt=1,
     nConExtWin=1,
     nConPar=0,
@@ -36,7 +37,7 @@ model Lobby
     bouConExtWin(HDifTil(each rho = 0.23)),
     datConExt(
     layers = {extWallSNLobby},
-    A = {(hRoo*extWallNorthLgth + (hRoo-extDoorNorthHght)*extDoorNorthLgth)},
+    A = {(hRoo*lExtWalNor + (hRoo-hExtDooNor)*lExtDooNor)},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -44,7 +45,7 @@ model Lobby
     T_b_start={Tini_int}),
     datConExtWin(
     layers = {extDoorOpaquePartLobby},
-    A = {extDoorNorthHght*extDoorNorthLgth},
+    A = {hExtDooNor*lExtDooNor},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
     steadyStateInitial = {false},
@@ -58,13 +59,13 @@ model Lobby
     T_b_start={Tini_int}),
     datConBou(
     layers = {intWall1Lobby, ceilingLobby, groundLobby},
-    A = {hRoo*intWallOnNBedroomLgth, AFlo, AFlo},
+    A = {hRoo*lIntWalOnNorBed, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     steadyStateInitial = {false, false, false},
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
-    A = {(hRoo*intWallOnLivRoomLgth + (hRoo-doorOnLivRoomHght)*doorOnLivRoomLgth), doorOnLivRoomHght*doorOnLivRoomLgth, hRoo*intWallOnKitchenLgth},
+    A = {(hRoo*lIntWalOnLivRoo + (hRoo-hDooOnLivRoo)*lDooOnLivRoo), hDooOnLivRoo*lDooOnLivRoo, hRoo*lIntWalOnKit},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     each absIR = 0.9,
     absSol = {0.17, 0.6, 0.17}),
@@ -72,17 +73,22 @@ model Lobby
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
 
-  Data.OpaqueConstructions.Constructions.ExtWallSN extWallSNLobby
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
+                                                                                                        extWallSNLobby
     annotation (Placement(transformation(extent={{420,-200},{440,-180}})));
-  Data.OpaqueConstructions.Constructions.ExtDoorOpaquePart
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtDoorOpaquePart
     extDoorOpaquePartLobby
     annotation (Placement(transformation(extent={{380,-200},{400,-180}})));
-  Data.OpaqueConstructions.Constructions.Ceiling ceilingLobby
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ceiling
+                                                                                                        ceilingLobby
     annotation (Placement(transformation(extent={{420,-160},{440,-140}})));
-  Data.OpaqueConstructions.Constructions.Ground groundLobby
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ground
+                                                                                                        groundLobby
     annotation (Placement(transformation(extent={{380,-160},{400,-140}})));
-  Data.OpaqueConstructions.Constructions.IntWall1 intWall1Lobby
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall1
+                                                                                                        intWall1Lobby
     annotation (Placement(transformation(extent={{420,-120},{440,-100}})));
-  Data.GlazingSystems.Window windowLobby
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.Window
+                                                                                     windowLobby
     annotation (Placement(transformation(extent={{340,-200},{360,-180}})));
 end Lobby;

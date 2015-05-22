@@ -1,12 +1,5 @@
 Rooms
-N2HouseModel
-N2HouseModel2
-N2HouseModel4
-N2HouseModel3
-N2HouseModel5
-N2HouseModel6
-N2LobbyBedroomModel
-N2SouthModel
-O5HouseModel
+N2House
+O5House
 Data
 BaseClasses

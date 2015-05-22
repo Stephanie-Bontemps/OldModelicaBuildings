@@ -2,15 +2,11 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses;
 package BaseClasses
   "Package with base classes for Buildings.Rooms.Validation.HolzkirchenTwinHouses"
 extends Modelica.Icons.BasesPackage;
-  model ThermalBridge "Thermal bridge description using a conduction model"
-    parameter Modelica.SIunits.ThermalConductance g
+  model ThermalBridge
+    "Thermal bridge description using a conduction model - Outside temperature is used"
+    parameter Modelica.SIunits.ThermalConductance g(start=0, min=0)
       "Constant thermal conductance of thermal bridge";
-    Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor(G=g)
-      "Value of global thermal bridges conductance"
-             annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-    Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
-      prescribedTemperature "Outer temperature boundary condition"
-      annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
+
     Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_b
       "Inner temperature boundary condition"                    annotation (
         Placement(transformation(extent={{90,-10},{110,10}}), iconTransformation(
@@ -19,6 +15,14 @@ extends Modelica.Icons.BasesPackage;
       "Outer temperature"
       annotation (Placement(transformation(extent={{-100,-10},{-80,10}}),
           iconTransformation(extent={{-100,-10},{-80,10}})));
+
+  protected
+    Modelica.Thermal.HeatTransfer.Components.ThermalConductor thermalConductor(G=g)
+      "Value of global thermal bridges conductance"
+             annotation (Placement(transformation(extent={{20,-10},{40,10}})));
+    Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
+      prescribedTemperature "Outer temperature boundary condition"
+      annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
 
   equation
     connect(thermalConductor.port_b,port_b)  annotation (Line(
@@ -83,41 +87,24 @@ First implementation.
 </html>"));
   end ThermalBridge;
 
-  model MultiThermalBridge "Model of all the thermal bridges in a house"
-    parameter Modelica.SIunits.ThermalConductance gKit
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gLob
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gNorBed
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gCor
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gBat
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gSouBed
-      "Constant thermal conductance of thermal bridge";
-    parameter Modelica.SIunits.ThermalConductance gLivRoo
-      "Constant thermal conductance of thermal bridge";
-    ThermalBridge theBriKit(g=gKit) "Thermal bridge conductance of the kitchen"
-      annotation (Placement(transformation(extent={{-20,80},{0,100}})));
-    ThermalBridge theBriLob(g=gLob) "Thermal bridge conductance of the lobby"
-      annotation (Placement(transformation(extent={{-20,50},{0,70}})));
-    ThermalBridge theBriNorBed(g=gNorBed)
-      "Thermal bridge conductance of the North bedroom"
-      annotation (Placement(transformation(extent={{-20,20},{0,40}})));
-    ThermalBridge theBriCor(g=gCor)
-      "Thermal bridge conductance of the corridor"
-      annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
-    ThermalBridge theBriBat(g=gBat)
-      "Thermal bridge conductance of the bathroom"
-      annotation (Placement(transformation(extent={{-20,-40},{0,-20}})));
-    ThermalBridge theBriSouBed(g=gSouBed)
-      "Thermal bridge conductance of the South bedroom"
-      annotation (Placement(transformation(extent={{-20,-70},{0,-50}})));
-    ThermalBridge theBriLivRoo(g=gLivRoo)
-      "Thermal bridge conductance of the living room"
-      annotation (Placement(transformation(extent={{-20,-100},{0,-80}})));
-    BoundaryConditions.WeatherData.Bus weaBus "Outer temperature"
+  model MultiThermalBridge
+    "Model of all the thermal bridges in a Holzkirchen house - Outside temperature is used"
+    parameter Modelica.SIunits.ThermalConductance gKit(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the kitchen";
+    parameter Modelica.SIunits.ThermalConductance gLob(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the lobby";
+    parameter Modelica.SIunits.ThermalConductance gNorBed(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the north bedroom";
+    parameter Modelica.SIunits.ThermalConductance gCor(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the corridor";
+    parameter Modelica.SIunits.ThermalConductance gBat(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the bathroom";
+    parameter Modelica.SIunits.ThermalConductance gSouBed(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the south bedroom";
+    parameter Modelica.SIunits.ThermalConductance gLivRoo(start=0, min=0)
+      "Constant thermal conductance of thermal bridge of the living room";
+
+    Buildings.BoundaryConditions.WeatherData.Bus weaBus "Outer temperature"
                                               annotation (Placement(
           transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent=
              {{-100,-10},{-80,10}})));
@@ -125,6 +112,36 @@ First implementation.
       "Inner temperature boundary condition in each room"
       annotation (Placement(transformation(extent={{90,-10},{110,10}}),
           iconTransformation(extent={{90,-10},{110,10}})));
+
+  protected
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriKit(g=gKit)
+      "Thermal bridge conductance of the kitchen"
+      annotation (Placement(transformation(extent={{-20,80},{0,100}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriLob(g=gLob)
+      "Thermal bridge conductance of the lobby"
+      annotation (Placement(transformation(extent={{-20,50},{0,70}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriNorBed(g=gNorBed)
+      "Thermal bridge conductance of the north bedroom"
+      annotation (Placement(transformation(extent={{-20,20},{0,40}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriCor(g=gCor)
+      "Thermal bridge conductance of the corridor"
+      annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriBat(g=gBat)
+      "Thermal bridge conductance of the bathroom"
+      annotation (Placement(transformation(extent={{-20,-40},{0,-20}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriSouBed(g=gSouBed)
+      "Thermal bridge conductance of the south bedroom"
+      annotation (Placement(transformation(extent={{-20,-70},{0,-50}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.ThermalBridge
+                                                                                      theBriLivRoo(g=gLivRoo)
+      "Thermal bridge conductance of the living room"
+      annotation (Placement(transformation(extent={{-20,-100},{0,-80}})));
 
   equation
     connect(weaBus, theBriKit.weaBus) annotation (Line(
@@ -254,16 +271,17 @@ First implementation.
   end MultiThermalBridge;
 
   model MultiThermalBridge2
-    "Model of all the thermal bridges in a house with different temperatures for internal bridges"
-    parameter Modelica.SIunits.ThermalConductance gExt[6]
+    "Model of all the thermal bridges in a Holzkirchen house with different temperatures for internal bridges"
+    parameter Modelica.SIunits.ThermalConductance gExt[6](each start=0, each min=0)
       "Constant thermal conductance of thermal bridge on outside";
-    parameter Modelica.SIunits.ThermalConductance gWesCei[3]
-      "Constant thermal conductance of thermal bridge on the West ceiling";
-    parameter Modelica.SIunits.ThermalConductance gEasCei[6]
-      "Constant thermal conductance of thermal bridge on the East ceiling";
-    parameter Modelica.SIunits.ThermalConductance gCel[7]
+    parameter Modelica.SIunits.ThermalConductance gWesCei[3](each start=0, each min=0)
+      "Constant thermal conductance of thermal bridge on the west ceiling";
+    parameter Modelica.SIunits.ThermalConductance gEasCei[6](each start=0, each min=0)
+      "Constant thermal conductance of thermal bridge on the east ceiling";
+    parameter Modelica.SIunits.ThermalConductance gCel[7](each start=0, each min=0)
       "Constant thermal conductance of thermal bridge on the cellar";
-    BoundaryConditions.WeatherData.Bus weaBus "Outer temperature"
+
+    Buildings.BoundaryConditions.WeatherData.Bus weaBus "Outer temperature"
                                               annotation (Placement(
           transformation(extent={{-110,50},{-70,90}}),  iconTransformation(extent={{-100,60},
               {-80,80}})));
@@ -272,10 +290,7 @@ First implementation.
           transformation(extent={{90,-10},{110,10}}), iconTransformation(extent={{
               90,-10},{110,10}})));
 
-    Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
-      prescribedTemperature "Outer temperature boundary condition"
-      annotation (Placement(transformation(extent={{-40,60},{-20,80}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TWesCei
+   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TWesCei
       "Temperature in the West Ceiling"
       annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
     Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TEasCei
@@ -284,14 +299,19 @@ First implementation.
     Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a TCel
       "Temperature in the cellar"
       annotation (Placement(transformation(extent={{-100,-80},{-80,-60}})));
+
+  protected
+    Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature
+      prescribedTemperature "Outer temperature boundary condition"
+      annotation (Placement(transformation(extent={{-40,60},{-20,80}})));
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriExt[6](G=gExt)
       "Values of thermal bridges conductance on the outside"
       annotation (Placement(transformation(extent={{20,60},{40,80}})));
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriWesCei[3](G=
-          gWesCei) "Values of thermal bridges conductance on the East ceiling"
+          gWesCei) "Values of thermal bridges conductance on the west ceiling"
       annotation (Placement(transformation(extent={{20,20},{40,40}})));
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriEasCei[6](G=
-          gEasCei) "Values of thermal bridges conductance on the East ceiling"
+          gEasCei) "Values of thermal bridges conductance on the east ceiling"
       annotation (Placement(transformation(extent={{20,-40},{40,-20}})));
     Modelica.Thermal.HeatTransfer.Components.ThermalConductor theBriCel[7](G=gCel)
       "Values of thermal bridges conductance on the cellar"
@@ -545,20 +565,24 @@ First implementation.
 
   model OpenOrClosedDoor
     "Model to choose if the door is open or closed between 2 rooms"
+    replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
+      annotation (__Dymola_choicesAllMatching=true);
     parameter Modelica.Blocks.Interfaces.BooleanOutput yDooFil=true
-      "Value of Boolean output for the kind of scenario for the door (yDooFil = true: constant value, yDooFil = false: time varying scenario)";
-    parameter Real kDooOpe
-      "Constant output value to choose if the door is always open or closed (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true";
-    parameter Modelica.SIunits.Length wOpe=0.935 "Width of opening";
-    parameter Modelica.SIunits.Length hOpe=1.98 "Height of opening";
-    parameter Modelica.SIunits.Area lClo=1e-06
+      "Kind of scenario for the door (yDooFil = true: constant value, yDooFil = false: time varying scenario)";
+    parameter Real kDooOpe(start=0, min=0, max=1, unit="1")
+      "Constant value to choose if the door is always open or closed (kDooOpe = 0: door closed or kDooOpe = 1: door open). To select if yDooFil=true";
+    parameter Modelica.SIunits.Length wOpe(start=0.935, min=0)
+      "Width of opening";
+    parameter Modelica.SIunits.Length hOpe(start=1.98, min=0)
+      "Height of opening";
+    parameter Modelica.SIunits.Area lClo(start=1e-06, min=0)
       "Effective leakage area if door model is used";
-
-    parameter Modelica.SIunits.Length hA=0
+    parameter Modelica.SIunits.Length hA(start=0, min=0)
       "Height of reference pressure zone A";
-    parameter Modelica.SIunits.Length hB=0
+    parameter Modelica.SIunits.Length hB(start=0, min=0)
       "Height of reference pressure zone B";
-    extends Fluid.Interfaces.PartialFourPortInterface(
+
+    extends Buildings.Fluid.Interfaces.PartialFourPortInterface(
       redeclare package Medium1 = MediumB,
       redeclare package Medium2 = MediumB,
       final allowFlowReversal1=false,
@@ -566,10 +590,7 @@ First implementation.
       final m1_flow_nominal=10/3600*1.2,
       final m2_flow_nominal=m1_flow_nominal);
 
-    replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
-      annotation (__Dymola_choicesAllMatching=true);
-
-    Airflow.Multizone.DoorDiscretizedOperable doo(
+    Buildings.Airflow.Multizone.DoorDiscretizedOperable doo(
       wOpe=wOpe,
       hOpe=hOpe,
       redeclare package Medium = MediumB,
@@ -694,90 +715,94 @@ First implementation.
 
     replaceable package MediumB = Modelica.Media.Interfaces.PartialMedium
       annotation (__Dymola_choicesAllMatching=true);
-    parameter Modelica.SIunits.Area lKit
+    parameter Modelica.SIunits.Area lKit(start=0, min=0)
       "Effective leakage area of the kitchen";
-    parameter Modelica.SIunits.Area lLob "Effective leakage area of the lobby";
-    parameter Modelica.SIunits.Area lNorBed
-      "Effective leakage area of the North bedroom";
-    parameter Modelica.SIunits.Area lBat
+    parameter Modelica.SIunits.Area lLob(start=0, min=0)
+      "Effective leakage area of the lobby";
+    parameter Modelica.SIunits.Area lNorBed(start=0, min=0)
+      "Effective leakage area of the north bedroom";
+    parameter Modelica.SIunits.Area lBat(start=0, min=0)
       "Effective leakage area of the bathroom";
-    parameter Modelica.SIunits.Area lSouBed
-      "Effective leakage area of the South bedroom";
-    parameter Modelica.SIunits.Area lLivRoo1
-      "Effective leakage area of the windows 2 and 3 on the South wall of the living room";
-    parameter Modelica.SIunits.Area lLivRoo2
-      "Effective leakage area of window 1 on the West wall of the living room";
-    parameter Real sNor
-      "Side ratio, s=length of this wall/length of adjacent wall (North)";
-    parameter Real sEas
-      "Side ratio, s=length of this wall/length of adjacent wall (East)";
-    parameter Real sSou
-      "Side ratio, s=length of this wall/length of adjacent wall (South)";
-    parameter Real sWes
-      "Side ratio, s=length of this wall/length of adjacent wall (West)";
+    parameter Modelica.SIunits.Area lSouBed(start=0, min=0)
+      "Effective leakage area of the south bedroom";
+    parameter Modelica.SIunits.Area lLivRoo1(start=0, min=0)
+      "Effective leakage area of the windows 2 and 3 on the south wall of the living room";
+    parameter Modelica.SIunits.Area lLivRoo2(start=0, min=0)
+      "Effective leakage area of window 1 on the west wall of the living room";
+    parameter Real sNor(start=1)
+      "Side ratio, s=length of this wall/length of adjacent wall (north)";
+    parameter Real sEas(start=1)
+      "Side ratio, s=length of this wall/length of adjacent wall (east)";
+    parameter Real sSou(start=1)
+      "Side ratio, s=length of this wall/length of adjacent wall (south)";
+    parameter Real sWes(start=1)
+      "Side ratio, s=length of this wall/length of adjacent wall (west)";
 
-    Fluid.Sources.Outside_CpLowRise outNor(
+    Buildings.Fluid.Sources.Outside_CpLowRise outNor(
       nPorts=2,
       s=sNor,
       redeclare package Medium = MediumB,
       azi=Buildings.Types.Azimuth.N)
-      "Outside boundary using weather data on the North wall"
+      "Outside boundary using weather data on the north wall"
       annotation (Placement(transformation(extent={{-60,80},{-40,100}})));
-    BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
+    Buildings.BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
           transformation(extent={{-110,-20},{-70,20}}), iconTransformation(extent={{-100,
               -10},{-80,10}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=lKit, redeclare package
-        Medium = MediumB,
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=lKit, redeclare
+        package Medium =
+                 MediumB,
       m=0.5) "Effective air leakage area around the window in the kitchen"
       annotation (Placement(transformation(extent={{-10,80},{10,100}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=lLob, redeclare package
-        Medium = MediumB,
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=lLob, redeclare
+        package Medium =
+                 MediumB,
       m=0.5) "Effective air leakage area around the door in the lobby"
       annotation (Placement(transformation(extent={{-10,50},{10,70}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=lNorBed, redeclare
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=lNorBed, redeclare
         package Medium = MediumB,
       m=0.5)
-      "Effective air leakage area around the window in the North bedroom"
+      "Effective air leakage area around the window in the north bedroom"
       annotation (Placement(transformation(extent={{-10,20},{10,40}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=lBat, redeclare package
-        Medium = MediumB,
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=lBat, redeclare
+        package Medium =
+                 MediumB,
       m=0.5) "Effective air leakage area around the window in the bathroom"
       annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=lSouBed, redeclare
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=lSouBed, redeclare
         package Medium = MediumB,
       m=0.5)
-      "Effective air leakage area around the window in the South bedroom"
+      "Effective air leakage area around the window in the south bedroom"
       annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=lLivRoo1, redeclare
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=lLivRoo1, redeclare
         package Medium = MediumB,
       m=0.5)
-      "Effective air leakage area around windows 2 and 3 on the South wall of the living room"
+      "Effective air leakage area around windows 2 and 3 on the south wall of the living room"
       annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
-    Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=lLivRoo2, redeclare
+    Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=lLivRoo2, redeclare
         package Medium = MediumB,
       m=0.5)
-      "Effective air leakage area around window 1 on the West wall of the living room"
+      "Effective air leakage area around window 1 on the west wall of the living room"
       annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
-    Fluid.Sources.Outside_CpLowRise outEas(
+    Buildings.Fluid.Sources.Outside_CpLowRise outEas(
       nPorts=1,
       s=sEas,
       redeclare package Medium = MediumB,
       azi=Buildings.Types.Azimuth.E)
-      "Outside boundary using weather data on the East wall"
+      "Outside boundary using weather data on the east wall"
       annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-    Fluid.Sources.Outside_CpLowRise outSou(
+    Buildings.Fluid.Sources.Outside_CpLowRise outSou(
       nPorts=2,
       s=sSou,
       azi=Buildings.Types.Azimuth.S,
       redeclare package Medium = MediumB)
-      "Outside boundary using weather data on the South wall"
+      "Outside boundary using weather data on the south wall"
       annotation (Placement(transformation(extent={{-60,-40},{-40,-20}})));
-    Fluid.Sources.Outside_CpLowRise outWes(
+    Buildings.Fluid.Sources.Outside_CpLowRise outWes(
       nPorts=2,
       s=sWes,
       redeclare package Medium = MediumB,
       azi=Buildings.Types.Azimuth.W)
-      "Outside boundary using weather data on the West wall"
+      "Outside boundary using weather data on the west wall"
       annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
 
     Modelica.Fluid.Interfaces.FluidPorts_b ports_b[7](redeclare package Medium
@@ -935,8 +960,9 @@ First implementation.
   block Separate "Divide the input in two outputs"
     extends Modelica.Blocks.Icons.Block;
 
-    parameter Real k1=0.5 "Gain of upper output";
-    parameter Real k2=0.5 "Gain of lower output";
+    parameter Real k1(start=0.5, min=0, max=1, unit="1") "Gain of upper output";
+    parameter Real k2(start=0.5, min=0, max=1, unit="1") "Gain of lower output";
+
     Modelica.Blocks.Interfaces.RealInput u "Connector of Real input signal"
       annotation (Placement(transformation(extent={{-140,-20},{-100,20}},
         rotation=0)));
@@ -948,10 +974,10 @@ First implementation.
       "Connector 2 of Real output signals"
       annotation (Placement(transformation(extent={{100,-60},{120,-40}},
         rotation=0)));
+
   equation
     y1 = k1*u;
     y2 = k2*u;
-
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}}), graphics), defaultComponentName="separate",
                 Documentation(
@@ -1010,220 +1036,6 @@ First implementation.
             smooth=Smooth.None)}));
   end Separate;
 
-  model HeatingCoolingSchedule
-    "Heating and cooling experimental schedule using imposed constant temperature or imposed heat or cooling power"
-    parameter Boolean startValue=false
-      "Start value of y. At time = table[1], y changes to 'not startValue'";
-    //parameter Modelica.SIunits.Time table[:]={0,1}
-    //  "Vector of time points. At every time point, the output y gets its opposite value (e.g., table={0,1}). 0 = Temperature set point and 1 = Heat or cooling flow imposed";
-    parameter Real kHea=1E6
-      "Gain value multiplied with input signal for heating";
-    parameter Real kCoo=-1E6
-      "Gain value multiplied with input signal for cooling";
-    Modelica.Blocks.Interfaces.RealInput heaCooFlo
-      "Heat or cooling power input applied depending on the scenario" annotation (
-       Placement(transformation(extent={{-220,70},{-180,110}}),
-          iconTransformation(extent={{-220,70},{-180,110}})));
-    HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloCon
-      "Prescribed heat or cooling flow for the convective part"
-      annotation (Placement(transformation(extent={{100,40},{120,60}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bCon
-      "Convective split" annotation (Placement(transformation(extent={{170,40},{190,
-              60}}), iconTransformation(extent={{170,40},{190,60}})));
-    HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloRad
-      "Prescribed heat or cooling flow for the radiative part"
-      annotation (Placement(transformation(extent={{100,-60},{120,-40}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bRad
-      "Radiative split" annotation (Placement(transformation(extent={{170,-60},{190,
-              -40}}), iconTransformation(extent={{170,-60},{190,-40}})));
-    Separate separate(k1=0.7, k2=0.3)
-      annotation (Placement(transformation(extent={{60,-10},{80,10}})));
-    Controls.Continuous.LimPID           conHea(
-      Td=60,
-      initType=Modelica.Blocks.Types.InitPID.InitialState,
-      Ti=300,
-      controllerType=Modelica.Blocks.Types.SimpleController.PI,
-      k=0.1) "Controller for heating"
-      annotation (Placement(transformation(extent={{-160,-60},{-140,-40}})));
-    Controls.Continuous.LimPID           conCoo(
-      Td=60,
-      reverseAction=true,
-      initType=Modelica.Blocks.Types.InitPID.InitialState,
-      Ti=300,
-      controllerType=Modelica.Blocks.Types.SimpleController.PI,
-      k=0.1) "Controller for cooling"
-      annotation (Placement(transformation(extent={{-160,-140},{-140,-120}})));
-    Modelica.Blocks.Math.Gain gaiHea(k=kHea) "Gain for heating"
-      annotation (Placement(transformation(extent={{-120,-60},{-100,-40}})));
-    Modelica.Blocks.Math.Gain gaiCoo(k=kCoo) "Gain for cooling"
-      annotation (Placement(transformation(extent={{-120,-140},{-100,-120}})));
-    Modelica.Blocks.Math.Sum sum1(nin=2)
-      annotation (Placement(transformation(extent={{-20,-100},{0,-80}})));
-    Modelica.Blocks.Routing.Multiplex2 multiplex2
-      annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
-    Modelica.Blocks.Continuous.Integrator EHea(
-      k=1,
-      initType=Modelica.Blocks.Types.Init.InitialState,
-      y_start=0,
-      u(unit="W"),
-      y(unit="J")) "Heating energy in Joules"
-      annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
-    Modelica.Blocks.Continuous.Integrator ECoo(
-      k=1,
-      initType=Modelica.Blocks.Types.Init.InitialState,
-      y_start=0,
-      u(unit="W"),
-      y(unit="J")) "Cooling energy in Joules"
-      annotation (Placement(transformation(extent={{-80,-140},{-60,-120}})));
-    Modelica.Blocks.Interfaces.RealInput TSetHea
-      "Heating temperature set point input applied depending on the scenario"
-      annotation (Placement(transformation(extent={{-220,-70},{-180,-30}}),
-          iconTransformation(extent={{-220,-80},{-180,-40}})));
-    Modelica.Blocks.Interfaces.RealInput TSetCoo
-      "Cooling temperature set point input applied depending on the scenario"
-      annotation (Placement(transformation(extent={{-220,-140},{-180,-100}}),
-          iconTransformation(extent={{-220,-140},{-180,-100}})));
-    Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor TRooAir
-      "Room air temperature"
-      annotation (Placement(transformation(extent={{100,-120},{120,-100}})));
-    Modelica.Blocks.Math.Mean TRooHou(f=1/3600, y(start=293.15))
-      "Hourly averaged room air temperature"
-      annotation (Placement(transformation(extent={{140,-120},{160,-100}})));
-
-    Modelica.Blocks.Logical.Switch switch1
-      annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bTSet
-      "Measured temperature for the set point"
-                         annotation (Placement(transformation(extent={{170,-10},{190,
-              10}}), iconTransformation(extent={{170,-10},{190,10}})));
-    Modelica.Blocks.Interfaces.RealInput schChoice
-      "Temperature set point or heating and cooling power" annotation (Placement(
-          transformation(extent={{-220,-20},{-180,20}}), iconTransformation(
-            extent={{-220,-20},{-180,20}})));
-    Modelica.Blocks.Math.RealToBoolean realToBoolean
-      annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
-  equation
-    connect(separate.y2, preHeaCooFloRad.Q_flow) annotation (Line(
-        points={{81,-5},{90,-5},{90,-50},{100,-50}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(separate.y1, preHeaCooFloCon.Q_flow) annotation (Line(
-        points={{81,5},{90,5},{90,50},{100,50}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(conHea.y,gaiHea. u) annotation (Line(
-        points={{-139,-50},{-122,-50}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(conCoo.y,gaiCoo. u)  annotation (Line(
-        points={{-139,-130},{-122,-130}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(gaiHea.y,multiplex2. u1[1]) annotation (Line(
-        points={{-99,-50},{-90,-50},{-90,-84},{-62,-84}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(gaiCoo.y,multiplex2. u2[1]) annotation (Line(
-        points={{-99,-130},{-90,-130},{-90,-96},{-62,-96}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(EHea.u,gaiHea. y) annotation (Line(
-        points={{-82,-50},{-99,-50}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(ECoo.u,gaiCoo. y) annotation (Line(
-        points={{-82,-130},{-99,-130}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(TSetHea, conHea.u_s) annotation (Line(
-        points={{-200,-50},{-162,-50}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(TSetCoo, conCoo.u_s) annotation (Line(
-        points={{-200,-120},{-182,-120},{-182,-130},{-162,-130}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(multiplex2.y, sum1.u) annotation (Line(
-        points={{-39,-90},{-22,-90}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(preHeaCooFloRad.port, port_bRad) annotation (Line(
-        points={{120,-50},{180,-50}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(TRooAir.T,TRooHou. u) annotation (Line(
-        points={{120,-110},{138,-110}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(TRooAir.T, conHea.u_m) annotation (Line(
-        points={{120,-110},{120,-70},{-150,-70},{-150,-62}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(TRooAir.T, conCoo.u_m) annotation (Line(
-        points={{120,-110},{120,-150},{-150,-150},{-150,-142}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(switch1.y, separate.u) annotation (Line(
-        points={{41,0},{58,0}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(heaCooFlo, switch1.u1) annotation (Line(
-        points={{-200,90},{10,90},{10,8},{18,8}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(sum1.y, switch1.u3) annotation (Line(
-        points={{1,-90},{10,-90},{10,-8},{18,-8}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(preHeaCooFloCon.port, port_bCon) annotation (Line(
-        points={{120,50},{180,50}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(port_bTSet, TRooAir.port) annotation (Line(
-        points={{180,0},{180,-20},{140,-20},{140,-60},{80,-60},{80,-110},{100,-110}},
-        color={191,0,0},
-        smooth=Smooth.None));
-
-    connect(realToBoolean.y, switch1.u2) annotation (Line(
-        points={{-79,0},{18,0}},
-        color={255,0,255},
-        smooth=Smooth.None));
-    connect(schChoice, realToBoolean.u) annotation (Line(
-        points={{-200,0},{-102,0}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
-              -180},{180,180}}), graphics), Icon(coordinateSystem(
-            preserveAspectRatio=false, extent={{-180,-180},{180,180}}), graphics={
-                                 Rectangle(extent={{-180,180},{180,-180}},
-              lineColor={0,0,0},
-            fillColor={255,255,255},
-            fillPattern=FillPattern.Solid),
-          Text(
-            extent={{-90,194},{98,226}},
-            lineColor={0,0,255},
-            fillColor={255,255,255},
-            fillPattern=FillPattern.Solid,
-            textString="%name")}),  defaultComponentName="heaCooSch",
-                Documentation(
-    info="<html>
-  Model to choose the kind of scenario used depending on the period in the experiment. A constant temperature set point can be used if boolean=false or an imposed heat or cooling power if boolean=true.
-  <br/>
-  The constant temperature set point is applied comparing the set point to the air temperature in the room.Buildings.Rooms.Validation.HolzkirchenTwinHouses.BaseClasses.HeatingCoolingSchedule
-  <br/>
-  Once the heat or cooling heat flow defined, it is separated between a radiative (30%) and a convective (70%) parts.
-  <br/>
-  This model can be used for one room. 
-  </html>",
-    revisions="<html>
-<ul>
-<li>
-January 30 2015, by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
-  end HeatingCoolingSchedule;
 
   model TemperatureSetPoint
     "Model to heat or to cool a room considering a temperature set point"
@@ -1232,25 +1044,6 @@ First implementation.
     parameter Real kCoo=-1E6
       "Gain value multiplied with input signal for cooling";
 
-    Controls.Continuous.LimPID           conHea(
-      Td=60,
-      initType=Modelica.Blocks.Types.InitPID.InitialState,
-      Ti=300,
-      controllerType=Modelica.Blocks.Types.SimpleController.PI,
-      k=0.1) "Controller for heating"
-      annotation (Placement(transformation(extent={{-80,40},{-60,60}})));
-    Controls.Continuous.LimPID           conCoo(
-      Td=60,
-      reverseAction=true,
-      initType=Modelica.Blocks.Types.InitPID.InitialState,
-      Ti=300,
-      controllerType=Modelica.Blocks.Types.SimpleController.PI,
-      k=0.1) "Controller for cooling"
-      annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
-    Modelica.Blocks.Math.Gain gaiHea(k=kHea) "Gain for heating"
-      annotation (Placement(transformation(extent={{-40,40},{-20,60}})));
-    Modelica.Blocks.Math.Gain gaiCoo(k=kCoo) "Gain for cooling"
-      annotation (Placement(transformation(extent={{-40,-60},{-20,-40}})));
     Modelica.Blocks.Math.Sum sum1(nin=2)
       annotation (Placement(transformation(extent={{40,-10},{60,10}})));
     Modelica.Blocks.Routing.Multiplex2 multiplex2
@@ -1283,6 +1076,28 @@ First implementation.
     Modelica.Blocks.Interfaces.RealInput TRooAir
       "Calculated air temperature in the room"
       annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
+
+  protected
+    Buildings.Controls.Continuous.LimPID           conHea(
+      Td=60,
+      initType=Modelica.Blocks.Types.InitPID.InitialState,
+      Ti=300,
+      controllerType=Modelica.Blocks.Types.SimpleController.PI,
+      k=0.1) "Controller for heating"
+      annotation (Placement(transformation(extent={{-80,40},{-60,60}})));
+    Buildings.Controls.Continuous.LimPID           conCoo(
+      Td=60,
+      reverseAction=true,
+      initType=Modelica.Blocks.Types.InitPID.InitialState,
+      Ti=300,
+      controllerType=Modelica.Blocks.Types.SimpleController.PI,
+      k=0.1) "Controller for cooling"
+      annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
+    Modelica.Blocks.Math.Gain gaiHea(k=kHea) "Gain for heating"
+      annotation (Placement(transformation(extent={{-40,40},{-20,60}})));
+    Modelica.Blocks.Math.Gain gaiCoo(k=kCoo) "Gain for cooling"
+      annotation (Placement(transformation(extent={{-40,-60},{-20,-40}})));
+
   equation
     connect(conHea.y,gaiHea. u) annotation (Line(
         points={{-59,50},{-42,50}},
@@ -1417,57 +1232,61 @@ First implementation.
       "Gain value multiplied with input signal for heating";
     parameter Real kCoo=-1E6
       "Gain value multiplied with input signal for cooling";
+    parameter Integer nRoo = 7 "Number of rooms";
 
-    Modelica.Blocks.Math.RealToBoolean       booTabTorFlo[7](each threshold=0.5)
-      "Boolean table to choose the scenario(constant temperature set point or imposed heat flow)"
-      annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
-    Modelica.Blocks.Interfaces.RealInput heaCooFlo[7]
+    Modelica.Blocks.Interfaces.RealInput heaCooFlo[nRoo]
       "Heat or cooling power input applied depending on the scenario" annotation (
        Placement(transformation(extent={{-180,50},{-140,90}}), iconTransformation(
             extent={{-180,50},{-140,90}})));
-    HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloCon[7]
-      "Prescribed heat or cooling flow for the convective part"
-      annotation (Placement(transformation(extent={{80,20},{100,40}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bCon[7]
+   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bCon[nRoo]
       "Convective split" annotation (Placement(transformation(extent={{130,20},{150,
               40}}), iconTransformation(extent={{130,20},{150,40}})));
-    HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloRad[7]
-      "Prescribed heat or cooling flow for the radiative part"
-      annotation (Placement(transformation(extent={{80,-40},{100,-20}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bRad[7]
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_b port_bRad[nRoo]
       "Radiative split" annotation (Placement(transformation(extent={{130,-40},
               {150,-20}}),
                       iconTransformation(extent={{130,-40},{150,-20}})));
-    Separate sep[7](each k1=0.7, each k2=0.3)
-      "y1: convective part and y2: radiative part"
-      annotation (Placement(transformation(extent={{40,-10},{60,10}})));
-    Modelica.Blocks.Interfaces.RealInput TSetHea[7]
+    Modelica.Blocks.Interfaces.RealInput TSetHea[nRoo]
       "Heating temperature set point input applied depending on the scenario"
       annotation (Placement(transformation(extent={{-180,-50},{-140,-10}}),
           iconTransformation(extent={{-180,-80},{-140,-40}})));
-    Modelica.Blocks.Interfaces.RealInput TSetCoo[7]
+    Modelica.Blocks.Interfaces.RealInput TSetCoo[nRoo]
       "Cooling temperature set point input applied depending on the scenario"
       annotation (Placement(transformation(extent={{-180,-140},{-140,-100}}),
           iconTransformation(extent={{-180,-140},{-140,-100}})));
-    Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor TRooAir[7]
-      "Room air temperature"
-      annotation (Placement(transformation(extent={{-120,-70},{-100,-50}})));
-
-    Modelica.Blocks.Logical.Switch swi[7]
+    Modelica.Blocks.Logical.Switch swi[nRoo]
       annotation (Placement(transformation(extent={{0,-10},{20,10}})));
-    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_aTSet[7]
+    Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_aTSet[nRoo]
       "Calculated temperature used for the set point" annotation (Placement(
           transformation(extent={{-150,-100},{-130,-80}}),iconTransformation(
             extent={{-150,-100},{-130,-80}})));
-    TemperatureSetPoint TSetPoi[7](each kHea=kHea, each kCoo=kCoo)
-      "Temperature set point"
-      annotation (Placement(transformation(extent={{-40,-30},{-20,-10}})));
-    Modelica.Blocks.Interfaces.RealInput schChoice[7]
+    Modelica.Blocks.Interfaces.RealInput schChoice[nRoo]
       "Temperature set point or heating and cooling power" annotation (Placement(
           transformation(extent={{-180,-20},{-140,20}}), iconTransformation(
             extent={{-180,-20},{-140,20}})));
-  equation
 
+  protected
+    Modelica.Blocks.Math.RealToBoolean       booTabTorFlo[nRoo](each threshold=0.5)
+      "Boolean table to choose the scenario(constant temperature set point or imposed heat flow)"
+      annotation (Placement(transformation(extent={{-100,-10},{-80,10}})));
+    Buildings.HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloCon[nRoo]
+      "Prescribed heat or cooling flow for the convective part"
+      annotation (Placement(transformation(extent={{80,20},{100,40}})));
+    Buildings.HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloRad[nRoo]
+      "Prescribed heat or cooling flow for the radiative part"
+      annotation (Placement(transformation(extent={{80,-40},{100,-20}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.Separate
+                                                                                 sep[nRoo](each k1=0.7, each k2=0.3)
+      "y1: convective part and y2: radiative part"
+      annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+    Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor TRooAir[nRoo]
+      "Room air temperature"
+      annotation (Placement(transformation(extent={{-120,-70},{-100,-50}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.TemperatureSetPoint
+                                                                                            TSetPoi[nRoo](each kHea=kHea, each kCoo=kCoo)
+      "Temperature set point"
+      annotation (Placement(transformation(extent={{-40,-30},{-20,-10}})));
+
+  equation
     connect(port_aTSet, TRooAir.port) annotation (Line(
         points={{-140,-90},{-130,-90},{-130,-60},{-120,-60}},
         color={191,0,0},
@@ -1603,9 +1422,12 @@ First implementation.
     parameter Boolean yRadGai=true "y = true: constant value, y = false: file";
     parameter Boolean yConGai=true "y = true: constant value, y = false: file";
     parameter Boolean  yLatGai=true "y = true: constant value, y = false: file";
-    parameter Real kRadGai=0 "Constant output value for radiative gains";
-    parameter Real kConGai=0 "Constant output value for convective heat gains";
-    parameter Real kLatGai=0 "Constant output value for latent heat gains";
+    parameter Real kRadGai(start=0, unit="W/m2")
+      "Constant output value for radiative gains";
+    parameter Real kConGai(start=0, unit="W/m2")
+      "Constant output value for convective heat gains";
+    parameter Real kLatGai(start=0, unit="W/m2")
+      "Constant output value for latent heat gains";
 
     Modelica.Blocks.Sources.Constant qConGai(k=kConGai) if (yConGai==true)
       "Convective heat gain"
@@ -1988,8 +1810,8 @@ First implementation.
     // By default, it is enabled. This introduces a nonlinear equation, but
     // we have not observed an increase in computing time because of this equation.
     Buildings.Utilities.Psychrometrics.TWetBul_TDryBulPhi tWetBul_TDryBulXi(
-        redeclare package Medium = Buildings.Media.PerfectGases.MoistAir,
-        TDryBul(displayUnit="degC")) if computeWetBulbTemperature
+        TDryBul(displayUnit="degC"), redeclare package Medium =
+          Buildings.Media.Air) if       computeWetBulbTemperature
       annotation (Placement(transformation(extent={{244,-66},{264,-46}})));
 
   equation
@@ -2768,8 +2590,8 @@ First implementation.
 </ul>
 </html>"),
       Diagram(coordinateSystem(preserveAspectRatio=false,
-                                                        extent={{-200,-300},{300,
-              300}}),
+                                                        extent={{-200,-300},{
+              300,300}}),
           graphics));
   end ReaderWeatherFile2;
 

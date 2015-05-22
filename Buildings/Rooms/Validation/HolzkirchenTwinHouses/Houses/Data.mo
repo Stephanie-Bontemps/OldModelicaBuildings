@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses;
 package Data
-  "Package with data that are used in houses models implemented to avoid duplicate definition of data."
+  "Package with data that are used in houses models implemented to avoid duplicate definition of data"
   extends Modelica.Icons.MaterialPropertiesPackage;
 
   package GlazingSystems
@@ -8,7 +8,7 @@ package Data
     extends Modelica.Icons.MaterialPropertiesPackage;
 
     record ExtGlass "Interpane Clear float 4 mm"
-      extends HeatTransfer.Data.Glasses.Generic(
+      extends Buildings.HeatTransfer.Data.Glasses.Generic(
         x=0.004,
         k=1,
         tauSol=0.842,
@@ -34,7 +34,7 @@ First implementation.
     end ExtGlass;
 
     record IntGlass "Interpane Iplus E - 4 mm "
-      extends HeatTransfer.Data.Glasses.Generic(x=0.004,
+      extends Buildings.HeatTransfer.Data.Glasses.Generic(x=0.004,
         k=1,
         tauSol=0.588,
         rhoSol_a=0.312,
@@ -59,7 +59,7 @@ First implementation.
     end IntGlass;
 
     record ArgonAirGap "Gap between two glasses 90% argon and 10% air"
-      extends HeatTransfer.Data.Gases.Generic(
+      extends Buildings.HeatTransfer.Data.Gases.Generic(
         x=0.016,
         MM=38.85E-3,
         a_k=2.334E-3,
@@ -86,7 +86,7 @@ First implementation.
     end ArgonAirGap;
 
     record Window "Glazing system used in Holzkirchen twin touses"
-      extends HeatTransfer.Data.GlazingSystems.Generic(
+      extends Buildings.HeatTransfer.Data.GlazingSystems.Generic(
       gas = {ArgonAirGap()},
       glass = {ExtGlass(), IntGlass()},
       UFra=1.0,
@@ -111,7 +111,7 @@ First implementation.
     end Window;
 
     record RollerBlinds "Shade produced by the roller blinds"
-      extends HeatTransfer.Data.Shades.Generic(absIR_a=0.32, absIR_b=0.32);
+      extends Buildings.HeatTransfer.Data.Shades.Generic(absIR_a=0.32, absIR_b=0.32);
 
       annotation (
     Documentation(info="<html>
@@ -424,14 +424,14 @@ First implementation.
       "Constructions (walls, roof...) commonly found in Holzkirchen twin houses"
       extends Modelica.Icons.MaterialPropertiesPackage;
 
-      record ExtWallSN "External wall on the South or on the North"
+      record ExtWallSN "External wall on the south or on the north"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationPU(),
-                          Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(),
-                          Materials.InteriorPlaster()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
@@ -449,14 +449,14 @@ First implementation.
       end ExtWallSN;
 
       record ExtWallSNUnderWindow3
-        "External wall under the window in the living room on the South"
+        "External wall under the window in the living room on the south"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationPU(),
-                          Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(x=0.2),
-                          Materials.InteriorPlaster()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.2),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
@@ -473,14 +473,14 @@ First implementation.
 </html>"));
       end ExtWallSNUnderWindow3;
 
-      record ExtWallE "External wall on the East"
+      record ExtWallE "External wall on the east"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationPU(x=0.08, k=0.022),
-                          Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(),
-                          Materials.InteriorPlaster()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(x=0.08, k=0.022),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
@@ -497,14 +497,14 @@ First implementation.
 </html>"));
       end ExtWallE;
 
-      record ExtWallWS "South part of the external wall on the West"
+      record ExtWallWS "South part of the external wall on the west"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationEPS(),
-                          Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(),
-                          Materials.InteriorPlaster()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationEPS(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
@@ -521,14 +521,14 @@ First implementation.
 </html>"));
       end ExtWallWS;
 
-      record ExtWallWN "North part of the external wall on the West"
+      record ExtWallWN "North part of the external wall on the west"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.ExteriorPlaster(),
-                          Materials.InsulationMineralWool(),
-                          Materials.FormerExtPlaster(),
-                          Materials.HoneycombBrick(),
-                          Materials.InteriorPlaster()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationMineralWool(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.23,
@@ -548,9 +548,9 @@ First implementation.
       record IntWall1 "Internal wall with a thickness of 27cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Materials.InteriorPlaster(k=0.35),
-                          Materials.HoneycombBrick(x=0.24, k=0.331, d=1000),
-                          Materials.InteriorPlaster(k=0.35)},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.24, k=0.331, d=1000),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
@@ -570,9 +570,9 @@ First implementation.
       record IntWall2 "Internal wall with a thickness of 14cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Materials.InteriorPlaster(k=0.35),
-                          Materials.HoneycombBrick(x=0.115, k=0.331, d=1000),
-                          Materials.InteriorPlaster(k=0.35)},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.115, k=0.331, d=1000),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.17,
@@ -592,11 +592,11 @@ First implementation.
       record Ceiling "Ceiling"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.Screed(),
-                          Materials.Insulation(),
-                          Materials.Concrete(),
-                          Materials.Plaster(),
-                          Materials.InsulationUnderCeiling()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Screed(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Insulation(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Concrete(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Plaster(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationUnderCeiling()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,
@@ -615,11 +615,11 @@ First implementation.
       record Ground "Floor"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Materials.Concrete(k=2.1),
-                          Materials.LevellingFill(),
-                          Materials.PURDammplatte025Insulation(),
-                          Materials.CompositePanelPUR(),
-                          Materials.Screed(x=0.065)},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Concrete(k=2.1),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.LevellingFill(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.PURDammplatte025Insulation(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.CompositePanelPUR(),
+                          Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Screed(x=0.065)},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,
@@ -638,7 +638,7 @@ First implementation.
       record ExtDoorOpaquePart "External door in the lobby"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=1,
-        final material = {Materials.WoodDoor()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,
@@ -657,7 +657,7 @@ First implementation.
       record IntDoorOpaquePart "Internal door"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=1,
-        final material = {Materials.WoodDoor()},
+        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,
