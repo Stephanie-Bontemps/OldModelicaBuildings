@@ -598,7 +598,6 @@ First implementation.
       hA=hA,
       hB=hB,
       dpCloRat(displayUnit="Pa"),
-      mClo=0.5,
       CDOpe=0.78,
       mOpe=0.78,
       forceErrorControlOnFlow=true,
@@ -750,37 +749,33 @@ First implementation.
               -10},{-80,10}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaKit(L=lKit, redeclare
         package Medium =
-                 MediumB,
-      m=0.5) "Effective air leakage area around the window in the kitchen"
+                 MediumB)
+      "Effective air leakage area around the window in the kitchen"
       annotation (Placement(transformation(extent={{-10,80},{10,100}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLob(L=lLob, redeclare
         package Medium =
-                 MediumB,
-      m=0.5) "Effective air leakage area around the door in the lobby"
+                 MediumB)
+      "Effective air leakage area around the door in the lobby"
       annotation (Placement(transformation(extent={{-10,50},{10,70}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaNorBed(L=lNorBed, redeclare
-        package Medium = MediumB,
-      m=0.5)
+        package Medium = MediumB)
       "Effective air leakage area around the window in the north bedroom"
       annotation (Placement(transformation(extent={{-10,20},{10,40}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaBat(L=lBat, redeclare
         package Medium =
-                 MediumB,
-      m=0.5) "Effective air leakage area around the window in the bathroom"
+                 MediumB)
+      "Effective air leakage area around the window in the bathroom"
       annotation (Placement(transformation(extent={{-10,-10},{10,10}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaSouBed(L=lSouBed, redeclare
-        package Medium = MediumB,
-      m=0.5)
+        package Medium = MediumB)
       "Effective air leakage area around the window in the south bedroom"
       annotation (Placement(transformation(extent={{-10,-40},{10,-20}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo1(L=lLivRoo1, redeclare
-        package Medium = MediumB,
-      m=0.5)
+        package Medium = MediumB)
       "Effective air leakage area around windows 2 and 3 on the south wall of the living room"
       annotation (Placement(transformation(extent={{-10,-70},{10,-50}})));
     Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLivRoo2(L=lLivRoo2, redeclare
-        package Medium = MediumB,
-      m=0.5)
+        package Medium = MediumB)
       "Effective air leakage area around window 1 on the west wall of the living room"
       annotation (Placement(transformation(extent={{-10,-100},{10,-80}})));
     Buildings.Fluid.Sources.Outside_CpLowRise outEas(
@@ -960,8 +955,7 @@ First implementation.
   block Separate "Divide the input in two outputs"
     extends Modelica.Blocks.Icons.Block;
 
-    parameter Real k1(start=0.5, min=0, max=1, unit="1") "Gain of upper output";
-    parameter Real k2(start=0.5, min=0, max=1, unit="1") "Gain of lower output";
+    parameter Real k(start=0.5, min=0, max=1, unit="1") "Gain of upper output";
 
     Modelica.Blocks.Interfaces.RealInput u "Connector of Real input signal"
       annotation (Placement(transformation(extent={{-140,-20},{-100,20}},
@@ -976,13 +970,13 @@ First implementation.
         rotation=0)));
 
   equation
-    y1 = k1*u;
-    y2 = k2*u;
+    y1 = k*u;
+    y2 = (1-k)*u;
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}}), graphics), defaultComponentName="separate",
                 Documentation(
     info="<html>
-  Model to separate the input in two outputs according to the coefficients <CODE>k1</CODE> and <CODE>k2</CODE>.
+  Model to separate the input in two outputs according to the coefficients <CODE>k</CODE> and <CODE>1-k</CODE>.
   </html>",
     revisions="<html>
 <ul>
@@ -1017,13 +1011,13 @@ First implementation.
             lineColor={0,0,0},
             fillColor={61,61,61},
             fillPattern=FillPattern.Solid,
-            textString="k1=%k1"),
+            textString="k1=%k"),
           Text(
             extent={{6,-28},{100,-40}},
             lineColor={0,0,0},
             fillColor={61,61,61},
             fillPattern=FillPattern.Solid,
-            textString="k2=%k2"),
+            textString="k2=1-%k"),
           Line(
             points={{-100,0},{2,0},{2,50},{100,50}},
             color={0,0,0},
@@ -1035,7 +1029,6 @@ First implementation.
             thickness=0.5,
             smooth=Smooth.None)}));
   end Separate;
-
 
   model TemperatureSetPoint
     "Model to heat or to cool a room considering a temperature set point"
@@ -1263,6 +1256,10 @@ First implementation.
       "Temperature set point or heating and cooling power" annotation (Placement(
           transformation(extent={{-180,-20},{-140,20}}), iconTransformation(
             extent={{-180,-20},{-140,20}})));
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.Separate
+                                                                                 sep[nRoo](each k=0.7)
+      "y1: convective part and y2: radiative part"
+      annotation (Placement(transformation(extent={{40,-10},{60,10}})));
 
   protected
     Modelica.Blocks.Math.RealToBoolean       booTabTorFlo[nRoo](each threshold=0.5)
@@ -1274,10 +1271,6 @@ First implementation.
     Buildings.HeatTransfer.Sources.PrescribedHeatFlow preHeaCooFloRad[nRoo]
       "Prescribed heat or cooling flow for the radiative part"
       annotation (Placement(transformation(extent={{80,-40},{100,-20}})));
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.Separate
-                                                                                 sep[nRoo](each k1=0.7, each k2=0.3)
-      "y1: convective part and y2: radiative part"
-      annotation (Placement(transformation(extent={{40,-10},{60,10}})));
     Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor TRooAir[nRoo]
       "Room air temperature"
       annotation (Placement(transformation(extent={{-120,-70},{-100,-50}})));

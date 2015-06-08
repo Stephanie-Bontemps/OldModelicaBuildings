@@ -642,7 +642,8 @@ First implementation.
           absIR_a=0.9,
           absIR_b=0.9,
           absSol_a=0.6,
-          absSol_b=0.6);
+          absSol_b=0.6,
+          roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.MediumSmooth);
         annotation (
       Documentation(revisions="<html>
 <ul>
