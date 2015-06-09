@@ -18,6 +18,7 @@ model Kitchen "Model of the kitchen (küche) in Holzkirchen Twin Houses"
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo=lExtWalNor*lExtWalWes,
@@ -28,14 +29,14 @@ model Kitchen "Model of the kitchen (küche) in Holzkirchen Twin Houses"
     nSurBou=2,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
     layers = {extWallSNKitchen},
     A = {hRoo*lExtWalNor},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConExtWin(
@@ -43,7 +44,7 @@ model Kitchen "Model of the kitchen (küche) in Holzkirchen Twin Houses"
     A = {hRoo*lExtWalWes},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int},
     glaSys = {windowKitchen},
@@ -56,7 +57,7 @@ model Kitchen "Model of the kitchen (küche) in Holzkirchen Twin Houses"
     layers = {intWall2Kitchen, ceilingKitchen, groundKitchen},
     A = {hRoo*lIntWalOnLob, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
-    steadyStateInitial = {false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(

@@ -18,6 +18,7 @@ model Bathroom "Model of the bathroom (bad WC) in Holzkirchen Twin Houses"
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo=lIntWalOnNorBed*lExtWalEas,
@@ -28,14 +29,14 @@ model Bathroom "Model of the bathroom (bad WC) in Holzkirchen Twin Houses"
     nSurBou=3,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExtWin(
     layers = {extWallEBathroom},
     A = {hRoo*lExtWalEas},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int},
     glaSys = {windowBathroom},
@@ -48,7 +49,7 @@ model Bathroom "Model of the bathroom (bad WC) in Holzkirchen Twin Houses"
     layers = {intWall2Bathroom, ceilingBathroom, groundBathroom},
     A = {hRoo*lIntWalOnNorBed, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
-    steadyStateInitial = {false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(

@@ -23,6 +23,7 @@ model NorthBedroomNorthPartModel
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo = lExtWalNor * lExtWalEas,
@@ -33,14 +34,14 @@ model NorthBedroomNorthPartModel
     nSurBou=1,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
     layers = {extWallENBedroom},
     A = {hRoo*lExtWalEas},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConExtWin(
@@ -48,7 +49,7 @@ model NorthBedroomNorthPartModel
     A = {hRoo*lExtWalNor},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
-    steadyStateInitial = {false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_ext,
     each T_b_start=Tini_int,
     glaSys = {windowNBedroom},

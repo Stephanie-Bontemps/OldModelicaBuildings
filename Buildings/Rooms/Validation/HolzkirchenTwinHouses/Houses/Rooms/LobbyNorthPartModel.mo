@@ -23,6 +23,7 @@ model LobbyNorthPartModel
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo=(lExtWalNor + lExtDooNor) * lIntWalOnNorBed,
@@ -33,14 +34,14 @@ model LobbyNorthPartModel
     nSurBou=0,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
     layers = {extWallSNLobby},
     A = {(hRoo*lExtWalNor + (hRoo-hExtDooNor)*lExtDooNor)},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConExtWin(
@@ -48,7 +49,7 @@ model LobbyNorthPartModel
     A = {hExtDooNor*lExtDooNor},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     glaSys = {windowLobby},
     hWin = {0.535},
     wWin = {0.585},

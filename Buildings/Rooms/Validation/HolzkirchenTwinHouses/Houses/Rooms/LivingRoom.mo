@@ -40,6 +40,7 @@ model LivingRoom "Model of the living room (wohnen) in Holzkirchen Twin Houses"
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo=lExtWalSou*(lExtWalSouWes+lExtWalNorWes),
@@ -50,14 +51,14 @@ model LivingRoom "Model of the living room (wohnen) in Holzkirchen Twin Houses"
     nSurBou=0,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
     layers = {extWallSNUnderWindow3_1, extWallWSLivingRoom},
     A = {AExtWalSouWin3, hRoo*lExtWalSouWes},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.W},
-    steadyStateInitial = {false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_ext,
     each T_b_start=Tini_int),
     datConExtWin(
@@ -65,7 +66,7 @@ model LivingRoom "Model of the living room (wohnen) in Holzkirchen Twin Houses"
     A = {AExtWalSouWin3, AExtWalSouWin2, hRoo*lExtWalNorWes},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.W},
-    steadyStateInitial = {false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_ext,
     each T_b_start=Tini_int,
     glaSys = {windowLivingRoom, windowLivingRoom, windowLivingRoom},
@@ -78,7 +79,7 @@ model LivingRoom "Model of the living room (wohnen) in Holzkirchen Twin Houses"
     layers = {intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, intWall1LivingRoom, intDoorOpaquePartLivingRoom, intWall1LivingRoom, ceilingLivingRoom, groundLivingRoom},
     A = {(hRoo*lIntWalOnKit+(hRoo-hDooOnKit)*lDooOnKit), hDooOnKit*lDooOnKit, (hRoo*lIntWalOnLob+(hRoo-hDooOnLob)*lDooOnLob), hDooOnLob*lDooOnLob, hRoo*lIntWalOnNorBed, (hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor, hRoo*lIntWalOnSouBed, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
-    steadyStateInitial = {false, false, false, false, false, false, false, false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,

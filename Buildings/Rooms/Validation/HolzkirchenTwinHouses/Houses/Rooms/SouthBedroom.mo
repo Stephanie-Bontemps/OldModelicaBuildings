@@ -21,6 +21,7 @@ model SouthBedroom
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo = 0.23 "Ground reflectivity";
 
   extends Buildings.Rooms.MixedAir(
     AFlo=lExtWalEas*lExtWalSou,
@@ -31,14 +32,14 @@ model SouthBedroom
     nSurBou=1,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
-    bouConExt(HDifTil(each rho = 0.23)),
-    bouConExtWin(HDifTil(each rho = 0.23)),
+    bouConExt(HDifTil(each rho = albedo)),
+    bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
     layers = {extWallESBedroom},
     A = {hRoo*lExtWalEas},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConExtWin(
@@ -46,7 +47,7 @@ model SouthBedroom
     A = {hRoo*lExtWalSou},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.S},
-    steadyStateInitial = {false},
+    each steadyStateInitial = false,
     T_a_start={Tini_ext},
     T_b_start={Tini_int},
     glaSys = {windowSBedroom},
@@ -59,7 +60,7 @@ model SouthBedroom
     layers = {intWall2SBedroom, intDoorOpaquePartSBedroom, intWall2SBedroom, intWall2SBedroom, ceilingSBedroom, groundSBedroom},
     A = {(hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor, hRoo*lIntWalOnBat, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
-    steadyStateInitial = {false, false, false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(

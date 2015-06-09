@@ -45,7 +45,7 @@ model Corridor
     layers = {intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, intWall1Corridor, intDoorOpaquePartCorridor, intWall1Corridor, ceilingCorridor, groundCorridor},
     A = {(hRoo*lIntWalOnNorBed+(hRoo-hDooOnNorBed)*lDooOnNorBed), hDooOnNorBed*lDooOnNorBed, (hRoo*lIntWallOnBat+(hRoo-hDooOnBat)*lDooOnBat), hDooOnBat*lDooOnBat, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
-    steadyStateInitial = {false, false, false, false, false, false},
+    each steadyStateInitial = false,
     each T_a_start=Tini_bou,
     each T_b_start=Tini_int),
     surBou(
