@@ -24,6 +24,20 @@ model NorthBedroomNorthPartModel
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
   parameter Real albedo = 0.23 "Ground reflectivity";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallSN
+    "Properties of  external wall on south and north";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallE
+    "Properties of external wall on east";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall1
+    "Properties of internal wall with a thickness of 27cm";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall2
+    "Properties of internal with a thickness of 14cm";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intDoorOpaquePart
+    "Properties of internal door";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ceiling
+    "Properties of ceiling";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ground
+    "Pproperties of floor";
 
   extends Buildings.Rooms.MixedAir(
     AFlo = lExtWalNor * lExtWalEas,
@@ -37,7 +51,7 @@ model NorthBedroomNorthPartModel
     bouConExt(HDifTil(each rho = albedo)),
     bouConExtWin(HDifTil(each rho = albedo)),
     datConExt(
-    layers = {extWallENBedroom},
+    layers = {extWallE},
     A = {hRoo*lExtWalEas},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.E},
@@ -45,7 +59,7 @@ model NorthBedroomNorthPartModel
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConExtWin(
-    layers = {extWallSNNBedroom},
+    layers = {extWallSN},
     A = {hRoo*lExtWalNor},
     til = {Buildings.Types.Tilt.Wall},
     azi = {Buildings.Types.Azimuth.N},
@@ -59,7 +73,7 @@ model NorthBedroomNorthPartModel
     ove(wL = {0}, wR = {0}, gap = {0}, dep = {0.16}),
     sidFin(h = {0}, gap = {0}, dep = {0.16})),
     datConBou(
-    layers = {intWall2NBedroom, intWall2NBedroom, intDoorOpaquePartNBedroom, intWall1NBedroom, ceilingNBedroom, groundNBedroom},
+    layers = {intWall2, intWall2, intDoorOpaquePart, intWall1, ceiling, ground},
     A = {hRoo*lIntWalOnBat, (hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor, hRoo*lIntWalOnLivRoo, AFlo, AFlo},
     til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Floor},
     each steadyStateInitial = false,
@@ -74,27 +88,8 @@ model NorthBedroomNorthPartModel
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
 
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
-                                                                                                        extWallSNNBedroom
-    annotation (Placement(transformation(extent={{420,-200},{440,-180}})));
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallE
-                                                                                                        extWallENBedroom
-    annotation (Placement(transformation(extent={{380,-200},{400,-180}})));
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ceiling
-                                                                                                        ceilingNBedroom
-    annotation (Placement(transformation(extent={{420,-160},{440,-140}})));
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ground
-                                                                                                        groundNBedroom
-    annotation (Placement(transformation(extent={{380,-160},{400,-140}})));
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.Window
                                                                                      windowNBedroom(haveExteriorShade=true, shade=
         Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
     annotation (Placement(transformation(extent={{338,-200},{358,-180}})));
-  Data.OpaqueConstructions.Constructions.IntWall1 intWall1NBedroom
-    annotation (Placement(transformation(extent={{420,-120},{440,-100}})));
-  Data.OpaqueConstructions.Constructions.IntWall2 intWall2NBedroom
-    annotation (Placement(transformation(extent={{380,-120},{400,-100}})));
-  Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
-    intDoorOpaquePartNBedroom
-    annotation (Placement(transformation(extent={{340,-120},{360,-100}})));
 end NorthBedroomNorthPartModel;

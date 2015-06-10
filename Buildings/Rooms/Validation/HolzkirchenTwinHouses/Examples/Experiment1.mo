@@ -591,10 +591,18 @@ package Experiment1
       nomFichierBouOthRoo=
           "D:/Berkeley/Berkeley - IEA58/BouOthRooLobNorBedExp1.txt",
       nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      extWallSN=extWallSN,
+      extWallE=extWallE,
+      extDoorOpaquePart=extDoorOpaquePart,
+      intDoorOpaquePart=intDoorOpaquePart,
+      intWall1=intWall1,
+      intWall2=intWall2,
+      ceiling=ceiling,
+      ground=ground,
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
+      annotation (Placement(transformation(extent={{-80,-20},{0,60}})));
 
     Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
       TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
@@ -611,53 +619,79 @@ package Experiment1
       TBlaSkySou=Buildings.BoundaryConditions.Types.DataSource.File,
       TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
       filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
+      annotation (Placement(transformation(extent={{-50,80},{-30,100}})));
 
     Modelica.Blocks.Sources.CombiTimeTable measurements(
       tableOnFile=true,
       tableName="data",
       columns=2:35,
       fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt")
-      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
+      annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
 
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[2]
       "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,10},{40,30}})));
+      annotation (Placement(transformation(extent={{20,30},{40,50}})));
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[2]
       "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
+      annotation (Placement(transformation(extent={{20,-10},{40,10}})));
     Modelica.Blocks.Math.Add residuals[2](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
+      annotation (Placement(transformation(extent={{60,-10},{80,10}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[2]
-      annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
+      annotation (Placement(transformation(extent={{20,-60},{40,-40}})));
+  public
+    Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
+                                                     extWallSN
+      annotation (Placement(transformation(extent={{-100,-100},{-80,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.ExtWallE
+                                                    extWallE
+      annotation (Placement(transformation(extent={{-80,-100},{-60,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.IntWall1
+                                                    intWall1
+      annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.IntWall2
+                                                    intWall2
+      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.Ceiling
+                                                   ceiling
+      annotation (Placement(transformation(extent={{-20,-100},{0,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.Ground
+                                                  ground
+      annotation (Placement(transformation(extent={{0,-100},{20,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.ExtDoorOpaquePart
+                                                             extDoorOpaquePart
+      annotation (Placement(transformation(extent={{20,-100},{40,-80}})));
+    Houses.Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
+                                                             intDoorOpaquePart
+      annotation (Placement(transformation(extent={{40,-100},{60,-80}})));
+
   equation
     connect(weaDat.weaBus, N2LobNorBed.weaBus) annotation (Line(
-        points={{-30,70},{-2.22222,70},{-2.22222,37.7778}},
+        points={{-30,90},{-2.22222,90},{-2.22222,57.7778}},
         color={255,204,51},
         thickness=0.5,
         smooth=Smooth.None));
     connect(N2LobNorBed.Tair, TairC.port) annotation (Line(
-        points={{-2.22222,20},{20,20}},
+        points={{-2.22222,40},{20,40}},
         color={191,0,0},
         smooth=Smooth.None));
     connect(N2LobNorBed.Trad, TradC.port) annotation (Line(
-        points={{-2.22222,-20},{20,-20}},
+        points={{-2.22222,0},{20,0}},
         color={191,0,0},
         smooth=Smooth.None));
     connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
+        points={{40,40},{50,40},{50,6},{58,6}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[12], fromKelvin[2].Kelvin) annotation (Line(
-        points={{-59,-70},{18,-70}},
+        points={{-59,-50},{18,-50}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[11], fromKelvin[1].Kelvin) annotation (Line(
-        points={{-59,-70},{18,-70}},
+        points={{-59,-50},{18,-50}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-        points={{41,-70},{50,-70},{50,-26},{58,-26}},
+        points={{41,-50},{50,-50},{50,-6},{58,-6}},
         color={0,0,127},
         smooth=Smooth.None));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,

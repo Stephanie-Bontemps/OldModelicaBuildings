@@ -29,6 +29,7 @@ model N2LobbyNorthBedroomModel
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo=0.23 "Ground reflectivity";
   parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of energy balance";
   parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
@@ -49,6 +50,22 @@ model N2LobbyNorthBedroomModel
     "Constant value for convective gains in the north bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
   parameter Real kLatGaiNorBed(unit = "W/m2")=0
     "Constant value for latent gains in the north bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallSN
+    "Properties of  external wall on south and north";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extDoorOpaquePart
+    "Properties of external door";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intDoorOpaquePart
+    "Properties of internal door";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall1
+    "Properties of internal wall with a thickness of 27cm";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall2
+    "Properties of internal with a thickness of 14cm";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ceiling
+    "Properties of ceiling";
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ground
+    "Properties of ground";
+  parameter HeatTransfer.Data.OpaqueConstructions.Generic extWallE
+    "Properties of external wall on east";
 
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.NorthBedroomNorthPartModel
                                                                                                         northBedroom(redeclare
@@ -60,7 +77,15 @@ model N2LobbyNorthBedroomModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=2)
+    nPorts=2,
+    albedo=albedo,
+    extWallSN=extWallSN,
+    extWallE=extWallE,
+    intWall1=intWall1,
+    intWall2=intWall2,
+    intDoorOpaquePart=intDoorOpaquePart,
+    ceiling=ceiling,
+    ground=ground)
     annotation (Placement(transformation(extent={{80,-100},{100,-80}})));
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.LobbyNorthPartModel
                                                                                                         lobby(redeclare
@@ -72,7 +97,15 @@ model N2LobbyNorthBedroomModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=2)
+    nPorts=2,
+    albedo=albedo,
+    extWallSN=extWallSN,
+    extDoorOpaquePart=extDoorOpaquePart,
+    intDoorOpaquePart=intDoorOpaquePart,
+    intWall1=intWall1,
+    intWall2=intWall2,
+    ceiling=ceiling,
+    ground=ground)
     annotation (Placement(transformation(extent={{-100,-102},{-80,-82}})));
   Modelica.Blocks.Sources.CombiTimeTable bliPos(
     final tableOnFile=true,
