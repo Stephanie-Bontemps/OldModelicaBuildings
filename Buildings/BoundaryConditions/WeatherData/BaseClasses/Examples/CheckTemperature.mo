@@ -8,8 +8,7 @@ public
   Buildings.BoundaryConditions.WeatherData.BaseClasses.CheckTemperature
     cheTemDewPoi "Check dew point temperature"
     annotation (Placement(transformation(extent={{60,-20},{80,0}})));
-  Buildings.Utilities.Time.ModelTime modTim
-    "Block that outputs the model time"
+  Buildings.Utilities.Time.ModelTime modTim "Block that outputs the model time"
     annotation (Placement(transformation(extent={{-100,0},{-80,20}})));
 protected
   Modelica.Blocks.Tables.CombiTable1Ds datRea(

@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House;
 model N2LobbyNorthBedroomModel
-  "Model of a part of N2 Twin House (lobby and north bedroom) using Model6 "
+  "Model of a part of N2 Twin House (lobby and north bedroom) using N2HouseModel "
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
   parameter String nomFichierHeaCoo = "NoName"
@@ -50,22 +50,6 @@ model N2LobbyNorthBedroomModel
     "Constant value for convective gains in the north bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
   parameter Real kLatGaiNorBed(unit = "W/m2")=0
     "Constant value for latent gains in the north bedroom" annotation (Dialog(group="Internal gains (positive if heat gains)"));
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallSN
-    "Properties of  external wall on south and north";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extDoorOpaquePart
-    "Properties of external door";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intDoorOpaquePart
-    "Properties of internal door";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall1
-    "Properties of internal wall with a thickness of 27cm";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic intWall2
-    "Properties of internal with a thickness of 14cm";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ceiling
-    "Properties of ceiling";
-  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic ground
-    "Properties of ground";
-  parameter HeatTransfer.Data.OpaqueConstructions.Generic extWallE
-    "Properties of external wall on east";
 
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.NorthBedroomNorthPartModel
                                                                                                         northBedroom(redeclare
@@ -85,8 +69,10 @@ model N2LobbyNorthBedroomModel
     intWall2=intWall2,
     intDoorOpaquePart=intDoorOpaquePart,
     ceiling=ceiling,
-    ground=ground)
+    ground=ground,
+    window=window)
     annotation (Placement(transformation(extent={{80,-100},{100,-80}})));
+
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.LobbyNorthPartModel
                                                                                                         lobby(redeclare
       package Medium =                                                                                 MediumA,
@@ -105,30 +91,33 @@ model N2LobbyNorthBedroomModel
     intWall1=intWall1,
     intWall2=intWall2,
     ceiling=ceiling,
-    ground=ground)
+    ground=ground,
+    window=window)
     annotation (Placement(transformation(extent={{-100,-102},{-80,-82}})));
+
   Modelica.Blocks.Sources.CombiTimeTable bliPos(
     final tableOnFile=true,
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         nomFichierBlinds),
     final tableName="BliPos",
-    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
-    columns=2:8) "Scenario of the blinds position applied on the South windows"
+    columns=2:9,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments)
+    "Scenario of the blinds position applied on the South windows"
     annotation (Placement(transformation(extent={{-160,80},{-140,100}})));
   Modelica.Blocks.Sources.CombiTimeTable bouVenIntGain(
     final tableOnFile=true,
-    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     final tableName="BouVenIntGai",
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         nomFichierBouVenIntGai),
-    columns=2:9)
+    columns=2:9,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments)
     "Boundary conditions for ceiling (1 for east, 2 for west) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); internal gains in the kitchen (8)"
     annotation (Placement(transformation(extent={{-160,160},{-140,180}})));
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge2
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge
                                                                                           mulTherBri(gExt={1.750,0.869,2.024,0.996,1.968,
         4.383},
     gEasCei={0.532,1.464,0.865,0.812,1.405,1.127},
@@ -147,24 +136,24 @@ model N2LobbyNorthBedroomModel
     annotation (Placement(transformation(extent={{160,-100},{180,-80}})));
   Modelica.Blocks.Sources.CombiTimeTable heaCoo(
     final tableOnFile=true,
-    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     final tableName="HeaCoo",
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         nomFichierHeaCoo),
-    columns=2:23)
+    columns=2:23,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments)
     "Heating or cooling power for the different rooms (1: kitchen, 2: lobby, 3: north bedroom, 4: corridor, 5: bathroom, 6: South bedroom, 7: living room); heating temperature set point for the different rooms (8: kitchen, 9: lobby, 10: north bedroom, 11: corridor, 12: bathroom, 13: South bedroom, 14: living room); cooling temperature set point for the different rooms (15: kitchen, 16: lobby, 17: north bedroom, 18: corridor, 19: bathroom, 20: South bedroom, 21: living room); scenario type (22)"
     annotation (Placement(transformation(extent={{-160,120},{-140,140}})));
   Buildings.Airflow.Multizone.Orifice oriCorNorBed(redeclare package Medium =
         MediumA, A=1e-6,
     m=0.65)
     "Orifice modelling the door between the north bedroom and the corridor"
-    annotation (Placement(transformation(extent={{80,-160},{100,-140}})));
+    annotation (Placement(transformation(extent={{80,-140},{100,-120}})));
   Buildings.Airflow.Multizone.Orifice oriLivRooLob(redeclare package Medium =
         MediumA, A=1e-6,
     m=0.65) "Orifice modelling the door between the lobby and the living room"
-    annotation (Placement(transformation(extent={{-100,-160},{-80,-140}})));
+    annotation (Placement(transformation(extent={{-100,-140},{-80,-120}})));
   Buildings.Airflow.Multizone.EffectiveAirLeakageArea leaLob(
     redeclare package Medium = MediumA,
     L=1.86e-04) "Effective air leakage area around the door in the lobby"
@@ -176,13 +165,13 @@ model N2LobbyNorthBedroomModel
     annotation (Placement(transformation(extent={{80,-60},{100,-40}})));
   Modelica.Blocks.Sources.CombiTimeTable bouOthRoo(
     final tableOnFile=true,
-    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
     final tableName="BouOthRoo",
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         nomFichierBouOthRoo),
-    columns=2:5)
+    columns=2:5,
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments)
     "Measured temperature in the other rooms around the studied rooms"
     annotation (Placement(transformation(extent={{-168,-20},{-148,0}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
@@ -217,15 +206,46 @@ protected
   Buildings.Fluid.Sources.Boundary_pT bouLivRoo(nPorts=1, use_T_in=true,
     redeclare package Medium = MediumA)
     "Boundary conditions in the living room"
-    annotation (Placement(transformation(extent={{-140,-160},{-120,-140}})));
+    annotation (Placement(transformation(extent={{-140,-140},{-120,-120}})));
   Buildings.Fluid.Sources.Boundary_pT bouCor(nPorts=1, use_T_in=true,
     redeclare package Medium = MediumA) "Boundary conditions in the corridor"
-    annotation (Placement(transformation(extent={{40,-160},{60,-140}})));
+    annotation (Placement(transformation(extent={{40,-140},{60,-120}})));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairOthRoo[4]
     annotation (Placement(transformation(extent={{-130,-20},{-110,0}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_a1[4]
     annotation (Placement(transformation(extent={{-100,-20},{-80,0}})));
 
+public
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
+                                                                                                        extWallSN
+    annotation (Placement(transformation(extent={{-180,-180},{-160,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallE
+                                                                                                        extWallE
+    annotation (Placement(transformation(extent={{-150,-180},{-130,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall1
+                                                                                                        intWall1
+    annotation (Placement(transformation(extent={{-60,-180},{-40,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall2
+                                                                                                        intWall2
+    annotation (Placement(transformation(extent={{-30,-180},{-10,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ceiling
+                                                                                                        ceiling
+    annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ground
+                                                                                                        ground
+    annotation (Placement(transformation(extent={{30,-180},{50,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtDoorOpaquePart
+                                                                                                        extDoorOpaquePart
+    annotation (Placement(transformation(extent={{-120,-180},{-100,-160}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
+                                                                                                        intDoorOpaquePart
+    annotation (Placement(transformation(extent={{-90,-180},{-70,-160}})));
+
+  Modelica.Blocks.Interfaces.RealOutput P[2] "Total power in each room"
+    annotation (Placement(transformation(extent={{180,-10},{200,10}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.Window
+                                                                                     window(haveExteriorShade=true, shade=Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
+    annotation (Placement(transformation(extent={{60,-180},{80,-160}})));
 equation
   connect(intGaiLob.intGai, lobby.qGai_flow) annotation (Line(
       points={{-119,-90},{-110,-90},{-110,-88},{-101,-88}},
@@ -255,7 +275,7 @@ equation
       string="%first",
       index=-1,
       extent={{-6,3},{-6,3}}));
-  connect(bliPos.y[2], northBedroom.uSha[1]) annotation (Line(
+  connect(bliPos.y[3], northBedroom.uSha[1]) annotation (Line(
       points={{-139,90},{70,90},{70,-82},{79,-82}},
       color={0,0,127},
       smooth=Smooth.None));
@@ -284,19 +304,19 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(oriLivRooLob.port_b, lobby.ports[2]) annotation (Line(
-      points={{-80,-150},{-70,-150},{-70,-96},{-97.5,-96}},
+      points={{-80,-130},{-70,-130},{-70,-96},{-97.5,-96}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(oriCorNorBed.port_b, northBedroom.ports[2]) annotation (Line(
-      points={{100,-150},{108,-150},{108,-94},{82.5,-94}},
+      points={{100,-130},{108,-130},{108,-94},{82.5,-94}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(bouCor.ports[1], oriCorNorBed.port_a) annotation (Line(
-      points={{60,-150},{80,-150}},
+      points={{60,-130},{80,-130}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(bouLivRoo.ports[1], oriLivRooLob.port_a) annotation (Line(
-      points={{-120,-150},{-100,-150}},
+      points={{-120,-130},{-100,-130}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(lobby.heaPorAir, Tair[1]) annotation (Line(
@@ -469,11 +489,11 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(bouOthRoo.y[1], bouLivRoo.T_in) annotation (Line(
-      points={{-147,-10},{-144,-10},{-144,-146},{-142,-146}},
+      points={{-147,-10},{-144,-10},{-144,-126},{-142,-126}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouOthRoo.y[2], bouCor.T_in) annotation (Line(
-      points={{-147,-10},{-140,-10},{-140,-28},{38,-28},{38,-146}},
+      points={{-147,-10},{-140,-10},{-140,-28},{38,-28},{38,-126}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(port_a1[1], lobby.surf_conBou[2]) annotation (Line(
@@ -512,8 +532,12 @@ equation
       points={{-110,-10},{-90,-10}},
       color={191,0,0},
       smooth=Smooth.None));
-        annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
-            -180},{180,180}}), graphics), Icon(coordinateSystem(
+  connect(mulHeaCooSch.P, P) annotation (Line(points={{-99.2857,56.4286},{170,
+          56.4286},{170,0},{190,0}}, color={0,0,127}));
+  connect(bliPos.y[2], lobby.uSha[1]) annotation (Line(points={{-139,90},{-136,90},
+          {-136,-84},{-101,-84}}, color={0,0,127}));
+  annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,
+            -180},{180,180}})),           Icon(coordinateSystem(
           preserveAspectRatio=false, extent={{-180,-180},{180,180}}), graphics={
         Bitmap(
           extent={{-166,180},{170,-180}},
@@ -555,5 +579,53 @@ equation
           fillColor={61,61,61},
           fillPattern=FillPattern.Solid,
           textString="radiation")}),
-                                  defaultComponentName="N2House");
+                                  defaultComponentName="N2HouseLobbyNorthBedroom",
+  Documentation(
+  info="<html>
+  <p>
+  This model represents a part of the N2 house (lobby and north bedroom). It gathers the models of these two rooms with the connections between the rooms (through the walls and the
+  doors) but also the air leakage area models, the thermal bridges, the internal gains, the heating and cooling systems and the boundary conditions. 
+  </p>
+  <p>
+  It is built using the models including in <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel\">
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel</a> as much as possible. Nevertheless, new models are used for the rooms as the heat conduction through
+  the walls in connection with the other rooms have to be modeled in the room model (except for the wall between the lobby and the north bedroom).  
+  <br>
+  <br>
+  In this way, the lobby is modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.Rooms.LobbyNorthPartModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.Rooms.LobbyNorthPartModel</a> and the north bedroom using an instance of 
+  <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.Rooms.NorthBedroomNorthPartModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.Rooms.NorthBedroomNorthPartModel</a>.
+  <br>
+  The air leakage areas are modeled using an instance of <a href=\"Buildings.Airflow.Multizone.EffectiveAirLeakageArea\">
+  Buildings.Airflow.Multizone.EffectiveAirLeakageArea</a> connected to <a href=\"Buildings.Fluid.Sources.Outside_CpLowRise\"> Buildings.Fluid.Sources.Outside_CpLowRise</a> 
+  to compute wind pressure for low-rise buildings.
+  <br>
+  The thermal bridges are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.MultiThermalBridge</a>.
+  <br>
+  The internal gains are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.InternalGains\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.InternalGains</a>.
+  <br>
+  The heating and cooling systems are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.MultiHeatingCoolingSchedule\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.MultiHeatingCoolingSchedule</a>.
+  <br>
+  There is no ventilation system in this model. 
+  <br>
+  The boundary conditions are modeled using <a href=\"Modelica.Blocks.Sources.CombiTimeTable\">Modelica.Blocks.Sources.CombiTimeTable</a>. They concern the supplied and extracted
+  mass flow rates with their respective temperature, the internal gains in each room, heating and cooling powers, temperatures set points for heating and cooling,
+  ceiling and floor boundary conditions and the scenario of blinds position. In addition, in this model, measured temperature in the surrounding rooms is considered and inserted in 
+  a <a href=\"Buildings.Fluid.Sources.Boundary_pT\">Buildings.Fluid.Sources.Boundary_pT</a> model.
+  <br>
+  The doors for these two rooms are closed and an instance of <a href=\"Buildings.Airflow.Multizone.Orifice\">Buildings.Airflow.Multizone.Orifice</a> is used to model them.
+  </p>
+  </html>",
+  revisions="<html>
+  <ul>
+  <li>
+  May 21 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
 end N2LobbyNorthBedroomModel;

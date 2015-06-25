@@ -11,6 +11,7 @@ package Azimuth "Enumeration for surface azimuth"
    constant Modelica.SIunits.Angle W = +Modelica.Constants.pi/2
   "Azimuth for an exterior wall whose outer surface faces west";
 
+
   annotation(preferredView="info",
 Documentation(info="<html>
 <p>

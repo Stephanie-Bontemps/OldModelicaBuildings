@@ -21,16 +21,16 @@ package Data
       annotation (
     Documentation(info="<html>
   <p>
-  This is a model of the external glass used in the window construction used in Holzkirchen twin houses. 
+  This is a model of the external glass used in the window construction of the Holzkirchen twin houses. 
   </p>
   </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
+  <ul>
+  <li>
+  January 16 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
     end ExtGlass;
 
     record IntGlass "Interpane Iplus E - 4 mm "
@@ -46,16 +46,16 @@ First implementation.
       annotation (
     Documentation(info="<html>
   <p>
-  This is a model of the internal glass used in the window construction used in Holzkirchen twin houses. 
+  This is a model of the internal glass used in the window construction of the Holzkirchen twin houses. 
   </p>
   </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
+  <ul>
+  <li>
+  January 16 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
     end IntGlass;
 
     record ArgonAirGap "Gap between two glasses 90% argon and 10% air"
@@ -73,41 +73,39 @@ First implementation.
       annotation (
     Documentation(info="<html>
   <p>
-  This is a model of the gap between the two glasses used in the window construction used in Holzkirchen twin houses. 
+  This is a model of the gap between the two glasses used in the window construction of the Holzkirchen twin houses. 
   </p>
   </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
+  <ul>
+  <li>
+  January 16 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
     end ArgonAirGap;
 
     record Window "Glazing system used in Holzkirchen twin touses"
       extends Buildings.HeatTransfer.Data.GlazingSystems.Generic(
-      gas = {ArgonAirGap()},
-      glass = {ExtGlass(), IntGlass()},
+      gas = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.ArgonAirGap()},
+      glass = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.ExtGlass(), Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.IntGlass()},
       UFra=1.0,
       haveExteriorShade=false,
         absSolFra=0.4);
 
-      annotation (
-    defaultComponentName="datGlaSys",
-    Documentation(info="<html>
+      annotation (Documentation(info="<html>
   <p>
-  This is a model of a window construction used in Holzkirchen twin houses. It is a double glazing with low emissivity coating and argon fill. 
+  This is a model of the window construction used in Holzkirchen twin houses. It is a double glazing with low emissivity coating and argon fill. 
   This window construction is used for all the windows on the façade and on the external door.
   </p>
   </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
+  <ul>
+  <li>
+  January 16 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
     end Window;
 
     record RollerBlinds "Shade produced by the roller blinds"
@@ -120,13 +118,13 @@ First implementation.
   Their absorptivity has been measured by Fraunhofer IBP as 0.32.
   </p>
   </html>",     revisions="<html>
-<ul>
-<li>
-January 16, 2015 by Stephanie Bontemps:<br/>
-First implementation.
-</li>
-</ul>
-</html>"));
+  <ul>
+  <li>
+  January 16 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
     end RollerBlinds;
   annotation(Documentation(info="<html>
     <p>
@@ -149,10 +147,15 @@ First implementation.
           c=1000,
           d=1200);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",
+      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -166,10 +169,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -183,10 +190,14 @@ First implementation.
           c=1000,
           d=1200);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -200,10 +211,14 @@ First implementation.
           k=0.22,
           d=800);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -217,10 +232,14 @@ First implementation.
           d=1200,
           k=1.0);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -234,10 +253,14 @@ First implementation.
           x=0.08,
           k=0.04);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -251,10 +274,14 @@ First implementation.
           x=0.08,
           k=0.036);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -268,10 +295,14 @@ First implementation.
           k=1.4,
           d=2000);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -285,10 +316,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -302,10 +337,14 @@ First implementation.
           k=2.0,
           d=2400);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -319,10 +358,14 @@ First implementation.
           d=1200,
           k=1.0);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -336,10 +379,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -353,10 +400,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -370,10 +421,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -387,10 +442,14 @@ First implementation.
           c=840,
           d=80);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -404,10 +463,14 @@ First implementation.
           c=1000,
           d=600);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -438,10 +501,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+        Documentation(info="<html>
+<p>
+This is a construction of an external wall used for the north wall and a part of the south one.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -463,10 +532,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an external wall used for south wall under the multiple window.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -487,10 +562,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an external wall used for the east wall.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -511,10 +592,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an external wall used for the south part of the external wall on the west.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -535,10 +622,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an external wall used for the north part of the external wall on the west.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -557,10 +650,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an internal wall (the one with a thickness of 27cm).
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -579,10 +678,16 @@ First implementation.
           absSol_b=0.17,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is a construction of an internal wall (the one with a thickness of 14cm).
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -602,10 +707,16 @@ First implementation.
           absSol_a=0.6,
           absSol_b=0.17);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is the construction of the ceiling.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -625,10 +736,16 @@ First implementation.
           absSol_a=0.6,
           absSol_b=0.6);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is the construction of the floor.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -645,10 +762,16 @@ First implementation.
           absSol_b=0.6,
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.MediumSmooth);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is the opaque composition of the external door in the lobby.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>
@@ -664,10 +787,16 @@ First implementation.
           absSol_a=0.6,
           absSol_b=0.6);
         annotation (
-      Documentation(revisions="<html>
+      Documentation(info="<html>
+<p>
+This is the opaque composition of the internal door.
+See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
+Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the wall composition.
+</p>
+</html>",      revisions="<html>
 <ul>
 <li>
-January 16, 2015 by Stephanie Bontemps:<br/>
+January 16 2015, by Stephanie Bontemps:<br/>
 First implementation.
 </li>
 </ul>

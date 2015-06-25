@@ -3,193 +3,13 @@ package Experiment1
   "First validation exercise on the models of the Holzkirchen twin houses"
   extends Modelica.Icons.ExamplesPackage;
 
-  model Experiment1N2House1
-    "First validation exercise on N2 House using Model1"
+
+
+
+
+  model Experiment1N2House "First validation exercise on N2 House"
     extends Modelica.Icons.Example;
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel1
-                                                                                  N2House(
-      kHea=1E6,
-      kCoo=0,
-      kDooOpeKitLiv=0,
-      kDooOpeLobLiv=0,
-      kDooOpeNthBedCor=0,
-      kDooOpeBatCor=1,
-      kDooOpeSthBedCor=1,
-      kDooOpeCorLiv=1,
-      nomFichierBouVenHeaCoo="D:/Berkeley/Berkeley - IEA58/N2BouVenHeaCooExp1Old.txt",
-      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
-      lat(displayUnit="deg") = 0.83555892609977,
-      redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      Tini_int=303.15,
-      Tini_ext=283.15,
-      Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
-
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.HorizontalRadiation,
-      HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
-
-    Modelica.Blocks.Sources.CombiTimeTable measurements(
-      tableOnFile=true,
-      tableName="data",
-      fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
-      columns=2:35)
-      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
-
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[7]
-      "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,10},{40,30}})));
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
-      "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
-    Modelica.Blocks.Math.Add3 add3_1(
-      k1=+1/3,
-      k2=+1/3,
-      k3=+1/3)
-      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
-  equation
-    connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-        points={{-30,70},{-7.77778,70},{-7.77778,34.4444}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(N2House.Tair, TairC.port) annotation (Line(
-        points={{-1.11111,20},{20,20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(N2House.Trad, TradC.port) annotation (Line(
-        points={{-1.11111,-20},{20,-20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[10], residuals[1].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[11], residuals[2].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[12], residuals[3].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[7], residuals[4].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[8], residuals[5].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[9], residuals[6].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[4], add3_1.u1) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[5], add3_1.u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[6], add3_1.u3) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(add3_1.y, residuals[7].u2) annotation (Line(
-        points={{-19,-90},{50,-90},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
-      experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35836e+007,
-        Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
-      __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2House1;
-
-  model Experiment1N2House3
-    "First validation exercise on N2 House using model3"
-    extends Modelica.Icons.Example;
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel3
-                                                                                  N2House(
-      kHea=1E6,
-      kCoo=0,
-      kDooOpeKitLiv=0,
-      kDooOpeLobLiv=0,
-      kDooOpeNthBedCor=0,
-      kDooOpeBatCor=1,
-      kDooOpeSthBedCor=1,
-      kDooOpeCorLiv=1,
-      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
-      lat(displayUnit="deg") = 0.83555892609977,
-      redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      Tini_int=303.15,
-      Tini_ext=283.15,
-      Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-40,-40},{40,40}})));
-
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.HorizontalRadiation,
-      HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{0,60},{20,80}})));
-
-  equation
-    connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-        points={{20,70},{32.2222,70},{32.2222,34.4444}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
-      experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35836e+007,
-        Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
-      __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2House3;
-
-  model Experiment1N2House4
-    "First validation exercise on N2 House using model4"
-    extends Modelica.Icons.Example;
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel4
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel
                                                                                   N2House(
       kHea=1E6,
       kCoo=0,
@@ -203,263 +23,8 @@ package Experiment1
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
       nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      Tini_int=303.15,
-      Tini_ext=283.15,
-      Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
-
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.HorizontalRadiation,
-      HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
-
-    Modelica.Blocks.Sources.CombiTimeTable measurements(
-      tableOnFile=true,
-      tableName="data",
-      fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
-      columns=2:35)
-      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
-
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[7]
-      "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,10},{40,30}})));
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
-      "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
-    Modelica.Blocks.Math.Add3 add3_1(
-      k1=+1/3,
-      k2=+1/3,
-      k3=+1/3)
-      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
-  equation
-    connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-        points={{-30,70},{-7.77778,70},{-7.77778,34.4444}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(N2House.Tair, TairC.port) annotation (Line(
-        points={{-1.11111,20},{20,20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(N2House.Trad, TradC.port) annotation (Line(
-        points={{-1.11111,-20},{20,-20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[10], residuals[1].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[11], residuals[2].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[12], residuals[3].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[7], residuals[4].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[8], residuals[5].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[9], residuals[6].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[4], add3_1.u1) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[5], add3_1.u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[6], add3_1.u3) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(add3_1.y, residuals[7].u2) annotation (Line(
-        points={{-19,-90},{50,-90},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
-      experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35836e+007,
-        Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
-      __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2House4;
-
-  model Experiment1N2House5 "First validation exercise on N2 House with model5"
-    extends Modelica.Icons.Example;
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel5
-                                                                                  N2House(
-      kHea=1E6,
-      kCoo=0,
-      kDooOpeKitLiv=0,
-      kDooOpeLobLiv=0,
-      kDooOpeNthBedCor=0,
-      kDooOpeBatCor=1,
-      kDooOpeSthBedCor=1,
-      kDooOpeCorLiv=1,
-      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
-      lat(displayUnit="deg") = 0.83555892609977,
-      redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      Tini_int=303.15,
-      Tini_ext=283.15,
-      Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
-
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.HorizontalRadiation,
-      HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
-
-    Modelica.Blocks.Sources.CombiTimeTable measurements(
-      tableOnFile=true,
-      tableName="data",
-      fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
-      columns=2:35)
-      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
-
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[7]
-      "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,10},{40,30}})));
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[7]
-      "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
-    Modelica.Blocks.Math.Add3 add3_1(
-      k1=+1/3,
-      k2=+1/3,
-      k3=+1/3)
-      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
-  equation
-    connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
-        points={{-30,70},{-7.77778,70},{-7.77778,34.4444}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(N2House.Tair, TairC.port) annotation (Line(
-        points={{-1.11111,20},{20,20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(N2House.Trad, TradC.port) annotation (Line(
-        points={{-1.11111,-20},{20,-20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[10], residuals[1].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[11], residuals[2].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[12], residuals[3].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[7], residuals[4].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[8], residuals[5].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[9], residuals[6].u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-60},{50,-60},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[4], add3_1.u1) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[5], add3_1.u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[6], add3_1.u3) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(add3_1.y, residuals[7].u2) annotation (Line(
-        points={{-19,-90},{50,-90},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
-      experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35836e+007,
-        Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
-      __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2House5;
-
-  model Experiment1N2House6
-    "First validation exercise on N2 House using model6"
-    extends Modelica.Icons.Example;
-    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel6
-                                                                                  N2House(
-      kHea=1E6,
-      kCoo=0,
-      kDooOpeKitLiv=0,
-      kDooOpeLobLiv=0,
-      kDooOpeNthBedCor=0,
-      kDooOpeBatCor=1,
-      kDooOpeSthBedCor=1,
-      kDooOpeCorLiv=1,
-      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
-      lat(displayUnit="deg") = 0.83555892609977,
-      redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1Old.txt",
       nomFichierBouVenIntGai=
-          "D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1Old.txt",
+          "D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
@@ -504,6 +69,8 @@ package Experiment1
       annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[7]
       annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
+    Modelica.Blocks.Interfaces.RealOutput P[7] "Total power in each room"
+      annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   equation
     connect(weaDat.weaBus, N2House.weaBus) annotation (Line(
         points={{-30,70},{-7.77778,70},{-7.77778,36.6667}},
@@ -566,8 +133,35 @@ package Experiment1
         points={{41,-70},{50,-70},{50,-26},{58,-26}},
         color={0,0,127},
         smooth=Smooth.None));
+    connect(N2House.P, P) annotation (Line(points={{1.11111,0},{1.11111,0},{110,
+            0}},
+          color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
+              -100},{100,100}})),
+    Documentation(
+    info="<html>
+  <p>
+  This example uses <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.N2House.N2HouseModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses..N2House.N2HouseModel</a>. 
+  <br>
+  The different values of the parameters describing the house have to be given, just as the files with the boundary conditions, the weather data and the measurements.
+  <br>
+  The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
+  <br>
+  In the particular case of the air temperature in the living room, the measured air temperature is computed as the mean of air temperature at each level (67cm, 125cm, 187cm).
+  <br>
+  The total power in each room is also extracted from the model.
+  </p>
+  <p></p>
+  </html>",
+    revisions="<html>
+  <ul>
+  <li>
+  March 24 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
       experiment(
         StartTime=2.00448e+007,
         StopTime=2.35836e+007,
@@ -575,30 +169,23 @@ package Experiment1
         Tolerance=1e-005,
         __Dymola_Algorithm="Radau"),
       __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2House6;
+  end Experiment1N2House;
 
   model Experiment1N2LobbyNorthBedroom
     "First validation exercise on the model of a part of N2 Twin House (lobby and north bedroom)"
     extends Modelica.Icons.Example;
-    Houses.N2House.N2LobbyNorthBedroomModel
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2LobbyNorthBedroomModel
       N2LobNorBed(
       kHea=1E6,
       kCoo=0,
       nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
       lat(displayUnit="deg") = 0.83555892609977,
       redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
+      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
+      nomFichierBouVenIntGai=
+          "D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
       nomFichierBouOthRoo=
           "D:/Berkeley/Berkeley - IEA58/BouOthRooLobNorBedExp1.txt",
-      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      extWallSN=extWallSN,
-      extWallE=extWallE,
-      extDoorOpaquePart=extDoorOpaquePart,
-      intDoorOpaquePart=intDoorOpaquePart,
-      intWall1=intWall1,
-      intWall2=intWall2,
-      ceiling=ceiling,
-      ground=ground,
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
@@ -625,7 +212,8 @@ package Experiment1
       tableOnFile=true,
       tableName="data",
       columns=2:35,
-      fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt")
+      fileName=
+          "D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt")
       annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
 
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[2]
@@ -635,35 +223,12 @@ package Experiment1
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-10},{40,10}})));
     Modelica.Blocks.Math.Add residuals[2](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-10},{80,10}})));
+      annotation (Placement(transformation(extent={{80,-10},{100,10}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[2]
       annotation (Placement(transformation(extent={{20,-60},{40,-40}})));
-  public
-    Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
-                                                     extWallSN
-      annotation (Placement(transformation(extent={{-100,-100},{-80,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.ExtWallE
-                                                    extWallE
-      annotation (Placement(transformation(extent={{-80,-100},{-60,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.IntWall1
-                                                    intWall1
-      annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.IntWall2
-                                                    intWall2
-      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.Ceiling
-                                                   ceiling
-      annotation (Placement(transformation(extent={{-20,-100},{0,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.Ground
-                                                  ground
-      annotation (Placement(transformation(extent={{0,-100},{20,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.ExtDoorOpaquePart
-                                                             extDoorOpaquePart
-      annotation (Placement(transformation(extent={{20,-100},{40,-80}})));
-    Houses.Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
-                                                             intDoorOpaquePart
-      annotation (Placement(transformation(extent={{40,-100},{60,-80}})));
 
+    Modelica.Blocks.Interfaces.RealOutput P[2] "Total power in each room"
+      annotation (Placement(transformation(extent={{100,10},{120,30}})));
   equation
     connect(weaDat.weaBus, N2LobNorBed.weaBus) annotation (Line(
         points={{-30,90},{-2.22222,90},{-2.22222,57.7778}},
@@ -679,7 +244,7 @@ package Experiment1
         color={191,0,0},
         smooth=Smooth.None));
     connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,40},{50,40},{50,6},{58,6}},
+        points={{40,40},{60,40},{60,6},{78,6}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[12], fromKelvin[2].Kelvin) annotation (Line(
@@ -691,117 +256,49 @@ package Experiment1
         color={0,0,127},
         smooth=Smooth.None));
     connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-        points={{41,-50},{50,-50},{50,-6},{58,-6}},
+        points={{41,-50},{60,-50},{60,-6},{78,-6}},
         color={0,0,127},
         smooth=Smooth.None));
+    connect(N2LobNorBed.P, P) annotation (Line(points={{2.22222,20},{2.22222,20},
+            {110,20}}, color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
+              -100},{100,100}})),
+    Documentation(
+    info="<html>
+  <p>
+  This example uses <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.N2House.N2LobbyNorthBedroomModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses..N2House.N2LobbyNorthBedroomModel</a>. 
+  <br>
+  The different values of the parameters describing the part of the house have to be given, just as the files with the boundary conditions, the weather data and the measurements.
+  <br>
+  The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
+  <br>
+  The total power in each room is also extracted from the model.
+  </p>
+  <p></p>
+  </html>",
+    revisions="<html>
+  <ul>
+  <li>
+  May 21 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
       experiment(
         StartTime=2.00448e+007,
         StopTime=2.35836e+007,
         Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
+        Tolerance=1e-007,
+        __Dymola_Algorithm="Cvode"),
       __Dymola_experimentSetupOutput(events=false));
   end Experiment1N2LobbyNorthBedroom;
 
-  model Experiment1N2LobbyNorthBedroomTsurBou
-    "Model to check that the model of a part of N2 Twin House (lobby and north bedroom) gives same results as model 6"
-    extends Modelica.Icons.Example;
-    Houses.N2House.N2LobbyNorthBedroomModelTsurBou
-      N2LobNorBed(
-      kHea=1E6,
-      kCoo=0,
-      nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
-      lat(displayUnit="deg") = 0.83555892609977,
-      redeclare package MediumA = Buildings.Media.Specialized.Air.PerfectGas,
-      nomFichierBouOthRoo="D:/Berkeley/Berkeley - IEA58/BouOthRooLobNorBedTestComputedTsurBouExp1.txt",
-      nomFichierHeaCoo="D:/Berkeley/Berkeley - IEA58/N2HeaCooExp1.txt",
-      nomFichierBouVenIntGai="D:/Berkeley/Berkeley - IEA58/N2BouVenRhoIntGaiExp1.txt",
-      Tini_int=303.15,
-      Tini_ext=283.15,
-      Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
-
-    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
-      TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      relHumSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winSpeSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      winDirSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      HSou=Buildings.BoundaryConditions.Types.RadiationDataSource.File,
-      HInfHorSou=Buildings.BoundaryConditions.Types.DataSource.File,
-      calTSky=Buildings.BoundaryConditions.Types.SkyTemperatureCalculation.TemperaturesAndSkyCover,
-      pAtmSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      ceiHeiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      totSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      opaSkyCovSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      TBlaSkySou=Buildings.BoundaryConditions.Types.DataSource.File,
-      TDewPoiSou=Buildings.BoundaryConditions.Types.DataSource.Parameter,
-      filNam="D:/Berkeley/Berkeley - IEA58/Holzkirchen_EXP1_TMY3.mos")
-      annotation (Placement(transformation(extent={{-50,60},{-30,80}})));
-
-    Modelica.Blocks.Sources.CombiTimeTable measurements(
-      tableOnFile=true,
-      tableName="data",
-      columns=2:35,
-      fileName="D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt")
-      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
-
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[2]
-      "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,10},{40,30}})));
-    Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[2]
-      "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add residuals[2](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
-    Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[2]
-      annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
-  equation
-    connect(weaDat.weaBus, N2LobNorBed.weaBus) annotation (Line(
-        points={{-30,70},{-2.22222,70},{-2.22222,37.7778}},
-        color={255,204,51},
-        thickness=0.5,
-        smooth=Smooth.None));
-    connect(N2LobNorBed.Tair, TairC.port) annotation (Line(
-        points={{-2.22222,20},{20,20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(N2LobNorBed.Trad, TradC.port) annotation (Line(
-        points={{-2.22222,-20},{20,-20}},
-        color={191,0,0},
-        smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[12], fromKelvin[2].Kelvin) annotation (Line(
-        points={{-59,-70},{18,-70}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[11], fromKelvin[1].Kelvin) annotation (Line(
-        points={{-59,-70},{18,-70}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-        points={{41,-70},{50,-70},{50,-26},{58,-26}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
-      experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35836e+007,
-        Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
-      __Dymola_experimentSetupOutput(events=false));
-  end Experiment1N2LobbyNorthBedroomTsurBou;
-
   model Experiment1N2South
-    "First validation exercise on the model of a part of N2 Twin House (bathroom, corridor, south bedroom, living room)"
+    "First validation exercise on the model of a part of N2 Twin House (corridor, bathroom, south bedroom, living room)"
     extends Modelica.Icons.Example;
-    Houses.N2House.N2SouthModel N2SouPar(
+    Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2SouthModel
+                                                                                 N2SouPar(
       kHea=1E6,
       kCoo=0,
       nomFichierBlinds="D:/Berkeley/Berkeley - IEA58/N2BliPosExp1.txt",
@@ -850,6 +347,8 @@ package Experiment1
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[4]
       annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
+    Modelica.Blocks.Interfaces.RealOutput P[4] "Total power in each room"
+      annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   equation
     connect(weaDat.weaBus, N2SouPar.weaBus) annotation (Line(
         points={{-30,70},{-1.84615,70},{-1.84615,38.4615}},
@@ -888,19 +387,45 @@ package Experiment1
         points={{-59,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
+    connect(N2SouPar.P, P) annotation (Line(points={{1.53846,0},{1.53846,0},{
+            110,0}},
+          color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
-              -100},{100,100}}),      graphics),
+              -100},{100,100}})),
+    Documentation(
+    info="<html>
+  <p>
+  This example uses <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.N2House.N2SouthModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses..N2House.N2SouthModel</a>. 
+  <br>
+  The different values of the parameters describing the part of the house have to be given, just as the files with the boundary conditions, the weather data and the measurements.
+  <br>
+  The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
+  <br>
+  In the particular case of the air temperature in the living room, the measured air temperature is computed as the mean of air temperature at each level (67cm, 125cm, 187cm).
+  <br>
+  The total power in each room is also extracted from the model.
+  </p>
+  <p></p>
+  </html>",
+    revisions="<html>
+  <ul>
+  <li>
+  June 22 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
       experiment(
         StartTime=2.00448e+007,
         StopTime=2.35836e+007,
         Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
+        Tolerance=1e-007,
+        __Dymola_Algorithm="Cvode"),
       __Dymola_experimentSetupOutput(events=false));
   end Experiment1N2South;
 
-  model ZenExp1
-    "Calculation of the zenith angle to calculate the direct normal radiation with an external file"
+  model ZenExp1 "Calculation of the zenith angle"
     extends Modelica.Icons.Example;
 
   protected
@@ -967,6 +492,24 @@ package Experiment1
         smooth=Smooth.None));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}}), graphics),
+    Documentation(
+    info="<html>
+  <p>
+  This example is used to compute the zenith angle in order to compute the direct normal radiation in an external file. 
+  </p>
+  <p>
+  It uses different components included in <a href=\"Buildings.BoundaryConditions.WeatherData.ReaderTMY3\">Buildings.BoundaryConditions.WeatherData.ReaderTMY3</a>. 
+  </p>
+  <p></p>
+  </html>",
+    revisions="<html>
+  <ul>
+  <li>
+  February 23 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
       experiment(
         StartTime=2.00448e+007,
         StopTime=2.35872e+007,
@@ -974,22 +517,4 @@ package Experiment1
       __Dymola_experimentSetupOutput);
   end ZenExp1;
 
-  model MeasurementsN2HouseExp1
-    "Extraction of the measurements on N2 House during Experimentation 1"
-    extends Modelica.Icons.Example;
-
-    Modelica.Blocks.Sources.CombiTimeTable combiTable1Ds(
-      tableOnFile=true,
-      tableName="data",
-      fileName=
-          "D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt",
-      columns=2:35)
-      annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
-
-    annotation (experiment(
-        StartTime=2.00448e+007,
-        StopTime=2.35872e+007,
-        Interval=3600,
-        __Dymola_Algorithm="Dassl"), __Dymola_experimentSetupOutput);
-  end MeasurementsN2HouseExp1;
 end Experiment1;

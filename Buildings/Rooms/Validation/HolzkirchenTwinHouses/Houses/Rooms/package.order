@@ -1,9 +1,9 @@
-LivingRoom
-SouthBedroom
+Kitchen
+Lobby
 NorthBedroom
 Corridor
 Bathroom
-Kitchen
-Lobby
+SouthBedroom
+LivingRoom
 LobbyNorthPartModel
 NorthBedroomNorthPartModel

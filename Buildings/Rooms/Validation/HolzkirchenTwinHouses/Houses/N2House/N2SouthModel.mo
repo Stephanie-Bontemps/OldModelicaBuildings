@@ -1,6 +1,6 @@
 within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House;
 model N2SouthModel
-  "Model of the south part of the N2 Twin House (bathroom, corridor, south bedroom, living room) using Model6"
+  "Model of the south part of the N2 Twin House (corridor, bathroom, south bedroom, living room) using N2Model"
 
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium annotation (__Dymola_choicesAllMatching=true);
   parameter String nomFichierHeaCoo = "NoName"
@@ -29,10 +29,13 @@ model N2SouthModel
     "Outside initial temperature";
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
     "Initial temperature of the boundary conditions";
+  parameter Real albedo=0.23 "Ground reflectivity";
   parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of energy balance";
   parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of mass balance";
+  parameter Real k_m_flow=0.04
+    "Constant value for the supplied and extracted air flow (kg/s)";
   parameter Real kHea=1E6 "Gain value multiplied with input signal for heating"
                                                                                 annotation (Dialog(group="Heating and cooling schedules"));
   parameter Real kCoo=-1E6
@@ -72,7 +75,17 @@ model N2SouthModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=7)
+    nPorts=7,
+    extWallSN=extWallSN,
+    extWallSNUnderWindow3=extWallSNUnderWindow3,
+    extWallWS=extWallWS,
+    extWallWN=extWallWN,
+    intDoorOpaquePart=intDoorOpaquePart,
+    intWall1=intWall1,
+    ceiling=ceiling,
+    ground=ground,
+    window=window,
+    albedo=albedo)
     annotation (Placement(transformation(extent={{60,-82},{80,-62}})));
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.SouthBedroom southBedroom(redeclare
       package Medium =                                                                                               MediumA,
@@ -83,7 +96,15 @@ model N2SouthModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=4)
+    nPorts=4,
+    extWallE=extWallE,
+    extWallSN=extWallSN,
+    intWall2=intWall2,
+    intDoorOpaquePart=intDoorOpaquePart,
+    ceiling=ceiling,
+    ground=ground,
+    window=window,
+    albedo=albedo)
     annotation (Placement(transformation(extent={{180,-200},{200,-180}})));
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.Corridor corridor(redeclare
       package Medium =                                                                                       MediumA,
@@ -94,7 +115,11 @@ model N2SouthModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=6)
+    nPorts=7,
+    intDoorOpaquePart=intDoorOpaquePart,
+    intWall2=intWall2,
+    ceiling=ceiling,
+    ground=ground)
     annotation (Placement(transformation(extent={{0,160},{20,180}})));
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms.Bathroom bathroom(redeclare
       package Medium =                                                                                       MediumA,
@@ -105,7 +130,13 @@ model N2SouthModel
     massDynamics=massDynamics,
     lat=lat,
     hRoo=hRoo,
-    nPorts=4)
+    nPorts=4,
+    extWallE=extWallE,
+    intWall2=intWall2,
+    ceiling=ceiling,
+    ground=ground,
+    window=window,
+    albedo=albedo)
     annotation (Placement(transformation(extent={{120,40},{140,60}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus annotation (Placement(
         transformation(extent={{238,240},{258,260}}),
@@ -119,7 +150,7 @@ model N2SouthModel
     final tableName="BliPos",
     smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.LastTwoPoints,
-    columns=2:8) "Scenario of the blinds position applied on the south windows"
+    columns=2:9) "Scenario of the blinds position applied on the south windows"
     annotation (Placement(transformation(extent={{-240,60},{-220,80}})));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairBou[3]
     annotation (Placement(transformation(extent={{-180,220},{-160,240}})));
@@ -138,7 +169,7 @@ model N2SouthModel
     "Boundary conditions for ceiling (1 for east, 2 for west) and floor (3); ventilation supply flow rate (6) and its temperature (4); ventilation extraction flow rate (7) and its temperature (5); internal gains in the kitchen (8)"
     annotation (Placement(transformation(extent={{-240,220},{-220,240}})));
 
-  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge2
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge
                                                                                           mulTherBri(gExt={1.750,0.869,2.024,0.996,1.968,
         4.383},
     gEasCei={0.532,1.464,0.865,0.812,1.405,1.127},
@@ -248,35 +279,36 @@ model N2SouthModel
     "Orifice modelling the door between the lobby and the living room"
     annotation (Placement(transformation(extent={{-140,-100},{-120,-80}})));
 protected
-  Fluid.Sources.Boundary_pT bouLob(
+  Buildings.Fluid.Sources.Boundary_pT bouLob(
     nPorts=1,
     use_T_in=true,
     redeclare package Medium = MediumA) "Boundary conditions in the lobbi"
     annotation (Placement(transformation(extent={{-180,-100},{-160,-80}})));
 public
-  Airflow.Multizone.Orifice oriNorBedCor(redeclare package Medium = MediumA, A=1e-6)
+  Buildings.Airflow.Multizone.Orifice oriNorBedCor(redeclare package Medium = MediumA, A=1e-6)
     "Orifice modelling the door between the north bedroom and the corridor"
     annotation (Placement(transformation(extent={{-140,-140},{-120,-120}})));
 protected
-  Fluid.Sources.Boundary_pT bouNorBed(
+  Buildings.Fluid.Sources.Boundary_pT bouNorBed(
     nPorts=1,
     use_T_in=true,
     redeclare package Medium = MediumA)
     "Boundary conditions in the north bedroom"
     annotation (Placement(transformation(extent={{-180,-140},{-160,-120}})));
 public
-  Airflow.Multizone.Orifice oriKitLivRoo(redeclare package Medium = MediumA, A=1e-6)
+  Buildings.Airflow.Multizone.Orifice oriKitLivRoo(redeclare package Medium = MediumA, A=1e-6)
     "Orifice modelling the door between the kitchen and the living room"
     annotation (Placement(transformation(extent={{-140,-60},{-120,-40}})));
 protected
-  Fluid.Sources.Boundary_pT bouKit(
+  Buildings.Fluid.Sources.Boundary_pT bouKit(
     nPorts=1,
     use_T_in=true,
     redeclare package Medium = MediumA) "Boundary conditions in the kitchen"
     annotation (Placement(transformation(extent={{-180,-60},{-160,-40}})));
 public
-  Airflow.Multizone.DoorDiscretizedOpen dooCorLivRoo(redeclare package Medium
-      = MediumA,
+  Buildings.Airflow.Multizone.DoorDiscretizedOpen dooCorLivRoo(redeclare
+      package Medium =
+        MediumA,
     wOpe=0.935,
     hOpe=1.98,
     hA=0,
@@ -284,7 +316,8 @@ public
     CD=0.78,
     dp_turbulent=1000) "Open door between corridor and living room"
     annotation (Placement(transformation(extent={{-38,120},{-18,140}})));
-  Airflow.Multizone.DoorDiscretizedOpen dooBatCor(redeclare package Medium =
+  Buildings.Airflow.Multizone.DoorDiscretizedOpen dooBatCor(redeclare package
+      Medium =
         MediumA,
     wOpe=0.935,
     hOpe=1.98,
@@ -293,8 +326,9 @@ public
     CD=0.78,
     dp_turbulent=1000) "Open door between bethroom and corridor"
     annotation (Placement(transformation(extent={{40,20},{60,40}})));
-  Airflow.Multizone.DoorDiscretizedOpen dooSouBedCor(redeclare package Medium
-      = MediumA,
+  Buildings.Airflow.Multizone.DoorDiscretizedOpen dooSouBedCor(redeclare
+      package Medium =
+        MediumA,
     wOpe=0.935,
     hOpe=1.98,
     hA=0,
@@ -302,6 +336,46 @@ public
     dp_turbulent=1000,
     CD=0.78) "Open door between south bedroom and corridor"
     annotation (Placement(transformation(extent={{140,-220},{160,-200}})));
+  Modelica.Blocks.Interfaces.RealOutput P[4] "Total power in each room"
+    annotation (Placement(transformation(extent={{260,-10},{280,10}})));
+public
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallSN
+                                                                                                        extWallSN
+    annotation (Placement(transformation(extent={{-260,-260},{-240,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallE
+                                                                                                        extWallE
+    annotation (Placement(transformation(extent={{-220,-260},{-200,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall1
+                                                                                                        intWall1
+    annotation (Placement(transformation(extent={{-100,-260},{-80,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntWall2
+                                                                                                        intWall2
+    annotation (Placement(transformation(extent={{-60,-260},{-40,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ceiling
+                                                                                                        ceiling
+    annotation (Placement(transformation(extent={{-20,-260},{0,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.Ground
+                                                                                                        ground
+    annotation (Placement(transformation(extent={{20,-260},{40,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.IntDoorOpaquePart
+                                                                                                        intDoorOpaquePart
+    annotation (Placement(transformation(extent={{-140,-260},{-120,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallSNUnderWindow3
+    extWallSNUnderWindow3
+    annotation (Placement(transformation(extent={{-180,-260},{-160,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallWS
+                                                                                                        extWallWS
+    annotation (Placement(transformation(extent={{60,-260},{80,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Constructions.ExtWallWN
+                                                                                                        extWallWN
+    annotation (Placement(transformation(extent={{100,-260},{120,-240}})));
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.Window
+                                                                                     window(haveExteriorShade=true, shade=Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.GlazingSystems.RollerBlinds())
+    annotation (Placement(transformation(extent={{142,-260},{162,-240}})));
+  Modelica.Blocks.Sources.Constant m_flow(k=k_m_flow)
+    "Constant value for the supplied and extracted air"
+    annotation (Placement(transformation(extent={{-240,180},{-220,200}})));
+
 equation
   connect(weaBus, mulAirLea.weaBus) annotation (Line(
       points={{248,250},{-250,250},{-250,30},{-239,30}},
@@ -355,51 +429,51 @@ equation
       points={{-159,150},{-150,150},{-150,178},{-140,178}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[1], mulHeaCooSch.heaCooFlo[1]) annotation (Line(
+  connect(heaCoo.y[4], mulHeaCooSch.heaCooFlo[1]) annotation (Line(
       points={{-219,110},{-212,110},{-212,113.929},{-181.429,113.929}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[2], mulHeaCooSch.heaCooFlo[2]) annotation (Line(
+  connect(heaCoo.y[5], mulHeaCooSch.heaCooFlo[2]) annotation (Line(
       points={{-219,110},{-212,110},{-212,114.643},{-181.429,114.643}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[3], mulHeaCooSch.heaCooFlo[3]) annotation (Line(
+  connect(heaCoo.y[6], mulHeaCooSch.heaCooFlo[3]) annotation (Line(
       points={{-219,110},{-212,110},{-212,115.357},{-181.429,115.357}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[4], mulHeaCooSch.heaCooFlo[4]) annotation (Line(
+  connect(heaCoo.y[7], mulHeaCooSch.heaCooFlo[4]) annotation (Line(
       points={{-219,110},{-212,110},{-212,116.071},{-181.429,116.071}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[8], mulHeaCooSch.TSetHea[1]) annotation (Line(
+  connect(heaCoo.y[11], mulHeaCooSch.TSetHea[1]) annotation (Line(
       points={{-219,110},{-212,110},{-212,104.643},{-181.429,104.643}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[9], mulHeaCooSch.TSetHea[2]) annotation (Line(
+  connect(heaCoo.y[12], mulHeaCooSch.TSetHea[2]) annotation (Line(
       points={{-219,110},{-212,110},{-212,105.357},{-181.429,105.357}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[10], mulHeaCooSch.TSetHea[3]) annotation (Line(
+  connect(heaCoo.y[13], mulHeaCooSch.TSetHea[3]) annotation (Line(
       points={{-219,110},{-212,110},{-212,106.071},{-181.429,106.071}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[11], mulHeaCooSch.TSetHea[4]) annotation (Line(
+  connect(heaCoo.y[14], mulHeaCooSch.TSetHea[4]) annotation (Line(
       points={{-219,110},{-212,110},{-212,106.786},{-181.429,106.786}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[15], mulHeaCooSch.TSetCoo[1]) annotation (Line(
+  connect(heaCoo.y[18], mulHeaCooSch.TSetCoo[1]) annotation (Line(
       points={{-219,110},{-212,110},{-212,100.357},{-181.429,100.357}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[16], mulHeaCooSch.TSetCoo[2]) annotation (Line(
+  connect(heaCoo.y[19], mulHeaCooSch.TSetCoo[2]) annotation (Line(
       points={{-219,110},{-212,110},{-212,101.071},{-181.429,101.071}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[17], mulHeaCooSch.TSetCoo[3]) annotation (Line(
+  connect(heaCoo.y[20], mulHeaCooSch.TSetCoo[3]) annotation (Line(
       points={{-219,110},{-212,110},{-212,101.786},{-181.429,101.786}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[18], mulHeaCooSch.TSetCoo[4]) annotation (Line(
+  connect(heaCoo.y[21], mulHeaCooSch.TSetCoo[4]) annotation (Line(
       points={{-219,110},{-212,110},{-212,102.5},{-181.429,102.5}},
       color={0,0,127},
       smooth=Smooth.None));
@@ -499,16 +573,8 @@ equation
       points={{-160,-50},{-140,-50}},
       color={0,127,255},
       smooth=Smooth.None));
-  connect(bouVenIntGain.y[6], venLivRoo.m_flow_in) annotation (Line(
-      points={{-219,230},{-200,230},{-200,198},{-180,198}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(bouVenIntGain.y[4], venLivRoo.T_in) annotation (Line(
       points={{-219,230},{-200,230},{-200,194},{-182,194}},
-      color={0,0,127},
-      smooth=Smooth.None));
-  connect(bouVenIntGain.y[7], divOutVen.u1) annotation (Line(
-      points={{-219,230},{-200,230},{-200,156},{-182,156}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(bouVenIntGain.y[5], venSouBed.T_in) annotation (Line(
@@ -519,23 +585,23 @@ equation
       points={{-219,230},{-200,230},{-200,134},{-142,134}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bliPos.y[3], bathroom.uSha[1]) annotation (Line(
+  connect(bliPos.y[4], bathroom.uSha[1]) annotation (Line(
       points={{-219,70},{-20,70},{-20,58},{119,58}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bliPos.y[4], southBedroom.uSha[1]) annotation (Line(
+  connect(bliPos.y[5], southBedroom.uSha[1]) annotation (Line(
       points={{-219,70},{-20,70},{-20,-182},{179,-182}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bliPos.y[5], livingRoom.uSha[1]) annotation (Line(
+  connect(bliPos.y[6], livingRoom.uSha[1]) annotation (Line(
       points={{-219,70},{-20,70},{-20,-64.6667},{59,-64.6667}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bliPos.y[6], livingRoom.uSha[2]) annotation (Line(
+  connect(bliPos.y[7], livingRoom.uSha[2]) annotation (Line(
       points={{-219,70},{-20,70},{-20,-64},{59,-64}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(bliPos.y[7], livingRoom.uSha[3]) annotation (Line(
+  connect(bliPos.y[8], livingRoom.uSha[3]) annotation (Line(
       points={{-219,70},{-20,70},{-20,-63.3333},{59,-63.3333}},
       color={0,0,127},
       smooth=Smooth.None));
@@ -560,7 +626,7 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(oriNorBedCor.port_b, corridor.ports[1]) annotation (Line(
-      points={{-120,-130},{-60,-130},{-60,163.333},{2.5,163.333}},
+      points={{-120,-130},{-60,-130},{-60,163.286},{2.5,163.286}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(dooCorLivRoo.port_a1, livingRoom.ports[3]) annotation (Line(
@@ -572,11 +638,11 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(dooCorLivRoo.port_b1, corridor.ports[2]) annotation (Line(
-      points={{-18,136},{-18,164},{2.5,164}},
+      points={{-18,136},{-18,163.857},{2.5,163.857}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(dooCorLivRoo.port_a2, corridor.ports[3]) annotation (Line(
-      points={{-18,124},{-18,164},{2.5,164},{2.5,164.667}},
+      points={{-18,124},{-18,164},{2.5,164},{2.5,164.429}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(dooSouBedCor.port_b1, southBedroom.ports[1]) annotation (Line(
@@ -588,13 +654,11 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(corridor.ports[4], dooSouBedCor.port_a1) annotation (Line(
-      points={{2.5,165.333},{2.5,-204},{140,-204}},
+      points={{2.5,165},{2.5,-204},{140,-204}},
       color={0,127,255},
       smooth=Smooth.None));
-  connect(dooSouBedCor.port_b2, dooSouBedCor.port_a1) annotation (Line(
-      points={{140,-216},{4,-216},{4,-204},{140,-204}},
-      color={0,127,255},
-      smooth=Smooth.None));
+  connect(dooSouBedCor.port_b2, corridor.ports[5]) annotation (Line(points={{140,
+          -216},{72,-216},{2.5,-216},{2.5,165.571}}, color={0,127,255}));
   connect(dooBatCor.port_b1, bathroom.ports[1]) annotation (Line(
       points={{60,36},{92,36},{92,43.5},{122.5,43.5}},
       color={0,127,255},
@@ -603,12 +667,12 @@ equation
       points={{60,24},{92,24},{92,44.5},{122.5,44.5}},
       color={0,127,255},
       smooth=Smooth.None));
-  connect(dooBatCor.port_a1, corridor.ports[5]) annotation (Line(
-      points={{40,36},{2.5,36},{2.5,166}},
+  connect(dooBatCor.port_a1, corridor.ports[6]) annotation (Line(
+      points={{40,36},{2.5,36},{2.5,166.143}},
       color={0,127,255},
       smooth=Smooth.None));
-  connect(dooBatCor.port_b2, corridor.ports[6]) annotation (Line(
-      points={{40,24},{4,24},{4,36},{2.5,36},{2.5,166.667}},
+  connect(dooBatCor.port_b2, corridor.ports[7]) annotation (Line(
+      points={{40,24},{4,24},{4,36},{2.5,36},{2.5,166.714}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(bathroom.heaPorAir, Tair[2]) annotation (Line(
@@ -620,8 +684,7 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(southBedroom.heaPorAir, Tair[3]) annotation (Line(
-      points={{189.5,-190},{240,-190},{240,-18},{240,-18},{240,50},{250,50},{250,
-          152.5}},
+      points={{189.5,-190},{240,-190},{240,50},{250,50},{250,152.5}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(livingRoom.heaPorAir, Tair[4]) annotation (Line(
@@ -885,8 +948,15 @@ equation
       points={{8.1,163.375},{8.1,-88},{73,-88},{73,-79.85}},
       color={191,0,0},
       smooth=Smooth.None));
+  connect(mulHeaCooSch.P, P) annotation (Line(points={{-159.286,116.429},{230,
+          116.429},{230,0},{270,0}},
+                            color={0,0,127}));
+  connect(m_flow.y, venLivRoo.m_flow_in) annotation (Line(points={{-219,190},{-200,
+          190},{-200,198},{-180,198}}, color={0,0,127}));
+  connect(m_flow.y, divOutVen.u1) annotation (Line(points={{-219,190},{-202,190},
+          {-202,156},{-182,156}}, color={0,0,127}));
    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-260,
-            -260},{260,260}}), graphics), Icon(coordinateSystem(
+            -260},{260,260}})),           Icon(coordinateSystem(
           preserveAspectRatio=false, extent={{-260,-260},{260,260}}), graphics={Text(
           extent={{-198,320},{194,264}},
           lineColor={0,0,255},
@@ -927,5 +997,53 @@ equation
           fillColor={61,61,61},
           fillPattern=FillPattern.Solid,
           textString="radiation")}),
-                                  defaultComponentName="N2House");
+                                  defaultComponentName="N2HouseSouthPart",
+  Documentation(
+  info="<html>
+  <p>
+  This model represents the south part of the N2 house (corridor, bathroom, south bedroom, living room). It gathers the models of these four rooms with the connections between 
+  the rooms (through the walls and the doors) but also the air leakage area models, the thermal bridges, the internal gains, the heating and cooling systems, the ventilation system
+  and the boundary conditions. 
+  </p>
+  <p>
+  It is built using the models including in <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel\">
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel</a> as much as possible. Contrary to the <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2LobbyNorthBedroomModel\">
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2LobbyNorthBedroomModel</a> new models of the rooms do not need to be built.  
+  <br>
+  <br>
+  The air leakage areas are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.MultiEffectiveAirLeakageArea\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.MultiEffectiveAirLeakageArea</a>.
+  <br>
+  The thermal bridges are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.MultiThermalBridge\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.MultiThermalBridge</a>.
+  <br>
+  The internal gains are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.InternalGains\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.InternalGains</a>.
+  <br>
+  The heating and cooling systems are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.BaseClasses.MultiHeatingCoolingSchedule\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses. BaseClasses.MultiHeatingCoolingSchedule</a>.
+  <br>
+  For the ventilation system the <a href=\"Buildings.Fluid.Sources.MassFlowSource_T\">
+  Buildings.Fluid.Sources.MassFlowSource_T</a> model is used. 
+  It describes an ideal flow source producing a prescribed mass flow rate with a prescribed temperature. 
+  In this model the air is supplied in the living room and it is extracted with equally distributed mass flow rate between the bathroom and the south bedroom. 
+  <br>
+  The boundary conditions are modeled using <a href=\"Modelica.Blocks.Sources.CombiTimeTable\">Modelica.Blocks.Sources.CombiTimeTable</a>. They concern the internal gains in each room,
+  heating and cooling powers, temperatures set points for heating and cooling, ceiling and floor boundary conditions and the scenario of blinds position. In addition, in this model,
+  measured temperature in the surrounding rooms is considered and inserted in a <a href=\"Buildings.Fluid.Sources.Boundary_pT\">Buildings.Fluid.Sources.Boundary_pT</a> model. In this
+  particular study a constant value was considered for the supplied and extracted mass flow rates but their respective temperature are still extracted from the file with the boundary
+  conditions.
+  <br>
+  The doors are modeled using an instance of <a href=\"Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.OpenOrClosedDoor\">
+  Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.BaseClasses.OpenOrClosedDoor</a>.
+  </p>
+  </html>",
+  revisions="<html>
+  <ul>
+  <li>
+  June 22 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"));
 end N2SouthModel;
