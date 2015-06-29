@@ -3,10 +3,6 @@ package Experiment1
   "First validation exercise on the models of the Holzkirchen twin houses"
   extends Modelica.Icons.ExamplesPackage;
 
-
-
-
-
   model Experiment1N2House "First validation exercise on N2 House"
     extends Modelica.Icons.Example;
     Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2HouseModel
@@ -166,8 +162,8 @@ package Experiment1
         StartTime=2.00448e+007,
         StopTime=2.35836e+007,
         Interval=3600,
-        Tolerance=1e-005,
-        __Dymola_Algorithm="Radau"),
+        Tolerance=0.001,
+        __Dymola_Algorithm="Cvode"),
       __Dymola_experimentSetupOutput(events=false));
   end Experiment1N2House;
 
