@@ -96,6 +96,30 @@ equation
         color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
+  Documentation(
+  info="<html>
+  <p>
+  This example uses <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.N2House.N2SouthModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses..N2House.N2SouthModel</a>. 
+  <br>
+  The different values of the parameters describing the part of the house have to be given, just as the files with the boundary conditions, the weather data and the measurements.
+  <br>
+  The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
+  <br>
+  In the particular case of the air temperature in the living room, the measured air temperature is the one at a level of 125cm.
+  <br>
+  The total power in each room is also extracted from the model.
+  </p>
+  <p></p>
+  </html>",
+  revisions="<html>
+  <ul>
+  <li>
+  June 22 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
     experiment(
       StartTime=2.00448e+007,
       StopTime=2.35836e+007,

@@ -58,11 +58,6 @@ package Experiment1
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
     Modelica.Blocks.Math.Add residuals[7](each k1=-1, each k2=+1)
       annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
-    Modelica.Blocks.Math.Add3 add3_1(
-      k1=+1/3,
-      k2=+1/3,
-      k3=+1/3)
-      annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[7]
       annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
     Modelica.Blocks.Interfaces.RealOutput P[7] "Total power in each room"
@@ -83,22 +78,6 @@ package Experiment1
         smooth=Smooth.None));
     connect(TairC.T, residuals.u1) annotation (Line(
         points={{40,20},{50,20},{50,-14},{58,-14}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[4], add3_1.u1) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-82},{-42,-82}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[5], add3_1.u2) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-90},{-42,-90}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(measurements.y[6], add3_1.u3) annotation (Line(
-        points={{-59,-70},{-50,-70},{-50,-98},{-42,-98}},
-        color={0,0,127},
-        smooth=Smooth.None));
-    connect(add3_1.y, fromKelvin[7].Kelvin) annotation (Line(
-        points={{-19,-90},{0,-90},{0,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[9], fromKelvin[6].Kelvin) annotation (Line(
@@ -125,6 +104,8 @@ package Experiment1
         points={{-59,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
+    connect(measurements.y[5], fromKelvin[7].Kelvin)
+      annotation (Line(points={{-59,-70},{-20,-70},{18,-70}}, color={0,0,127}));
     connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
         points={{41,-70},{50,-70},{50,-26},{58,-26}},
         color={0,0,127},
@@ -132,7 +113,7 @@ package Experiment1
     connect(N2House.P, P) annotation (Line(points={{1.11111,0},{1.11111,0},{110,
             0}},
           color={0,0,127}));
-    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+      annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}})),
     Documentation(
     info="<html>
@@ -144,7 +125,7 @@ package Experiment1
   <br>
   The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
   <br>
-  In the particular case of the air temperature in the living room, the measured air temperature is computed as the mean of air temperature at each level (67cm, 125cm, 187cm).
+  In the particular case of the air temperature in the living room, the measured air temperature is the one at a level of 125cm.
   <br>
   The total power in each room is also extracted from the model.
   </p>
@@ -162,7 +143,7 @@ package Experiment1
         StartTime=2.00448e+007,
         StopTime=2.35836e+007,
         Interval=3600,
-        Tolerance=0.001,
+        Tolerance=1e-005,
         __Dymola_Algorithm="Cvode"),
       __Dymola_experimentSetupOutput(events=false));
   end Experiment1N2House;
@@ -398,7 +379,7 @@ package Experiment1
   <br>
   The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
   <br>
-  In the particular case of the air temperature in the living room, the measured air temperature is computed as the mean of air temperature at each level (67cm, 125cm, 187cm).
+  In the particular case of the air temperature in the living room, the measured air temperature is the one at a level of 125cm.
   <br>
   The total power in each room is also extracted from the model.
   </p>
