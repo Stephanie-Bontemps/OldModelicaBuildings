@@ -1,5 +1,5 @@
 within Buildings.Types;
-package Tilt "Enumeration for surface tilt"
+package Tilt "List of possible constant values for surface tilt"
   extends Modelica.Icons.TypesPackage;
 
   constant Modelica.SIunits.Angle Ceiling = 0 "Tilt for ceiling";
@@ -11,7 +11,7 @@ package Tilt "Enumeration for surface tilt"
 
 annotation(preferredView="info", Documentation(info="<html>
 <p>
-numeration to define the tilt of a surface.
+Possible constant values to define the tilt of a surface.
 For example, for a construction that is a floor, use
 <code>Buildings.Types.Tilt.Floor</code>.
 </p>
