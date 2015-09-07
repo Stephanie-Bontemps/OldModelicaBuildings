@@ -165,11 +165,10 @@ First implementation.
       record InsulationPU
         extends Buildings.HeatTransfer.Data.Solids.Generic(
           x=0.12,
-          k=0.035,
           c=840,
-          d=80);
-        annotation (
-      Documentation(info="<html>
+          d=80,
+          k=0.035);
+        annotation (Documentation(info="<html>
 <p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
 Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
 </p>
@@ -490,18 +489,17 @@ First implementation.
       record ExtWallSN "External wall on the south or on the north"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.23,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.23 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
-        annotation (
-        Documentation(info="<html>
+        annotation (Documentation(info="<html>
 <p>
 This is a construction of an external wall used for the north wall and a part of the south one.
 See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
@@ -526,10 +524,10 @@ First implementation.
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.2),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.23,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.23 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -551,15 +549,15 @@ First implementation.
       record ExtWallE "External wall on the east"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(x=0.08, k=0.022),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.23,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.23 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -586,10 +584,10 @@ First implementation.
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.23,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.23 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -616,10 +614,10 @@ First implementation.
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.23,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.23 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -641,13 +639,13 @@ First implementation.
       record IntWall1 "Internal wall with a thickness of 27cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.24, k=0.331, d=1000),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35)},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.17,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.17 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -669,13 +667,13 @@ First implementation.
       record IntWall2 "Internal wall with a thickness of 14cm"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=3,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.115, k=0.331, d=1000),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InteriorPlaster(k=0.35)},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.17,
-          absSol_b=0.17,
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.17 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.Smooth);
         annotation (
       Documentation(info="<html>
@@ -697,15 +695,15 @@ First implementation.
       record Ceiling "Ceiling"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Screed(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Screed(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Insulation(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Concrete(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Plaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationUnderCeiling()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.6,
-          absSol_b=0.17);
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.6 annotation(Evaluate=false),
+          absSol_b=0.17 annotation(Evaluate=false));
         annotation (
       Documentation(info="<html>
 <p>
@@ -726,15 +724,15 @@ First implementation.
       record Ground "Floor"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Concrete(k=2.1),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Concrete(k=2.1),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.LevellingFill(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.PURDammplatte025Insulation(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.CompositePanelPUR(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.Screed(x=0.065)},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.6,
-          absSol_b=0.6);
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.6 annotation(Evaluate=false),
+          absSol_b=0.6 annotation(Evaluate=false));
         annotation (
       Documentation(info="<html>
 <p>
@@ -755,11 +753,11 @@ First implementation.
       record ExtDoorOpaquePart "External door in the lobby"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=1,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.6,
-          absSol_b=0.6,
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.6 annotation(Evaluate=false),
+          absSol_b=0.6 annotation(Evaluate=false),
           roughness_a=Buildings.HeatTransfer.Types.SurfaceRoughness.MediumSmooth);
         annotation (
       Documentation(info="<html>
@@ -781,11 +779,11 @@ First implementation.
       record IntDoorOpaquePart "Internal door"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=1,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
-          absIR_a=0.9,
-          absIR_b=0.9,
-          absSol_a=0.6,
-          absSol_b=0.6);
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.WoodDoor()},
+          absIR_a=0.9 annotation(Evaluate=false),
+          absIR_b=0.9 annotation(Evaluate=false),
+          absSol_a=0.6 annotation(Evaluate=false),
+          absSol_b=0.6 annotation(Evaluate=false));
         annotation (
       Documentation(info="<html>
 <p>

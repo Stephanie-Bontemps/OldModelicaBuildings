@@ -22,14 +22,14 @@ model N2LobbyNorthBedroomModel
         __Dymola_loadSelector(caption=
             "Select file with temperatures of surrounding rooms")));
   parameter Modelica.SIunits.Angle lat = 0.83555892609977 "Latitude";
-  parameter Modelica.SIunits.Length hRoo = 2.495 "Height under ceiling";
+  parameter Modelica.SIunits.Length hRoo = 2.495 "Height under ceiling" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_int = 293.15
-    "Intial temperature in the room";
+    "Intial temperature in the room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_ext = 293.15
-    "Outside initial temperature";
+    "Outside initial temperature" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
-    "Initial temperature of the boundary conditions";
-  parameter Real albedo=0.23 "Ground reflectivity";
+    "Initial temperature of the boundary conditions" annotation(Evaluate=false);
+  parameter Real albedo=0.23 "Ground reflectivity" annotation(Evaluate=false);
   parameter Modelica.Fluid.Types.Dynamics energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of energy balance";
   parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial

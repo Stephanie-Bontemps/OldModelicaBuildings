@@ -2,28 +2,28 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model LobbyNorthPartModel
   "Model of the lobby (flur on north side of building) in Holzkirchen Twin Houses for north part model"
   parameter Modelica.SIunits.Length lExtWalNor = 1.255
-    "Length of the external wall on the north";
+    "Length of the external wall on the north" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lExtDooNor = 0.995
-    "Length of the external door on the north";
+    "Length of the external door on the north" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length hExtDooNor = 2.025
-    "Height of the external door on the north";
+    "Height of the external door on the north" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnNorBed = 2.61
-    "Length of the wall between lobby and north Bedroom";
+    "Length of the wall between lobby and north Bedroom" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lDooOnLivRoo = 0.935
-    "Length of the door between lobby and living room";
+    "Length of the door between lobby and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length hDooOnLivRoo = 1.98
-    "Height of the door between lobby and living room";
+    "Height of the door between lobby and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnLivRoo = (lExtWalNor + lExtDooNor) - lDooOnLivRoo
-    "Length of the wall between lobby and living room";
+    "Length of the wall between lobby and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnKit = lIntWalOnNorBed
-    "Length of the wall between lobby and kitchen";
+    "Length of the wall between lobby and kitchen" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_int = 293.15
-    "Intial temperature in the room";
+    "Intial temperature in the room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_ext = 293.15
-    "Outside initial temperature";
+    "Outside initial temperature" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
-    "Initial temperature of the boundary conditions";
-  parameter Real albedo = 0.23 "Ground reflectivity";
+    "Initial temperature of the boundary conditions" annotation(Evaluate=false);
+  parameter Real albedo = 0.23 "Ground reflectivity" annotation(Evaluate=false);
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallSN
     "Properties of  external wall on south and north";
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extDoorOpaquePart
@@ -67,11 +67,17 @@ model LobbyNorthPartModel
     azi = {Buildings.Types.Azimuth.N},
     each steadyStateInitial = false,
     glaSys = {window},
-    hWin = {0.535},
-    wWin = {0.585},
-    fFra = {0.01},
-    ove(wL = {0.20}, wR = {0.20}, gap = {0.20}, dep = {0.37}),
-    sidFin(h = {0.20}, gap = {0.20}, dep = {0.37}),
+    hWin = {0.535}
+                  annotation(Evaluate=false),
+    wWin = {0.585} annotation(Evaluate=false),
+    fFra = {0.01} annotation(Evaluate=false),
+    ove(wL = {0.20} annotation(Evaluate=false),
+        wR = {0.20} annotation(Evaluate=false),
+        gap = {0.20} annotation(Evaluate=false),
+        dep = {0.37} annotation(Evaluate=false)),
+    sidFin(h = {0.20} annotation(Evaluate=false),
+           gap = {0.20} annotation(Evaluate=false),
+           dep = {0.37} annotation(Evaluate=false)),
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConBou(

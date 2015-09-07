@@ -2,28 +2,28 @@ within Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Rooms;
 model NorthBedroomNorthPartModel
   "Model of the north bedroom (schladen - referred as bedroom) in Holzkirchen Twin Houses for the north part model"
   parameter Modelica.SIunits.Length lExtWalNor = 3.83
-    "Length of the external wall on the north";
+    "Length of the external wall on the north" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lExtWalEas = 3.18
-    "Length of the external wall on the east";
+    "Length of the external wall on the east" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnBat = 2.07
-    "Length of the wall between north bedroom and bathroom";
+    "Length of the wall between north bedroom and bathroom" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnCor = 0.685
-    "Length of the wall between north bedroom and corridor";
+    "Length of the wall between north bedroom and corridor" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lDooOnCor = 0.935
-    "Length of the door between north bedroom and corridor";
+    "Length of the door between north bedroom and corridor" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length hDooOnCor = 1.98
-    "Height of the door between north bedroom and corridor";
+    "Height of the door between north bedroom and corridor" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnLivRoo = 0.30
-    "Length of the wall between north bedroom and living room";
+    "Length of the wall between north bedroom and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnLob = 2.61
-    "Length of the wall between north bedroom and lobby";
+    "Length of the wall between north bedroom and lobby" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_int = 293.15
-    "Intial temperature in the room";
+    "Intial temperature in the room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_ext = 293.15
-    "Outside initial temperature";
+    "Outside initial temperature" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_bou = 293.15
-    "Initial temperature of the boundary conditions";
-  parameter Real albedo = 0.23 "Ground reflectivity";
+    "Initial temperature of the boundary conditions" annotation(Evaluate=false);
+  parameter Real albedo = 0.23 "Ground reflectivity" annotation(Evaluate=false);
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallSN
     "Properties of  external wall on south and north";
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic extWallE
@@ -69,11 +69,16 @@ model NorthBedroomNorthPartModel
     each T_a_start=Tini_ext,
     each T_b_start=Tini_int,
     glaSys = {window},
-    hWin = {1.54},
-    wWin = {1.23},
-    fFra = {0.3175},
-    ove(wL = {0}, wR = {0}, gap = {0}, dep = {0.16}),
-    sidFin(h = {0}, gap = {0}, dep = {0.16})),
+    hWin = {1.54} annotation(Evaluate=false),
+    wWin = {1.23} annotation(Evaluate=false),
+    fFra = {0.3175} annotation(Evaluate=false),
+    ove(wL = {0} annotation(Evaluate=false),
+        wR = {0} annotation(Evaluate=false),
+        gap = {0} annotation(Evaluate=false),
+        dep = {0.16} annotation(Evaluate=false)),
+    sidFin(h = {0} annotation(Evaluate=false),
+           gap = {0} annotation(Evaluate=false),
+           dep = {0.16} annotation(Evaluate=false))),
     datConBou(
     layers = {intWall2, intWall2, intDoorOpaquePart, intWall1, ceiling, ground},
     A = {hRoo*lIntWalOnBat, (hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor, hRoo*lIntWalOnLivRoo, AFlo, AFlo},
@@ -84,8 +89,8 @@ model NorthBedroomNorthPartModel
     surBou(
     A = {hRoo*lIntWalOnLob},
     til = {Buildings.Types.Tilt.Wall},
-    each absIR = 0.9,
-    absSol = {0.17}),
+    each absIR = 0.9 annotation(Evaluate=false),
+    absSol = {0.17} annotation(Evaluate=false)),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);
