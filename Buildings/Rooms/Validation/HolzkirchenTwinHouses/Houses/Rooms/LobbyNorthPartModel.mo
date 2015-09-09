@@ -17,6 +17,16 @@ model LobbyNorthPartModel
     "Length of the wall between lobby and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnKit = lIntWalOnNorBed
     "Length of the wall between lobby and kitchen" annotation(Evaluate=false);
+  parameter Modelica.SIunits.Length hWin = 0.535 "Window height";
+  parameter Modelica.SIunits.Length wWin = 0.585 "Window width";
+  parameter Modelica.SIunits.Length fraWin = 0.01 "Proportion of window frame";
+  parameter Modelica.SIunits.Length wLOve = 0.20 "Overhang left length";
+  parameter Modelica.SIunits.Length wROve = 0.20 "Overhang right length";
+  parameter Modelica.SIunits.Length gapOve = 0.20 "Overhang gap";
+  parameter Modelica.SIunits.Length depOve = 0.37 "Overhang depth";
+  parameter Modelica.SIunits.Length hSidFin = 0.20 "Side fins height";
+  parameter Modelica.SIunits.Length gapSidFin = 0.20 "Side fins gap";
+  parameter Modelica.SIunits.Length depSidFin = 0.37 "Side fins depth";
   parameter Modelica.SIunits.Temperature Tini_int = 293.15
     "Intial temperature in the room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_ext = 293.15
@@ -67,17 +77,16 @@ model LobbyNorthPartModel
     azi = {Buildings.Types.Azimuth.N},
     each steadyStateInitial = false,
     glaSys = {window},
-    hWin = {0.535}
-                  annotation(Evaluate=false),
-    wWin = {0.585} annotation(Evaluate=false),
-    fFra = {0.01} annotation(Evaluate=false),
-    ove(wL = {0.20} annotation(Evaluate=false),
-        wR = {0.20} annotation(Evaluate=false),
-        gap = {0.20} annotation(Evaluate=false),
-        dep = {0.37} annotation(Evaluate=false)),
-    sidFin(h = {0.20} annotation(Evaluate=false),
-           gap = {0.20} annotation(Evaluate=false),
-           dep = {0.37} annotation(Evaluate=false)),
+    hWin = {hWin},
+    wWin = {wWin},
+    fFra = {fraWin},
+    ove(wL = {wLOve},
+        wR = {wROve},
+        gap = {gapOve},
+        dep = {depOve}),
+    sidFin(h = {hSidFin},
+           gap = {gapSidFin},
+           dep = {depSidFin}),
     T_a_start={Tini_ext},
     T_b_start={Tini_int}),
     datConBou(

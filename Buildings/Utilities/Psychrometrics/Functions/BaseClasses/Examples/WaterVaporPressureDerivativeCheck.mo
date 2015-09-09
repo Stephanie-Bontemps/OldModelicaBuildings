@@ -13,12 +13,6 @@ model WaterVaporPressureDerivativeCheck
 initial equation
   y=y_comp;
 equation
-<<<<<<< HEAD
-    x=Buildings.Utilities.Psychrometrics.Functions.pW_X(X_w=time*uniCon,p=101525);
-    der(y)=der(x);
-    assert(abs(x-y) < 1E-2, "Model has an error");
-   annotation (                      __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/WaterVaporPressureDerivativeCheck.mos"
-=======
   X_w =  1.001 + 0.999/2*time^3;
   p = 101325+300*time^3;
 
@@ -29,7 +23,6 @@ equation
 
 annotation (
    __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/WaterVaporPressureDerivativeCheck.mos"
->>>>>>> upstream/master
         "Simulate and plot"),
       experiment(
         StartTime=-1,

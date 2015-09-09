@@ -13,13 +13,13 @@ package OpaqueConstructions
       "Thermal resistance per unit area";
 
    parameter Modelica.SIunits.Emissivity absIR_a=0.9
-      "Infrared absorptivity of surface a (usually outside-facing surface)";
+      "Infrared absorptivity of surface a (usually outside-facing surface)" annotation(Evaluate=false);
    parameter Modelica.SIunits.Emissivity absIR_b=0.9
-      "Infrared absorptivity of surface b (usually room-facing surface)";
+      "Infrared absorptivity of surface b (usually room-facing surface)" annotation(Evaluate=false);
    parameter Modelica.SIunits.Emissivity absSol_a=0.5
-      "Solar absorptivity of surface a (usually outside-facing surface)";
+      "Solar absorptivity of surface a (usually outside-facing surface)" annotation(Evaluate=false);
    parameter Modelica.SIunits.Emissivity absSol_b=0.5
-      "Solar absorptivity of surface b (usually room-facing surface)";
+      "Solar absorptivity of surface b (usually room-facing surface)" annotation(Evaluate=false);
    parameter Buildings.HeatTransfer.Types.SurfaceRoughness roughness_a=
       Buildings.HeatTransfer.Types.SurfaceRoughness.Medium
       "Exterior surface roughness";

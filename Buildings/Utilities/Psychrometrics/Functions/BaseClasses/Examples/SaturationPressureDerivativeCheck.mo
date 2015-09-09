@@ -13,12 +13,6 @@ model SaturationPressureDerivativeCheck
 initial equation
   y=y_comp;
 equation
-<<<<<<< HEAD
-    pSat=Buildings.Utilities.Psychrometrics.Functions.saturationPressure(T);
-    der(pSat)=der(pSatDer);
-    assert(abs(pSat-pSatDer) < 1E-2, "Model has an error");
-   annotation (                      __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/SaturationPressureDerivativeCheck.mos"
-=======
   T =  TMin + (TMax-TMin)/2 + (TMax-TMin)/2*time^3;
   y=Buildings.Utilities.Psychrometrics.Functions.saturationPressure(TSat=T);
   der(y)=der(y_comp);
@@ -27,7 +21,6 @@ equation
 
 annotation (
   __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/SaturationPressureDerivativeCheck.mos"
->>>>>>> upstream/master
         "Simulate and plot"),
       experiment(
         StartTime=-1,

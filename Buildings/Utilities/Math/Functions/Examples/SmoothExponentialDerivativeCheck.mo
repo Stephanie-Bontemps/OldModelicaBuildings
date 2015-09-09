@@ -12,14 +12,6 @@ model SmoothExponentialDerivativeCheck
 initial equation
    y=y_comp;
 equation
-<<<<<<< HEAD
-  x=Buildings.Utilities.Math.Functions.smoothExponential(
-                                               x=time-2, delta=0.5);
-  der(y)=der(x);
-  assert(abs(x-y) < 1E-2, "Model has an error");
-  ex=exp(-abs(time-2));
- annotation(experiment(StopTime=4),
-=======
   x = time^3;
   y_comp=Buildings.Utilities.Math.Functions.smoothExponential(
                                                x=x, delta=delta);
@@ -28,7 +20,6 @@ equation
   assert(abs(err) < 1E-2, "Model has an error");
   ex=exp(-abs(x));
  annotation(experiment(StartTime=-1, StopTime=1, Tolerance=1E-8),
->>>>>>> upstream/master
 __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Math/Functions/Examples/SmoothExponentialDerivativeCheck.mos"
         "Simulate and plot"),
     Documentation(info="<html>

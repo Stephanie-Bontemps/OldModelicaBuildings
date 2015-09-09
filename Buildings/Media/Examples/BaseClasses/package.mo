@@ -1,11 +1,7 @@
 within Buildings.Media.Examples;
 package BaseClasses "Package with base classes for Buildings.Media.Examples"
-<<<<<<< HEAD
-  extends Modelica.Icons.ExamplesPackage;
-=======
   extends Modelica.Icons.BasesPackage;
 
->>>>>>> upstream/master
 
 annotation (preferredView="info", Documentation(info="<html>
 <p>

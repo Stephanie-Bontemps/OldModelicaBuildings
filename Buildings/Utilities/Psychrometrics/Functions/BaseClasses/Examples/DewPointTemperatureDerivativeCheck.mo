@@ -10,12 +10,6 @@ model DewPointTemperatureDerivativeCheck
 initial equation
   y=y_comp;
 equation
-<<<<<<< HEAD
-    x=Buildings.Utilities.Psychrometrics.Functions.pW_TDewPoi(  T=time*uniCon);
-    der(y)=der(x);
-    assert(abs(x-y) < 1E-2, "Model has an error");
-   annotation (                      __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/DewPointTemperatureDerivativeCheck.mos"
-=======
   T =  273.15 + 50 + time^3 * 50;
   y=Buildings.Utilities.Psychrometrics.Functions.pW_TDewPoi(T=T);
   der(y)=der(y_comp);
@@ -23,7 +17,6 @@ equation
  // fixme assert(abs(err) < 1E-2, "Derivative implementation has an error or solver tolerance is too low.");
 annotation (
   __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Psychrometrics/Functions/BaseClasses/Examples/DewPointTemperatureDerivativeCheck.mos"
->>>>>>> upstream/master
         "Simulate and plot"),
       experiment(
         StartTime=-1,

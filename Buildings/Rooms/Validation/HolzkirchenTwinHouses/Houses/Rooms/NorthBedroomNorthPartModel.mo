@@ -17,6 +17,17 @@ model NorthBedroomNorthPartModel
     "Length of the wall between north bedroom and living room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Length lIntWalOnLob = 2.61
     "Length of the wall between north bedroom and lobby" annotation(Evaluate=false);
+  parameter Modelica.SIunits.Length hWin = 1.54 "Window height";
+  parameter Modelica.SIunits.Length wWin = 1.23 "Window width";
+  parameter Modelica.SIunits.Length fraWin = 0.3175
+    "Proportion of window frame";
+  parameter Modelica.SIunits.Length wLOve = 0 "Overhang left length";
+  parameter Modelica.SIunits.Length wROve = 0 "Overhang right length";
+  parameter Modelica.SIunits.Length gapOve = 0 "Overhang gap";
+  parameter Modelica.SIunits.Length depOve = 0.16 "Overhang depth";
+  parameter Modelica.SIunits.Length hSidFin = 0 "Side fins height";
+  parameter Modelica.SIunits.Length gapSidFin = 0 "Side fins gap";
+  parameter Modelica.SIunits.Length depSidFin = 0.16 "Side fins depth";
   parameter Modelica.SIunits.Temperature Tini_int = 293.15
     "Intial temperature in the room" annotation(Evaluate=false);
   parameter Modelica.SIunits.Temperature Tini_ext = 293.15
@@ -69,16 +80,16 @@ model NorthBedroomNorthPartModel
     each T_a_start=Tini_ext,
     each T_b_start=Tini_int,
     glaSys = {window},
-    hWin = {1.54} annotation(Evaluate=false),
-    wWin = {1.23} annotation(Evaluate=false),
-    fFra = {0.3175} annotation(Evaluate=false),
-    ove(wL = {0} annotation(Evaluate=false),
-        wR = {0} annotation(Evaluate=false),
-        gap = {0} annotation(Evaluate=false),
-        dep = {0.16} annotation(Evaluate=false)),
-    sidFin(h = {0} annotation(Evaluate=false),
-           gap = {0} annotation(Evaluate=false),
-           dep = {0.16} annotation(Evaluate=false))),
+    hWin = {hWin},
+    wWin = {wWin},
+    fFra = {fraWin},
+    ove(wL = {wLOve},
+        wR = {wROve},
+        gap = {gapOve},
+        dep = {depOve}),
+    sidFin(h = {hSidFin},
+           gap = {gapSidFin},
+           dep = {depSidFin})),
     datConBou(
     layers = {intWall2, intWall2, intDoorOpaquePart, intWall1, ceiling, ground},
     A = {hRoo*lIntWalOnBat, (hRoo*lIntWalOnCor+(hRoo-hDooOnCor)*lDooOnCor), hDooOnCor*lDooOnCor, hRoo*lIntWalOnLivRoo, AFlo, AFlo},
@@ -89,8 +100,8 @@ model NorthBedroomNorthPartModel
     surBou(
     A = {hRoo*lIntWalOnLob},
     til = {Buildings.Types.Tilt.Wall},
-    each absIR = 0.9 annotation(Evaluate=false),
-    absSol = {0.17} annotation(Evaluate=false)),
+    each absIR = 0.9,
+    absSol = {0.17}),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     T_start=Tini_int);

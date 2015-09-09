@@ -14,11 +14,7 @@ equation
   der(y)=der(x);
   assert(abs(x-y) < 1E-2, "Model has an error");
 
-<<<<<<< HEAD
- annotation(experiment(StartTime=-1, StopTime=1.0),
-=======
  annotation(experiment(StartTime=-1, StopTime=1.0, Tolerance=1E-08),
->>>>>>> upstream/master
 __Dymola_Commands(file="modelica://Buildings/Resources/Scripts/Dymola/Utilities/Math/Functions/Examples/RegNonZeroPowerDerivativeCheck.mos"
         "Simulate and plot"),
     Documentation(info="<html>
