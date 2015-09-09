@@ -165,9 +165,9 @@ First implementation.
       record InsulationPU
         extends Buildings.HeatTransfer.Data.Solids.Generic(
           x=0.12,
+          k=0.035,
           c=840,
-          d=80,
-          k=0.035);
+          d=80);
         annotation (Documentation(info="<html>
 <p> See report <i>Empirical Whole Model Validation Modelling Specification Test Case Twin_House_1 IEA ECB
 Annex 58 Validation of Building Energy Simulation Tools Subtask 4 Version 6</i> for the specification of materials and their thermophysical properties.
@@ -489,7 +489,7 @@ First implementation.
       record ExtWallSN "External wall on the south or on the north"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
@@ -519,7 +519,7 @@ First implementation.
         "External wall under the window in the living room on the south"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationPU(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(x=0.2),
@@ -579,7 +579,7 @@ First implementation.
       record ExtWallWS "South part of the external wall on the west"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationEPS(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
@@ -609,7 +609,7 @@ First implementation.
       record ExtWallWN "North part of the external wall on the west"
         extends Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(
         final nLay=5,
-        final material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
+        material = {Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.ExteriorPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.InsulationMineralWool(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.FormerExtPlaster(),
                           Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.Data.OpaqueConstructions.Materials.HoneycombBrick(),
