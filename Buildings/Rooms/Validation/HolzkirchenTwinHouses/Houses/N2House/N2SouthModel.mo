@@ -34,7 +34,7 @@ model N2SouthModel
     "Formulation of energy balance";
   parameter Modelica.Fluid.Types.Dynamics massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial
     "Formulation of mass balance";
-  parameter Real k_m_flow=0.04
+  parameter Real k_m_flow=0.0406
     "Constant value for the supplied and extracted air flow (kg/s)";
   parameter Real kHea=1E6 "Gain value multiplied with input signal for heating"
                                                                                 annotation (Dialog(group="Heating and cooling schedules"));
@@ -275,8 +275,8 @@ model N2SouthModel
     annotation (Placement(transformation(extent={{-180,-20},{-160,0}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a port_a1[3]
     annotation (Placement(transformation(extent={{-140,-20},{-120,0}})));
-  Airflow.Multizone.Orifice oriLobLivRoo(redeclare package Medium = MediumA, A=1e-6)
-    "Orifice modelling the door between the lobby and the living room"
+  Airflow.Multizone.Orifice oriLobLivRoo(redeclare package Medium = MediumA, A=1e-6,
+    m=0.65) "Orifice modelling the door between the lobby and the living room"
     annotation (Placement(transformation(extent={{-140,-100},{-120,-80}})));
 protected
   Buildings.Fluid.Sources.Boundary_pT bouLob(
@@ -285,7 +285,8 @@ protected
     redeclare package Medium = MediumA) "Boundary conditions in the lobbi"
     annotation (Placement(transformation(extent={{-180,-100},{-160,-80}})));
 public
-  Buildings.Airflow.Multizone.Orifice oriNorBedCor(redeclare package Medium = MediumA, A=1e-6)
+  Buildings.Airflow.Multizone.Orifice oriNorBedCor(redeclare package Medium = MediumA, A=1e-6,
+    m=0.65)
     "Orifice modelling the door between the north bedroom and the corridor"
     annotation (Placement(transformation(extent={{-140,-140},{-120,-120}})));
 protected
@@ -296,7 +297,8 @@ protected
     "Boundary conditions in the north bedroom"
     annotation (Placement(transformation(extent={{-180,-140},{-160,-120}})));
 public
-  Buildings.Airflow.Multizone.Orifice oriKitLivRoo(redeclare package Medium = MediumA, A=1e-6)
+  Buildings.Airflow.Multizone.Orifice oriKitLivRoo(redeclare package Medium = MediumA, A=1e-6,
+    m=0.65)
     "Orifice modelling the door between the kitchen and the living room"
     annotation (Placement(transformation(extent={{-140,-60},{-120,-40}})));
 protected
@@ -477,7 +479,7 @@ equation
       points={{-219,110},{-212,110},{-212,102.5},{-181.429,102.5}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[23], mulHeaCooSch.schChoice[1]) annotation (Line(
+  connect(heaCoo.y[22], mulHeaCooSch.schChoice[1]) annotation (Line(
       points={{-219,110},{-212,110},{-212,108.929},{-181.429,108.929}},
       color={0,0,127},
       smooth=Smooth.None));

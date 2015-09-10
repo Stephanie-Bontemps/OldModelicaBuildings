@@ -51,8 +51,10 @@ model Experiment1N2SouthMorris
     annotation (Placement(transformation(extent={{60,40},{80,60}})));
   Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[4]
     annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
-  Modelica.Blocks.Math.Add Presiduals[3](each k1=-1, each k2=+1)
+  Modelica.Blocks.Math.Add Presiduals[4](each k1=-1, each k2=+1)
     annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
+  Modelica.Blocks.Sources.Constant Pcor(k=0)
+    annotation (Placement(transformation(extent={{-40,-100},{-20,-80}})));
 equation
   connect(weaDat.weaBus, N2SouPar.weaBus) annotation (Line(
       points={{-30,70},{-1.84615,70},{-1.84615,38.4615}},
@@ -91,21 +93,26 @@ equation
       points={{-59,-70},{18,-70}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(measurements.y[20], Presiduals[1].u2) annotation (Line(points={{-59,
+  connect(measurements.y[20], Presiduals[2].u2) annotation (Line(points={{-59,
           -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
-  connect(measurements.y[21], Presiduals[2].u2) annotation (Line(points={{-59,
+  connect(measurements.y[21], Presiduals[3].u2) annotation (Line(points={{-59,
           -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
-  connect(measurements.y[19], Presiduals[3].u2) annotation (Line(points={{-59,
+  connect(measurements.y[19], Presiduals[4].u2) annotation (Line(points={{-59,
           -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
-  connect(N2SouPar.P[2], Presiduals[1].u1) annotation (Line(points={{1.53846,
+  connect(N2SouPar.P[1], Presiduals[1].u1) annotation (Line(points={{1.53846,
+          -1.15385},{14,-1.15385},{14,-44},{58,-44}},
+                                             color={0,0,127}));
+  connect(N2SouPar.P[2], Presiduals[2].u1) annotation (Line(points={{1.53846,
           -0.384615},{14,-0.384615},{14,-44},{58,-44}},
                                              color={0,0,127}));
-  connect(N2SouPar.P[3], Presiduals[2].u1) annotation (Line(points={{1.53846,
+  connect(N2SouPar.P[3], Presiduals[3].u1) annotation (Line(points={{1.53846,
           0.384615},{14,0.384615},{14,-44},{58,-44}},
                                              color={0,0,127}));
-  connect(N2SouPar.P[4], Presiduals[3].u1) annotation (Line(points={{1.53846,
+  connect(N2SouPar.P[4], Presiduals[4].u1) annotation (Line(points={{1.53846,
           1.15385},{14,1.15385},{14,-44},{58,-44}},
                                            color={0,0,127}));
+  connect(Pcor.y, Presiduals[1].u2) annotation (Line(points={{-19,-90},{0,-90},
+          {0,-56},{58,-56}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
   Documentation(
