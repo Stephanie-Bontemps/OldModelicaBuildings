@@ -257,8 +257,8 @@ model N2SouthModel
     final fileName=
         Buildings.BoundaryConditions.WeatherData.BaseClasses.getAbsolutePath(
         nomFichierHeaCoo),
-    columns=2:23)
-    "Heating or cooling power for the different rooms (1: kitchen, 2: lobby, 3: north bedroom, 4: corridor, 5: bathroom, 6: south bedroom, 7: living room); heating temperature set point for the different rooms (8: kitchen, 9: lobby, 10: north bedroom, 11: corridor, 12: bathroom, 13: south bedroom, 14: living room); cooling temperature set point for the different rooms (15: kitchen, 16: lobby, 17: north bedroom, 18: corridor, 19: bathroom, 20: south bedroom, 21: living room); scenario type (22)"
+    columns=2:24)
+    "Heating or cooling power for the different rooms (1: kitchen, 2: lobby, 3: north bedroom, 4: corridor, 5: bathroom, 6: south bedroom, 7: living room); heating temperature set point for the different rooms (8: kitchen, 9: lobby, 10: north bedroom, 11: corridor, 12: bathroom, 13: south bedroom, 14: living room); cooling temperature set point for the different rooms (15: kitchen, 16: lobby, 17: north bedroom, 18: corridor, 19: bathroom, 20: south bedroom, 21: living room); scenario type (22); scenario type for corridor (23)"
     annotation (Placement(transformation(extent={{-240,100},{-220,120}})));
   Modelica.Blocks.Sources.CombiTimeTable bouOthRoo(
     final tableOnFile=true,
@@ -477,7 +477,7 @@ equation
       points={{-219,110},{-212,110},{-212,102.5},{-181.429,102.5}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(heaCoo.y[22], mulHeaCooSch.schChoice[1]) annotation (Line(
+  connect(heaCoo.y[23], mulHeaCooSch.schChoice[1]) annotation (Line(
       points={{-219,110},{-212,110},{-212,108.929},{-181.429,108.929}},
       color={0,0,127},
       smooth=Smooth.None));

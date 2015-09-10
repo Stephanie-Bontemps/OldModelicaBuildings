@@ -179,6 +179,14 @@ model N2LobbyNorthBedroomModel
                                                     iconTransformation(extent={{160,160},
             {180,180}})));
 
+  Buildings.Fluid.Sources.Outside_CpLowRise outNor(
+    nPorts=2,
+    azi=Buildings.Types.Azimuth.N,
+    s=1,
+    redeclare package Medium = MediumA)
+    "Outside boundary using weather data on the north wall"
+    annotation (Placement(transformation(extent={{-140,-60},{-120,-40}})));
+
 protected
   Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature TairBou[3]
     annotation (Placement(transformation(extent={{-120,160},{-100,180}})));
@@ -196,13 +204,6 @@ protected
     kConGai=kConGaiNorBed,
     kLatGai=kLatGaiNorBed)
     annotation (Placement(transformation(extent={{40,-100},{60,-80}})));
-  Buildings.Fluid.Sources.Outside_CpLowRise outNor(
-    nPorts=2,
-    azi=Buildings.Types.Azimuth.N,
-    s=1,
-    redeclare package Medium = MediumA)
-    "Outside boundary using weather data on the north wall"
-    annotation (Placement(transformation(extent={{-140,-60},{-120,-40}})));
   Buildings.Fluid.Sources.Boundary_pT bouLivRoo(nPorts=1, use_T_in=true,
     redeclare package Medium = MediumA)
     "Boundary conditions in the living room"

@@ -1,6 +1,6 @@
 within ;
 model Experiment1N2SouthMorris
-  "First validation exercise on the model of a part of N2 Twin House (bathroom, corridor, south bedroom, living room)"
+  "First validation exercise on the model of a part of N2 Twin House (corridor, bathroom, south bedroom, living room)"
   extends Modelica.Icons.Example;
   Buildings.Rooms.Validation.HolzkirchenTwinHouses.Houses.N2House.N2SouthModel N2SouPar(
     kHea=1E6,
@@ -47,12 +47,12 @@ model Experiment1N2SouthMorris
   Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[4]
     "Radiative temperature in the different rooms in °C"
     annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-  Modelica.Blocks.Math.Add residuals[4](each k1=-1, each k2=+1)
-    annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
+  Modelica.Blocks.Math.Add Tresiduals[4](each k1=-1, each k2=+1)
+    annotation (Placement(transformation(extent={{60,40},{80,60}})));
   Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[4]
     annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
-  Modelica.Blocks.Interfaces.RealOutput P[4] "Total power in each room"
-    annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+  Modelica.Blocks.Math.Add Presiduals[3](each k1=-1, each k2=+1)
+    annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
 equation
   connect(weaDat.weaBus, N2SouPar.weaBus) annotation (Line(
       points={{-30,70},{-1.84615,70},{-1.84615,38.4615}},
@@ -67,12 +67,12 @@ equation
       points={{-1.53846,-23.0769},{10,-23.0769},{10,-20},{20,-20}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(TairC.T, residuals.u1) annotation (Line(
-      points={{40,20},{50,20},{50,-14},{58,-14}},
+  connect(TairC.T, Tresiduals.u1) annotation (Line(
+      points={{40,20},{50,20},{50,56},{58,56}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-      points={{41,-70},{50,-70},{50,-26},{58,-26}},
+  connect(fromKelvin.Celsius, Tresiduals.u2) annotation (Line(
+      points={{41,-70},{50,-70},{50,44},{58,44}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(measurements.y[7], fromKelvin[1].Kelvin) annotation (Line(
@@ -91,9 +91,21 @@ equation
       points={{-59,-70},{18,-70}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(N2SouPar.P, P) annotation (Line(points={{1.53846,0},{1.53846,0},{110,
-          0}},
-        color={0,0,127}));
+  connect(measurements.y[20], Presiduals[1].u2) annotation (Line(points={{-59,
+          -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+  connect(measurements.y[21], Presiduals[2].u2) annotation (Line(points={{-59,
+          -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+  connect(measurements.y[19], Presiduals[3].u2) annotation (Line(points={{-59,
+          -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+  connect(N2SouPar.P[2], Presiduals[1].u1) annotation (Line(points={{1.53846,
+          -0.384615},{14,-0.384615},{14,-44},{58,-44}},
+                                             color={0,0,127}));
+  connect(N2SouPar.P[3], Presiduals[2].u1) annotation (Line(points={{1.53846,
+          0.384615},{14,0.384615},{14,-44},{58,-44}},
+                                             color={0,0,127}));
+  connect(N2SouPar.P[4], Presiduals[3].u1) annotation (Line(points={{1.53846,
+          1.15385},{14,1.15385},{14,-44},{58,-44}},
+                                           color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
   Documentation(
@@ -127,5 +139,5 @@ equation
       Tolerance=1e-007,
       __Dymola_Algorithm="Cvode"),
     __Dymola_experimentSetupOutput(events=false),
-    uses(Modelica(version="3.2.1"), Buildings(version="2.0.1")));
+    uses(Modelica(version="3.2.1"), Buildings(version="3.0.0")));
 end Experiment1N2SouthMorris;

@@ -50,13 +50,13 @@ model Experiment1N2LobbyNorthBedroomMorris
   Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[2]
     "Radiative temperature in the different rooms in °C"
     annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-  Modelica.Blocks.Math.Add residuals[2](each k1=-1, each k2=+1)
-    annotation (Placement(transformation(extent={{80,-10},{100,10}})));
+  Modelica.Blocks.Math.Add Tresiduals[2](each k1=-1, each k2=+1)
+    annotation (Placement(transformation(extent={{60,40},{80,60}})));
   Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[2]
     annotation (Placement(transformation(extent={{20,-60},{40,-40}})));
 
-  Modelica.Blocks.Interfaces.RealOutput P[2] "Total power in each room"
-    annotation (Placement(transformation(extent={{100,10},{120,30}})));
+  Modelica.Blocks.Math.Add Presiduals[2](each k1=-1, each k2=+1)
+    annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
 equation
   connect(weaDat.weaBus, N2LobNorBed.weaBus) annotation (Line(
       points={{-30,90},{-2.22222,90},{-2.22222,57.7778}},
@@ -71,10 +71,6 @@ equation
       points={{-2.22222,0},{20,0}},
       color={191,0,0},
       smooth=Smooth.None));
-  connect(TairC.T, residuals.u1) annotation (Line(
-      points={{40,40},{60,40},{60,6},{78,6}},
-      color={0,0,127},
-      smooth=Smooth.None));
   connect(measurements.y[12], fromKelvin[2].Kelvin) annotation (Line(
       points={{-59,-50},{18,-50}},
       color={0,0,127},
@@ -83,15 +79,42 @@ equation
       points={{-59,-50},{18,-50}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-      points={{41,-50},{60,-50},{60,-6},{78,-6}},
+  connect(fromKelvin.Celsius, Tresiduals.u2) annotation (Line(
+      points={{41,-50},{54,-50},{54,44},{58,44}},
       color={0,0,127},
       smooth=Smooth.None));
-  connect(N2LobNorBed.P, P) annotation (Line(points={{2.22222,20},{2.22222,20},
-          {110,20}},
-                   color={0,0,127}));
+  connect(TairC.T, Tresiduals.u1) annotation (Line(points={{40,40},{50,40},{50,
+          56},{58,56}}, color={0,0,127}));
+  connect(N2LobNorBed.P, Presiduals.u1) annotation (Line(points={{2.22222,20},{
+          2.22222,20},{48,20},{48,-44},{58,-44}}, color={0,0,127}));
+  connect(measurements.y[24], Presiduals[1].u2) annotation (Line(points={{-59,
+          -50},{0,-50},{0,-56},{58,-56}}, color={0,0,127}));
+  connect(measurements.y[25], Presiduals[2].u2) annotation (Line(points={{-59,
+          -50},{0,-50},{0,-56},{58,-56}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,100}})),
+  Documentation(
+  info="<html>
+  <p>
+  This example uses <a href=\"Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses.N2House.N2LobbyNorthBedroomModel\">
+  Buildings.Rooms.Validation.HlozkirchenTwinHouses.Houses..N2House.N2LobbyNorthBedroomModel</a>. 
+  <br>
+  The different values of the parameters describing the part of the house have to be given, just as the files with the boundary conditions, the weather data and the measurements.
+  <br>
+  The residuals on the air temperature are computed as the difference between the measured air temperature and the simulated one. 
+  <br>
+  The total power in each room is also extracted from the model.
+  </p>
+  <p></p>
+  </html>",
+  revisions="<html>
+  <ul>
+  <li>
+  May 21 2015, by Stephanie Bontemps:<br/>
+  First implementation.
+  </li>
+  </ul>
+  </html>"),
     experiment(
       StartTime=2.00448e+007,
       StopTime=2.35836e+007,
@@ -99,7 +122,5 @@ equation
       Tolerance=1e-007,
       __Dymola_Algorithm="Cvode"),
     __Dymola_experimentSetupOutput(events=false),
-    Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
-            100}})),
-    uses(Modelica(version="3.2.1")));
+    uses(Modelica(version="3.2.1"), Buildings(version="3.0.0")));
 end Experiment1N2LobbyNorthBedroomMorris;

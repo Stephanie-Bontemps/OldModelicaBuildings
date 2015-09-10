@@ -166,7 +166,7 @@ package Experiment1
       Tini_int=303.15,
       Tini_ext=283.15,
       Tini_bou=303.15)
-      annotation (Placement(transformation(extent={{-80,-20},{0,60}})));
+      annotation (Placement(transformation(extent={{-80,-40},{0,40}})));
 
     Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(
       TDryBulSou=Buildings.BoundaryConditions.Types.DataSource.File,
@@ -191,53 +191,57 @@ package Experiment1
       columns=2:35,
       fileName=
           "D:/Berkeley/Berkeley - IEA58/Twin_house_exp1_house_N2_60min_modified.txt")
-      annotation (Placement(transformation(extent={{-80,-60},{-60,-40}})));
+      annotation (Placement(transformation(extent={{-80,-80},{-60,-60}})));
 
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TairC[2]
       "Air temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,30},{40,50}})));
+      annotation (Placement(transformation(extent={{20,10},{40,30}})));
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[2]
       "Radiative temperature in the different rooms in °C"
-      annotation (Placement(transformation(extent={{20,-10},{40,10}})));
-    Modelica.Blocks.Math.Add residuals[2](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{80,-10},{100,10}})));
+      annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
+    Modelica.Blocks.Math.Add Tresiduals[2](each k1=-1, each k2=+1)
+      annotation (Placement(transformation(extent={{60,40},{80,60}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[2]
-      annotation (Placement(transformation(extent={{20,-60},{40,-40}})));
+      annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
 
-    Modelica.Blocks.Interfaces.RealOutput P[2] "Total power in each room"
-      annotation (Placement(transformation(extent={{100,10},{120,30}})));
+    Modelica.Blocks.Math.Add Presiduals[2](each k1=-1, each k2=+1)
+      annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
   equation
     connect(weaDat.weaBus, N2LobNorBed.weaBus) annotation (Line(
-        points={{-30,90},{-2.22222,90},{-2.22222,57.7778}},
+        points={{-30,90},{-2.22222,90},{-2.22222,37.7778}},
         color={255,204,51},
         thickness=0.5,
         smooth=Smooth.None));
     connect(N2LobNorBed.Tair, TairC.port) annotation (Line(
-        points={{-2.22222,40},{20,40}},
+        points={{-2.22222,20},{20,20}},
         color={191,0,0},
         smooth=Smooth.None));
     connect(N2LobNorBed.Trad, TradC.port) annotation (Line(
-        points={{-2.22222,0},{20,0}},
+        points={{-2.22222,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,40},{60,40},{60,6},{78,6}},
-        color={0,0,127},
-        smooth=Smooth.None));
     connect(measurements.y[12], fromKelvin[2].Kelvin) annotation (Line(
-        points={{-59,-50},{18,-50}},
+        points={{-59,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[11], fromKelvin[1].Kelvin) annotation (Line(
-        points={{-59,-50},{18,-50}},
+        points={{-59,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-        points={{41,-50},{60,-50},{60,-6},{78,-6}},
+    connect(fromKelvin.Celsius, Tresiduals.u2) annotation (Line(
+        points={{41,-70},{54,-70},{54,44},{58,44}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(N2LobNorBed.P, P) annotation (Line(points={{2.22222,20},{2.22222,20},
-            {110,20}}, color={0,0,127}));
+    connect(TairC.T, Tresiduals.u1) annotation (Line(points={{40,20},{50,20},{
+            50,56},{58,56}}, color={0,0,127}));
+    connect(N2LobNorBed.P, Presiduals.u1) annotation (Line(points={{2.22222,0},
+            {2.22222,0},{48,0},{48,-44},{58,-44}},   color={0,0,127}));
+    connect(measurements.y[24], Presiduals[1].u2) annotation (Line(points={{-59,-70},
+            {0,-70},{0,-56},{58,-56},{58,-56}},
+                                            color={0,0,127}));
+    connect(measurements.y[25], Presiduals[2].u2) annotation (Line(points={{-59,-70},
+            {0,-70},{0,-56},{58,-56},{58,-56}},
+                                            color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}})),
     Documentation(
@@ -320,12 +324,12 @@ package Experiment1
     Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor TradC[4]
       "Radiative temperature in the different rooms in °C"
       annotation (Placement(transformation(extent={{20,-30},{40,-10}})));
-    Modelica.Blocks.Math.Add residuals[4](each k1=-1, each k2=+1)
-      annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
+    Modelica.Blocks.Math.Add Tresiduals[4](each k1=-1, each k2=+1)
+      annotation (Placement(transformation(extent={{60,40},{80,60}})));
     Modelica.Thermal.HeatTransfer.Celsius.FromKelvin fromKelvin[4]
       annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
-    Modelica.Blocks.Interfaces.RealOutput P[4] "Total power in each room"
-      annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+    Modelica.Blocks.Math.Add Presiduals[3](each k1=-1, each k2=+1)
+      annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
   equation
     connect(weaDat.weaBus, N2SouPar.weaBus) annotation (Line(
         points={{-30,70},{-1.84615,70},{-1.84615,38.4615}},
@@ -340,12 +344,12 @@ package Experiment1
         points={{-1.53846,-23.0769},{10,-23.0769},{10,-20},{20,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TairC.T, residuals.u1) annotation (Line(
-        points={{40,20},{50,20},{50,-14},{58,-14}},
+    connect(TairC.T, Tresiduals.u1) annotation (Line(
+        points={{40,20},{50,20},{50,56},{58,56}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(fromKelvin.Celsius, residuals.u2) annotation (Line(
-        points={{41,-70},{50,-70},{50,-26},{58,-26}},
+    connect(fromKelvin.Celsius, Tresiduals.u2) annotation (Line(
+        points={{41,-70},{50,-70},{50,44},{58,44}},
         color={0,0,127},
         smooth=Smooth.None));
     connect(measurements.y[7], fromKelvin[1].Kelvin) annotation (Line(
@@ -364,9 +368,21 @@ package Experiment1
         points={{-59,-70},{18,-70}},
         color={0,0,127},
         smooth=Smooth.None));
-    connect(N2SouPar.P, P) annotation (Line(points={{1.53846,0},{1.53846,0},{
-            110,0}},
-          color={0,0,127}));
+    connect(measurements.y[20], Presiduals[1].u2) annotation (Line(points={{-59,
+            -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+    connect(measurements.y[21], Presiduals[2].u2) annotation (Line(points={{-59,
+            -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+    connect(measurements.y[19], Presiduals[3].u2) annotation (Line(points={{-59,
+            -70},{0,-70},{0,-56},{58,-56}}, color={0,0,127}));
+    connect(N2SouPar.P[2], Presiduals[1].u1) annotation (Line(points={{1.53846,
+            -0.384615},{14,-0.384615},{14,-44},{58,-44}},
+                                               color={0,0,127}));
+    connect(N2SouPar.P[3], Presiduals[2].u1) annotation (Line(points={{1.53846,
+            0.384615},{14,0.384615},{14,-44},{58,-44}},
+                                               color={0,0,127}));
+    connect(N2SouPar.P[4], Presiduals[3].u1) annotation (Line(points={{1.53846,
+            1.15385},{14,1.15385},{14,-44},{58,-44}},
+                                             color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
               -100},{100,100}})),
     Documentation(
